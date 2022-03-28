@@ -7,8 +7,15 @@ function Login() {
 
   const MIN_PASSWORD_LENGTH = 7;
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+  };
+
   return (
-    <form>
+    <form onSubmit={ handleSubmit }>
       <input
         type="email"
         placeholder="E-mail"
