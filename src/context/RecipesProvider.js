@@ -4,9 +4,14 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const context = {};
+  const [currentRecipes, setCurrentRecipes] = useState('');
+
+  const setNewRecipes = (recipes) => {
+    setCurrentRecipes(recipes);
+  };
 
   return (
-    <RecipesContext.Provider value={ context }>
+    <RecipesContext.Provider value={ { context, currentRecipes, setNewRecipes } }>
       {children}
     </RecipesContext.Provider>
   );
