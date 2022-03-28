@@ -1,8 +1,9 @@
 import React from 'react';
+import SearchBar from '../components/SearchBar'; // para testes
 
 function Login() {
   return (
-    <div>Login</div>
+    <SearchBar /> // para testes
   );
 }
 
