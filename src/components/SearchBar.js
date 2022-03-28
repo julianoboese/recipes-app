@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   fetchMealByIngredients,
   fetchMealByName,
@@ -9,64 +10,61 @@ import {
   fetchDrinkByName,
   fetchDrinkByFirstLetter,
 } from '../services/fetchDrinks';
-import recipesContext from '../context/RecipesContext';
-// import PropTypes from 'prop-types';
 
-function SearchBar(props) {
+function SearchBar({ history, location }) {
   const [searchValue, setSearchValue] = useState('');
   const [radioSearch, setRadioSearch] = useState('');
 
-  const { setNewRecipes } = useContext(recipesContext);
+  console.log(location);
+  console.log(history);
 
   const FIRST_LETTER = 'first-letter';
-  console.log(radioSearch);
 
   const wrongLetter = (requestApi) => {
-    if (searchValue.length === 1) {
+    if (searchValue.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
-      return requestApi();
+      return requestApi(searchValue);
     }
   };
 
   const saveRecipes = (recipes, food) => {
     if (recipes.length === 1) {
-      const { history } = props;
-      if (food === 'Meals') {
+      if (food === 'meals') {
         history.push(`/foods/${recipes[0].idMeal}`);
       } else {
         history.push(`/drinks/${recipes[0].idDrink}`);
       }
     } else {
-      setNewRecipes(recipes);
+      // setNewRecipes(recipes);
     }
   };
 
-  const getMealsFromApi = () => {
+  const getMealsFromApi = async () => {
     let recipes;
     if (radioSearch === 'ingredient') {
-      recipes = fetchMealByIngredients();
+      recipes = await fetchMealByIngredients(searchValue);
     } else if (radioSearch === 'name') {
-      recipes = fetchMealByName();
+      recipes = await fetchMealByName(searchValue);
     } else if (radioSearch === FIRST_LETTER) {
-      recipes = wrongLetter(fetchMealByFirstLetter);
+      recipes = await wrongLetter(fetchMealByFirstLetter);
     }
 
     if (recipes === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
-      saveRecipes(recipes, 'Meals');
+      saveRecipes(recipes, 'meals');
     }
   };
 
-  const getDrinksFromApi = () => {
+  const getDrinksFromApi = async () => {
     let recipes;
     if (radioSearch === 'ingredient') {
-      recipes = fetchDrinkByIngredients();
+      recipes = await fetchDrinkByIngredients(searchValue);
     } else if (radioSearch === 'name') {
-      recipes = fetchDrinkByName();
+      recipes = await fetchDrinkByName(searchValue);
     } else if (radioSearch === FIRST_LETTER) {
-      recipes = wrongLetter(fetchDrinkByFirstLetter);
+      recipes = await wrongLetter(fetchDrinkByFirstLetter);
     }
 
     if (recipes === null) {
@@ -81,7 +79,7 @@ function SearchBar(props) {
 
     const currentLocal = window.location.pathname;
 
-    if (currentLocal === '/food') {
+    if (currentLocal === '/foods') {
       getMealsFromApi();
     } else if (currentLocal === '/drinks') {
       getDrinksFromApi();
@@ -92,7 +90,7 @@ function SearchBar(props) {
     <form>
       <input
         type="text"
-        data-testid="search=input"
+        data-testid="search-input"
         placeholder="Search Recipe"
         value={ searchValue }
         onChange={ ({ target }) => setSearchValue(target.value) }
@@ -144,6 +142,7 @@ SearchBar.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  location: PropTypes.string.isRequired,
 };
 
 export default SearchBar;
