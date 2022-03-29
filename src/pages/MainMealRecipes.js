@@ -9,7 +9,7 @@ import {
   fetchMealsByCategory,
 } from '../services/fetchMeals';
 
-function MainMealRecipes({ location }) {
+function MainMealRecipes({ history, location }) {
   const [mealCategories, setMealCategories] = useState([]);
   const [mealRecipes, setMealRecipes] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
@@ -39,7 +39,7 @@ function MainMealRecipes({ location }) {
 
   return (
     <>
-      <Header location={ location.pathname } />
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -70,6 +70,9 @@ function MainMealRecipes({ location }) {
 }
 
 MainMealRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
