@@ -6,6 +6,9 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import Profile from './pages/Profile';
+import DoneRecipes from './pages/DoneRecipes';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/foods" component={ MainMealRecipes } />
         <Route path="/drinks" component={ MainDrinkRecipes } />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
       </Switch>
     </RecipesProvider>
   );
