@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
 import Explore from './pages/Explore';
+import ExploreFoods from './pages/ExploreFoods';
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/foods" component={ MainMealRecipes } />
         <Route path="/drinks" component={ MainDrinkRecipes } />
-        <Route path="/explore" component={ Explore } />
+        <Route exact path="/explore" component={ Explore } />
+        <Route path="/explore/foods" component={ ExploreFoods } />
+        <Route path="/explore/drinks" component={ ExploreFoods } />
       </Switch>
     </RecipesProvider>
   );

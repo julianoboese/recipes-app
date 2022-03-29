@@ -45,3 +45,10 @@ export const fetchMealByFirstLetter = async (firstLetter) => {
   const responseJson = await response.json();
   return responseJson.meals;
 };
+
+export const fetchMealRandomly = async () => {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals;
+};
