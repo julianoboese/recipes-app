@@ -9,7 +9,7 @@ function Profile({ history }) {
   };
 
   const redirectDoneRecepes = () => {
-    history.push('/done-recepies');
+    history.push('/done-recipes');
   };
 
   const redirectFavoriteRecepes = () => {
