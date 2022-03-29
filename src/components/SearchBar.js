@@ -21,7 +21,6 @@ function SearchBar({ history, location }) {
 
   const wrongNumberOfCaracters = async (requestApi) => {
     if (searchValue.length >= 2) {
-      console.log(searchValue);
       global.alert('Your search must have only 1 (one) character');
     } else {
       const result = await requestApi(searchValue);
