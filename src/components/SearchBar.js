@@ -19,16 +19,18 @@ function SearchBar({ history, location }) {
 
   const FIRST_LETTER = 'first-letter';
 
-  const wrongNumberOfCaracters = (requestApi) => {
-    if (searchValue.length > 1) {
+  const wrongNumberOfCaracters = async (requestApi) => {
+    if (searchValue.length >= 2) {
+      console.log(searchValue);
       global.alert('Your search must have only 1 (one) character');
     } else {
-      return requestApi(searchValue);
+      const result = await requestApi(searchValue);
+      console.log(result);
+      return result;
     }
   };
 
   const saveRecipes = (recipes, food) => {
-    console.log(recipes);
     if (recipes.length === 1) {
       if (food === 'meals') {
         history.push(`/foods/${recipes[0].idMeal}`);
@@ -41,7 +43,7 @@ function SearchBar({ history, location }) {
   };
 
   const nullSafeRecipe = (recipes, food) => {
-    if (recipes === null) {
+    if (!recipes) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       saveRecipes(recipes, food);
@@ -57,8 +59,9 @@ function SearchBar({ history, location }) {
     } else if (radioSearch === FIRST_LETTER) {
       recipes = await wrongNumberOfCaracters(fetchMealByFirstLetter);
     }
-
-    nullSafeRecipe(recipes, 'meals');
+    if (recipes !== undefined) {
+      nullSafeRecipe(recipes, 'meals');
+    }
   };
 
   const getDrinksFromApi = async () => {
@@ -71,7 +74,9 @@ function SearchBar({ history, location }) {
       recipes = await wrongNumberOfCaracters(fetchDrinkByFirstLetter);
     }
 
-    nullSafeRecipe(recipes, 'drinks');
+    if (recipes === undefined) {
+      nullSafeRecipe(recipes, 'drinks');
+    }
   };
 
   const searchController = (event) => {

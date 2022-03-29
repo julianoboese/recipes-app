@@ -4,7 +4,7 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const context = {};
-  const [currentRecipes, setCurrentRecipes] = useState('');
+  const [currentRecipes, setCurrentRecipes] = useState([]);
 
   const setNewRecipes = (recipes) => {
     setCurrentRecipes(recipes);
