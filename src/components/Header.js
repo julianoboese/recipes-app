@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
-function Header({ location }) {
+function Header({ location, history }) {
   const [isSearching, setIsSearching] = useState(false);
 
   const checkLocationAndGiveName = () => {
@@ -55,13 +55,16 @@ function Header({ location }) {
         </button>
       </div>
 
-      { isSearching && <SearchBar /> }
+      { isSearching && <SearchBar location={ location } history={ history } /> }
     </header>
   );
 }
 
 Header.propTypes = {
   location: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default Header;

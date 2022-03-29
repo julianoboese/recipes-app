@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   fetchMealByIngredients,
@@ -10,17 +10,16 @@ import {
   fetchDrinkByName,
   fetchDrinkByFirstLetter,
 } from '../services/fetchDrinks';
+import RecipesContext from '../context/RecipesContext';
 
 function SearchBar({ history, location }) {
   const [searchValue, setSearchValue] = useState('');
   const [radioSearch, setRadioSearch] = useState('');
-
-  console.log(location);
-  console.log(history);
+  const { setNewRecipes } = useContext(RecipesContext);
 
   const FIRST_LETTER = 'first-letter';
 
-  const wrongLetter = (requestApi) => {
+  const wrongNumberOfCaracters = (requestApi) => {
     if (searchValue.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
@@ -29,6 +28,7 @@ function SearchBar({ history, location }) {
   };
 
   const saveRecipes = (recipes, food) => {
+    console.log(recipes);
     if (recipes.length === 1) {
       if (food === 'meals') {
         history.push(`/foods/${recipes[0].idMeal}`);
@@ -36,7 +36,15 @@ function SearchBar({ history, location }) {
         history.push(`/drinks/${recipes[0].idDrink}`);
       }
     } else {
-      // setNewRecipes(recipes);
+      setNewRecipes(recipes);
+    }
+  };
+
+  const nullSafeRecipe = (recipes, food) => {
+    if (recipes === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else {
+      saveRecipes(recipes, food);
     }
   };
 
@@ -47,14 +55,10 @@ function SearchBar({ history, location }) {
     } else if (radioSearch === 'name') {
       recipes = await fetchMealByName(searchValue);
     } else if (radioSearch === FIRST_LETTER) {
-      recipes = await wrongLetter(fetchMealByFirstLetter);
+      recipes = await wrongNumberOfCaracters(fetchMealByFirstLetter);
     }
 
-    if (recipes === null) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    } else {
-      saveRecipes(recipes, 'meals');
-    }
+    nullSafeRecipe(recipes, 'meals');
   };
 
   const getDrinksFromApi = async () => {
@@ -64,24 +68,19 @@ function SearchBar({ history, location }) {
     } else if (radioSearch === 'name') {
       recipes = await fetchDrinkByName(searchValue);
     } else if (radioSearch === FIRST_LETTER) {
-      recipes = await wrongLetter(fetchDrinkByFirstLetter);
+      recipes = await wrongNumberOfCaracters(fetchDrinkByFirstLetter);
     }
 
-    if (recipes === null) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    } else {
-      saveRecipes(recipes, 'drinks');
-    }
+    nullSafeRecipe(recipes, 'drinks');
   };
 
   const searchController = (event) => {
     event.preventDefault();
+    const NOT_FOUND = -1;
 
-    const currentLocal = window.location.pathname;
-
-    if (currentLocal === '/foods') {
+    if (location.indexOf('foods') !== NOT_FOUND) {
       getMealsFromApi();
-    } else if (currentLocal === '/drinks') {
+    } else if (location.indexOf('drinks') !== NOT_FOUND) {
       getDrinksFromApi();
     }
   };
