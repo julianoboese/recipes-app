@@ -7,13 +7,11 @@ function MealCard({ meal, index }) {
 
   return (
     (
-      <Link
-        to={ `/food/${idMeal}` }
-        key={ idMeal }
-        data-testid={ `${index}-recipe-card` }
-      >
-        <img src={ strMealThumb } alt={ strMeal } data-testid={ `${index}-card-img` } />
-        <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+      <Link to={ `/foods/${idMeal}` }>
+        <div key={ idMeal } data-testid={ `${index}-recipe-card` }>
+          <img src={ strMealThumb } alt={ strMeal } data-testid={ `${index}-card-img` } />
+          <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+        </div>
       </Link>
     )
   );

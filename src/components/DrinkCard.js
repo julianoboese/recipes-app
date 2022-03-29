@@ -7,13 +7,15 @@ function DrinkCard({ drink, index }) {
 
   return (
     (
-      <Link
-        to={ `/drinks/${idDrink}` }
-        key={ idDrink }
-        data-testid={ `${index}-recipe-card` }
-      >
-        <img src={ strDrinkThumb } alt={ strDrink } data-testid={ `${index}-card-img` } />
-        <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+      <Link to={ `/drinks/${idDrink}` }>
+        <div key={ idDrink } data-testid={ `${index}-recipe-card` }>
+          <img
+            src={ strDrinkThumb }
+            alt={ strDrink }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+        </div>
       </Link>
     )
   );
