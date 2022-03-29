@@ -1,15 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function MealCard({ meal, index }) {
   const { idMeal, strMeal, strMealThumb } = meal;
 
   return (
     (
-      <div key={ idMeal } data-testid={ `${index}-recipe-card` }>
+      <Link
+        to={ `/food/${idMeal}` }
+        key={ idMeal }
+        data-testid={ `${index}-recipe-card` }
+      >
         <img src={ strMealThumb } alt={ strMeal } data-testid={ `${index}-card-img` } />
         <p data-testid={ `${index}-card-name` }>{strMeal}</p>
-      </div>
+      </Link>
     )
   );
 }

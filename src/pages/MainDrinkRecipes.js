@@ -25,7 +25,7 @@ function MainDrinkRecipes({ location }) {
   }, []);
 
   const handleCategory = async ({ target }) => {
-    if (target.innerHTML === currentCategory) {
+    if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
       const meals = await fetchDrinks();
       setDrinkRecipes(meals);
       setCurrentCategory('');
@@ -39,16 +39,25 @@ function MainDrinkRecipes({ location }) {
   return (
     <>
       <Header location={ location.pathname } />
-      {drinkCategories.map(({ strCategory }) => (
+      <section>
         <button
-          key={ strCategory }
           type="button"
-          data-testid={ `${strCategory}-category-filter` }
+          data-testid="All-category-filter"
           onClick={ handleCategory }
         >
-          {strCategory}
+          All
         </button>
-      ))}
+        {drinkCategories.map(({ strCategory }) => (
+          <button
+            key={ strCategory }
+            type="button"
+            data-testid={ `${strCategory}-category-filter` }
+            onClick={ handleCategory }
+          >
+            {strCategory}
+          </button>
+        ))}
+      </section>
       <section>
         {drinkRecipes.map((drink, index) => (
           <DrinkCard key={ drink.idDrink } drink={ drink } index={ index } />

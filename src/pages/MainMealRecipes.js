@@ -25,7 +25,7 @@ function MainMealRecipes({ location }) {
   }, []);
 
   const handleCategory = async ({ target }) => {
-    if (target.innerHTML === currentCategory) {
+    if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
       const meals = await fetchMeals();
       setMealRecipes(meals);
       setCurrentCategory('');
@@ -40,6 +40,13 @@ function MainMealRecipes({ location }) {
     <>
       <Header location={ location.pathname } />
       <section>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ handleCategory }
+        >
+          All
+        </button>
         {mealCategories.map(({ strCategory }) => (
           <button
             key={ strCategory }
