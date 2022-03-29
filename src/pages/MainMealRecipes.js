@@ -11,6 +11,7 @@ import {
 function MainMealRecipes({ location }) {
   const [mealCategories, setMealCategories] = useState([]);
   const [mealRecipes, setMealRecipes] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState('');
 
   useEffect(() => {
     const getCategoriesAndMeals = async () => {
@@ -24,8 +25,15 @@ function MainMealRecipes({ location }) {
   }, []);
 
   const handleCategory = async ({ target }) => {
-    const meals = await fetchMealsByCategory(target.innerHTML);
-    setMealRecipes(meals);
+    if (target.innerHTML === currentCategory) {
+      const meals = await fetchMeals();
+      setMealRecipes(meals);
+      setCurrentCategory('');
+    } else {
+      const meals = await fetchMealsByCategory(target.innerHTML);
+      setMealRecipes(meals);
+      setCurrentCategory(target.innerHTML);
+    }
   };
 
   return (

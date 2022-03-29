@@ -11,6 +11,7 @@ import {
 function MainDrinkRecipes({ location }) {
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [drinkRecipes, setDrinkRecipes] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState('');
 
   useEffect(() => {
     const getCategoriesAndDrinks = async () => {
@@ -24,8 +25,15 @@ function MainDrinkRecipes({ location }) {
   }, []);
 
   const handleCategory = async ({ target }) => {
-    const drinks = await fetchDrinksByCategory(target.innerHTML);
-    setDrinkRecipes(drinks);
+    if (target.innerHTML === currentCategory) {
+      const meals = await fetchDrinks();
+      setDrinkRecipes(meals);
+      setCurrentCategory('');
+    } else {
+      const drinks = await fetchDrinksByCategory(target.innerHTML);
+      setDrinkRecipes(drinks);
+      setCurrentCategory(target.innerHTML);
+    }
   };
 
   return (
