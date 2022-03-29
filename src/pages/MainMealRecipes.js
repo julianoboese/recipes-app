@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MealCard from '../components/MealCard';
 import {
@@ -63,6 +64,7 @@ function MainMealRecipes({ location }) {
           <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
         ))}
       </section>
+      <Footer />
     </>
   );
 }
