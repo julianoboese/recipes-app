@@ -6,6 +6,7 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
+import Explore from './pages/Explore';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/foods" component={ MainMealRecipes } />
         <Route path="/drinks" component={ MainDrinkRecipes } />
+        <Route path="/explore" component={ Explore } />
       </Switch>
     </RecipesProvider>
   );
