@@ -52,3 +52,11 @@ export const fetchMealRandomly = async () => {
   const responseJson = await response.json();
   return responseJson.meals;
 };
+
+export const fetchMealIngredients = async () => {
+  const MAX_RECIPES = 12;
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals.slice(0, MAX_RECIPES);
+};

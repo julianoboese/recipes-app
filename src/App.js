@@ -8,6 +8,7 @@ import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
+import ExploreIngredients from './pages/ExploreIngredients';
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
         <Route path="/foods" component={ MainMealRecipes } />
         <Route path="/drinks" component={ MainDrinkRecipes } />
         <Route exact path="/explore" component={ Explore } />
-        <Route path="/explore/foods" component={ ExploreFoods } />
-        <Route path="/explore/drinks" component={ ExploreFoods } />
+        <Route exact path="/explore/foods" component={ ExploreFoods } />
+        <Route exact path="/explore/drinks" component={ ExploreFoods } />
+        <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
+        <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
       </Switch>
     </RecipesProvider>
   );
