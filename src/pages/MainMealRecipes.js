@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MealCard from '../components/MealCard';
 import {
@@ -8,7 +9,7 @@ import {
   fetchMealsByCategory,
 } from '../services/fetchMeals';
 
-function MainMealRecipes({ location }) {
+function MainMealRecipes({ history, location }) {
   const [mealCategories, setMealCategories] = useState([]);
   const [mealRecipes, setMealRecipes] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
@@ -38,7 +39,7 @@ function MainMealRecipes({ location }) {
 
   return (
     <>
-      <Header location={ location.pathname } />
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -63,11 +64,15 @@ function MainMealRecipes({ location }) {
           <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
         ))}
       </section>
+      <Footer />
     </>
   );
 }
 
 MainMealRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,

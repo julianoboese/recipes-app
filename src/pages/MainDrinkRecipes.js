@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import DrinkCard from '../components/DrinkCard';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import {
   fetchDrinkCategories,
@@ -8,7 +9,7 @@ import {
   fetchDrinksByCategory,
 } from '../services/fetchDrinks';
 
-function MainDrinkRecipes({ location }) {
+function MainDrinkRecipes({ history, location }) {
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [drinkRecipes, setDrinkRecipes] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
@@ -38,7 +39,7 @@ function MainDrinkRecipes({ location }) {
 
   return (
     <>
-      <Header location={ location.pathname } />
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -63,11 +64,15 @@ function MainDrinkRecipes({ location }) {
           <DrinkCard key={ drink.idDrink } drink={ drink } index={ index } />
         ))}
       </section>
+      <Footer />
     </>
   );
 }
 
 MainDrinkRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
