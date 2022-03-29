@@ -2,7 +2,11 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import MealCard from '../components/MealCard';
-import { fetchMealCategories, fetchMeals } from '../services/fetchMeals';
+import {
+  fetchMealCategories,
+  fetchMeals,
+  fetchMealsByCategory,
+} from '../services/fetchMeals';
 
 function MainMealRecipes({ location }) {
   const [mealCategories, setMealCategories] = useState([]);
@@ -19,6 +23,11 @@ function MainMealRecipes({ location }) {
     getCategoriesAndMeals();
   }, []);
 
+  const handleCategory = async ({ target }) => {
+    const meals = await fetchMealsByCategory(target.innerHTML);
+    setMealRecipes(meals);
+  };
+
   return (
     <>
       <Header location={ location.pathname } />
@@ -28,6 +37,7 @@ function MainMealRecipes({ location }) {
             key={ strCategory }
             type="button"
             data-testid={ `${strCategory}-category-filter` }
+            onClick={ handleCategory }
           >
             {strCategory}
           </button>

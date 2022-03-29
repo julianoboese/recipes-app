@@ -2,7 +2,11 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import DrinkCard from '../components/DrinkCard';
 import Header from '../components/Header';
-import { fetchDrinkCategories, fetchDrinks } from '../services/fetchDrinks';
+import {
+  fetchDrinkCategories,
+  fetchDrinks,
+  fetchDrinksByCategory,
+} from '../services/fetchDrinks';
 
 function MainDrinkRecipes({ location }) {
   const [drinkCategories, setDrinkCategories] = useState([]);
@@ -19,6 +23,11 @@ function MainDrinkRecipes({ location }) {
     getCategoriesAndDrinks();
   }, []);
 
+  const handleCategory = async ({ target }) => {
+    const drinks = await fetchDrinksByCategory(target.innerHTML);
+    setDrinkRecipes(drinks);
+  };
+
   return (
     <>
       <Header location={ location.pathname } />
@@ -27,6 +36,7 @@ function MainDrinkRecipes({ location }) {
           key={ strCategory }
           type="button"
           data-testid={ `${strCategory}-category-filter` }
+          onClick={ handleCategory }
         >
           {strCategory}
         </button>
