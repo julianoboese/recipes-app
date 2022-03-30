@@ -1,19 +1,13 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import RecipesContext from '../context/RecipesContext';
 import { fetchDrinkById } from '../services/fetchDrinks';
 
 function DrinkInProgress({ match }) {
-  const [drinkInProgress, setDrinkInProgress] = useState({});
-
   const { params: { recipeId } } = match;
 
-  useEffect(() => {
-    const getRecipe = async () => {
-      const drink = await fetchDrinkById(recipeId);
-      setDrinkInProgress(drink);
-    };
-    getRecipe();
-  }, [recipeId]);
+  const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
+  const [drinkInProgress, setDrinkInProgress] = useState({});
 
   const { strDrink, strDrinkThumb, strCategory, strInstructions } = drinkInProgress;
   const ingredients = Object.entries(drinkInProgress).reduce((acc, [key, value]) => {
@@ -23,6 +17,48 @@ function DrinkInProgress({ match }) {
     return acc;
   }, []);
 
+  useEffect(() => {
+    const getRecipe = async () => {
+      const drink = await fetchDrinkById(recipeId);
+      setDrinkInProgress(drink);
+    };
+    getRecipe();
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (storedRecipes) {
+      setInProgressRecipes(storedRecipes);
+    }
+  }, [recipeId, setInProgressRecipes]);
+
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  }, [inProgressRecipes]);
+
+  const handleChange = ({ target }) => {
+    if (target.checked) {
+      setInProgressRecipes(
+        {
+          ...inProgressRecipes,
+          cocktails: {
+            ...inProgressRecipes.cocktails,
+            [recipeId]: inProgressRecipes.cocktails[recipeId] ? [
+              ...inProgressRecipes.cocktails[recipeId],
+              target.value,
+            ] : [target.value],
+          },
+        },
+      );
+    } else {
+      setInProgressRecipes({
+        ...inProgressRecipes,
+        cocktails: {
+          ...inProgressRecipes.cocktails,
+          [recipeId]: inProgressRecipes.cocktails[recipeId]
+            .filter((ingredient) => ingredient !== target.value),
+        },
+      });
+    }
+  };
+
   return (
     <div>
       <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
@@ -31,16 +67,28 @@ function DrinkInProgress({ match }) {
       <button type="button" data-testid="share-btn">Share</button>
       <button type="button" data-testid="favorite-btn">Favorite</button>
       <p data-testid="instructions">{strInstructions}</p>
-      {ingredients.map((ingredient, index) => (
-        <label
-          htmlFor={ ingredient }
-          key={ ingredient }
-          data-testid={ `${index}-ingredient-step` }
-        >
-          <input type="checkbox" value={ ingredient } id={ ingredient } />
-          {ingredient}
-        </label>
-      ))}
+      {ingredients.map((ingredient, index) => {
+        const isChecked = inProgressRecipes.cocktails[recipeId]
+          && inProgressRecipes.cocktails[recipeId].includes(ingredient);
+
+        return (
+          <label
+            htmlFor={ ingredient }
+            key={ ingredient }
+            data-testid={ `${index}-ingredient-step` }
+            style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+          >
+            <input
+              type="checkbox"
+              value={ ingredient }
+              id={ ingredient }
+              checked={ isChecked }
+              onChange={ handleChange }
+            />
+            {ingredient}
+          </label>
+        );
+      })}
       <button type="button" data-testid="finish-recipe-btn">Finish</button>
     </div>
   );
