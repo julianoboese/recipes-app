@@ -6,6 +6,8 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
+import MealInProgress from './pages/MealInProgress';
+import DrinkInProgress from './pages/DrinkInProgress';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
@@ -21,6 +23,8 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ MainMealRecipes } />
         <Route exact path="/drinks" component={ MainDrinkRecipes } />
+        <Route exact path="/foods/:recipeId/in-progress" component={ MealInProgress } />
+        <Route exact path="/drinks/:recipeId/in-progress" component={ DrinkInProgress } />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />

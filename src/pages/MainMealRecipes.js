@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MealCard from '../components/MealCard';
+import RecipesContext from '../context/RecipesContext';
 import {
   fetchMealCategories,
   fetchMeals,
@@ -10,8 +11,9 @@ import {
 } from '../services/fetchMeals';
 
 function MainMealRecipes({ history, location }) {
+  const { currentRecipes, setCurrentRecipes } = useContext(RecipesContext);
+
   const [mealCategories, setMealCategories] = useState([]);
-  const [mealRecipes, setMealRecipes] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
 
   useEffect(() => {
@@ -20,19 +22,19 @@ function MainMealRecipes({ history, location }) {
       setMealCategories(categories);
 
       const meals = await fetchMeals();
-      setMealRecipes(meals);
+      setCurrentRecipes(meals);
     };
     getCategoriesAndMeals();
-  }, []);
+  }, [setCurrentRecipes]);
 
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
       const meals = await fetchMeals();
-      setMealRecipes(meals);
+      setCurrentRecipes(meals);
       setCurrentCategory('');
     } else {
       const meals = await fetchMealsByCategory(target.innerHTML);
-      setMealRecipes(meals);
+      setCurrentRecipes(meals);
       setCurrentCategory(target.innerHTML);
     }
   };
@@ -60,7 +62,7 @@ function MainMealRecipes({ history, location }) {
         ))}
       </section>
       <section>
-        {mealRecipes.map((meal, index) => (
+        {currentRecipes.map((meal, index) => (
           <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
         ))}
       </section>

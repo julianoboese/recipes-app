@@ -20,9 +20,9 @@ export const fetchDrinksByCategory = async (category) => {
 };
 
 export const fetchDrinkById = async (id) => {
-  const response = await fetch(`www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
   const responseJson = await response.json();
-  return responseJson.meals[0];
+  return responseJson.drinks[0];
 };
 
 export const fetchDrinkByIngredients = async (ingredient) => {

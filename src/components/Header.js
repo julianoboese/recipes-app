@@ -37,7 +37,7 @@ function Header({ location, history }) {
             <img
               data-testid="profile-top-btn"
               src={ profileIcon }
-              alt="icone de perfil"
+              alt="ícone de perfil"
             />
           </button>
         </Link>
@@ -51,7 +51,7 @@ function Header({ location, history }) {
           type="button"
           className="btn btn-primary"
         >
-          <img src={ searchIcon } data-testid="search-top-btn" alt="icone de pesquisa" />
+          <img src={ searchIcon } data-testid="search-top-btn" alt="ícone de pesquisa" />
         </button>
       </div>
 
