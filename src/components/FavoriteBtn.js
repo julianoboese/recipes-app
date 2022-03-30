@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import favoriteIcon from '../images/blackHeartIcon.svg';
 import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 
-function FavoriteBtn() {
+function FavoriteBtn({ recipe }, type) {
+  console.log(recipe, type);
   const [isFavorited, setIsFavorited] = useState(false);
+  // const [favorite, setFavorite] = useState({})
+
+  useEffect(() => {
+    // const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    // setFavorite(favorites.)
+  }, []);
 
   const heartFavorited = () => {
     if (isFavorited) {
@@ -23,5 +31,11 @@ function FavoriteBtn() {
     </button>
   );
 }
+
+FavoriteBtn.propTypes = {
+  recipe: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+};
 
 export default FavoriteBtn;

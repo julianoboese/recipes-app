@@ -66,7 +66,7 @@ function MealRecipe({ match: { params: { id } } }) {
           <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-          <FavoriteBtn />
+          <FavoriteBtn recipe={ recipe } type="foods" />
 
           <ShareBtn type="foods" id={ recipe.idMeal } />
 
