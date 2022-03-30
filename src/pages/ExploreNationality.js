@@ -17,8 +17,7 @@ function ExploreNationality({ history, location }) {
   useEffect(() => {
     const loadAllCountries = async () => {
       const countries = await fetchMealCountries();
-      countries.unshift({ strArea: 'All' });
-      setAllCountries(countries);
+      setAllCountries([{ strArea: 'All' }, ...countries]);
     };
     loadAllCountries();
   }, []);
@@ -30,7 +29,6 @@ function ExploreNationality({ history, location }) {
         setAllRecipes(recipes);
       } else {
         const recipes = await fetchMealByCountry(currentCountry);
-        console.log(recipes);
         setAllRecipes(recipes);
       }
     };
