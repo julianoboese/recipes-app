@@ -14,6 +14,7 @@ function MealRecipe({ location, match: { params: { id } } }) {
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isShared, setIsShared] = useState(false);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -59,13 +60,14 @@ function MealRecipe({ location, match: { params: { id } } }) {
         className="btn btn-primary mr-1"
         onClick={ () => {
           navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-          global.alert('Link copied!');
+          setIsShared(true);
         } }
       >
         <img src={ shareIcon } alt="icone para compartilhar" />
       </button>
-
       <FavoriteBtn />
+
+      {isShared && <p>Link copied!</p>}
 
       <div>
         <h3>Ingredients</h3>
