@@ -16,6 +16,7 @@ function FavoriteBtn() {
     <button
       type="button"
       className="btn btn-primary"
+      data-testid="favorite-btn"
       onClick={ () => setIsFavorited(!isFavorited) }
     >
       {heartFavorited()}

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import shareIcon from '../images/shareIcon.svg';
-import { fetchMealById } from '../services/fetchMeals';
-import { fetchDrinks } from '../services/fetchDrinks';
+import { fetchMeals } from '../services/fetchMeals';
+import { fetchDrinkById } from '../services/fetchDrinks';
 import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
@@ -10,22 +10,20 @@ import FavoriteBtn from '../components/FavoriteBtn';
 function DrinkRecipe({ location, match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [youtubeUrl, setYoutubeUrl] = useState('');
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recomentationsReq = await fetchDrinks();
+      const recomentationsReq = await fetchMeals();
       const MAX_CAROUSEL_RECOM = 6;
       setRecomendations(recomentationsReq.slice(0, MAX_CAROUSEL_RECOM));
-      const responseRecipe = await fetchMealById(id);
-      setYoutubeUrl(embedYoutubeUrl(responseRecipe.strYoutube));
+      const responseRecipe = await fetchDrinkById(id);
 
       setRecipe(responseRecipe);
 
       const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (''))
+        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (null))
         .map((entry) => entry[1]);
       setIngredients(recipeIngredients);
       setIsLoading(false);
@@ -34,9 +32,9 @@ function DrinkRecipe({ location, match: { params: { id } } }) {
   }, [id]);
 
   const objToCarousel = recomendations.map((drink) => ({
-    id: drink.idDrink,
-    name: drink.strDrink,
-    imgUrl: drink.strDrinkThumb,
+    id: drink.idMeal,
+    name: drink.strMeal,
+    imgUrl: drink.strMealThumb,
     category: drink.strCategory,
   }));
 
@@ -44,12 +42,12 @@ function DrinkRecipe({ location, match: { params: { id } } }) {
     <main>
       <img
         className="mw-100"
-        src={ recipe.strMealThumb }
+        src={ recipe.strDrinkThumb }
         data-testid="recipe-photo"
         alt="imagem da receita"
       />
 
-      <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+      <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
       <p data-testid="recipe-category">{recipe.strCategory}</p>
 
       <button
@@ -83,25 +81,6 @@ function DrinkRecipe({ location, match: { params: { id } } }) {
       <div>
         <h3>Instructions</h3>
         <p data-testid="instructions">{recipe.strInstructions}</p>
-      </div>
-
-      <div>
-        <h3>Video</h3>
-        <iframe
-          data-testid="video"
-          width="340"
-          height="315"
-          src={ youtubeUrl }
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture"
-          allowFullScreen
-        />
       </div>
 
       <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
