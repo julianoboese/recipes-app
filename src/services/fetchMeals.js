@@ -32,6 +32,14 @@ export const fetchMealByIngredients = async (ingredient) => {
   return responseJson.meals;
 };
 
+export const fetchMealByCountry = async (country) => {
+  const MAX_RECIPES = 12;
+  const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`;
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals.slice(0, MAX_RECIPES);
+};
+
 export const fetchMealByName = async (name) => {
   const URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
   const response = await fetch(URL);
@@ -41,6 +49,28 @@ export const fetchMealByName = async (name) => {
 
 export const fetchMealByFirstLetter = async (firstLetter) => {
   const URL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals;
+};
+
+export const fetchMealRandomly = async () => {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals;
+};
+
+export const fetchMealIngredients = async () => {
+  const MAX_RECIPES = 12;
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.meals.slice(0, MAX_RECIPES);
+};
+
+export const fetchMealCountries = async () => {
+  const URL = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
   const response = await fetch(URL);
   const responseJson = await response.json();
   return responseJson.meals;
