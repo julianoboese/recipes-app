@@ -2,12 +2,14 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import { fetchMealById } from '../services/fetchMeals';
+import shareIcon from '../images/shareIcon.svg';
 
 function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
   const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
   const [mealInProgress, setMealInProgress] = useState({});
+  const [isShared, setIsShared] = useState(false);
 
   const { strMeal, strMealThumb, strCategory, strInstructions } = mealInProgress;
   const ingredients = Object.entries(mealInProgress).reduce((acc, [key, value]) => {
@@ -81,8 +83,19 @@ function MealInProgress({ history, match }) {
       <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
       <h2 data-testid="recipe-title">{strMeal}</h2>
       <h3 data-testid="recipe-category">{strCategory}</h3>
-      <button type="button" data-testid="share-btn">Share</button>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => {
+          navigator.clipboard.writeText(`http://localhost:3000/foods/${recipeId}`);
+          setIsShared(true);
+        } }
+      >
+        <img src={ shareIcon } alt="ícone para compartilhar" />
+      </button>
       <button type="button" data-testid="favorite-btn">Favorite</button>
+      {isShared && <p>Link copied!</p>}
+
       <p data-testid="instructions">{strInstructions}</p>
       {ingredients.map((ingredient, index) => {
         const isChecked = handleCheck(ingredient);
