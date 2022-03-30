@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-function RecomendCarousel({ recomendations }) {
+function RecomendCarousel({ recomendations, loading }) {
   const activeClassName = 'carousel-item active';
   const commumClassName = 'carousel-item';
 
@@ -16,7 +16,6 @@ function RecomendCarousel({ recomendations }) {
   }, []);
 
   const handleCarouselChange = (event) => {
-    console.log(recomendations);
     const isAtEndOfCarousel = activeCarousel[2].includes('active');
 
     const numberOfActive = activeCarousel
@@ -34,18 +33,59 @@ function RecomendCarousel({ recomendations }) {
   return (
     <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
       <div className="carousel-inner">
-        <div className={ activeCarousel[0] }>
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/mlchx21564916997.jpg" alt="First slide" />
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/58oia61564916529.jpg" alt="First slider" />
-        </div>
-        <div className={ activeCarousel[1] }>
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/n3xxd91598732796.jpg" alt="Second slide" />
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/wuxrtu1483564410.jpg" alt="Third slide" />
-        </div>
-        <div className={ activeCarousel[2] }>
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/wuxrtu1483564410.jpg" alt="Third slide" />
-          <img className="w-50" src="https://www.themealdb.com/images/media/meals/n3xxd91598732796.jpg" alt="Second slide" />
-        </div>
+        {!loading && activeCarousel.map((carouselPosition, index) => {
+          let recomIndex = [];
+          const POSITION_1TH_ARR = 0;
+          const POSITION_2TH_ARR = 1;
+          const POSITION_3TH_ARR = 2;
+          const POSITION_4TH_ARR = 3;
+          const POSITION_5TH_ARR = 4;
+          const POSITION_6TH_ARR = 5;
+          if (index === 0) recomIndex = [POSITION_1TH_ARR, POSITION_2TH_ARR];
+          if (index === 1) recomIndex = [POSITION_3TH_ARR, POSITION_4TH_ARR];
+          if (index === 2) recomIndex = [POSITION_5TH_ARR, POSITION_6TH_ARR];
+
+          return (
+            <div key={ index } className={ carouselPosition }>
+              <div className="d-flex mw-100 my-3">
+                <div
+                  className="w-50 card"
+                  data-testid={ `${recomIndex[0]}-recomendation-card` }
+                >
+                  <img
+                    className="w-100"
+                    src={ recomendations[recomIndex[0]].imgUrl }
+                    alt="First slide"
+                  />
+                  <p>{recomendations[recomIndex[0]].category}</p>
+                  <h4
+                    data-testid={ `${recomIndex[0]}-recomendation-title` }
+                  >
+                    {recomendations[recomIndex[0]].name}
+
+                  </h4>
+                </div>
+
+                <div
+                  className="w-50 card"
+                  data-testid={ `${recomIndex[1]}-recomendation-card` }
+                >
+                  <img
+                    className="w-100"
+                    src={ recomendations[recomIndex[1]].imgUrl }
+                    alt="First slider"
+                  />
+                  <p>{recomendations[recomIndex[1]].category}</p>
+                  <h4
+                    data-testid={ `${recomIndex[1]}-recomendation-title` }
+                  >
+                    {recomendations[recomIndex[1]].name}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <a
         onClick={ handleCarouselChange }
@@ -72,8 +112,9 @@ function RecomendCarousel({ recomendations }) {
 }
 
 RecomendCarousel.propTypes = {
+  loading: PropTypes.bool.isRequired,
   recomendations: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+    name: PropTypes.string,
   })).isRequired,
 };
 export default RecomendCarousel;

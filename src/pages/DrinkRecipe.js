@@ -2,13 +2,12 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import shareIcon from '../images/shareIcon.svg';
 import { fetchMealById } from '../services/fetchMeals';
-import embedYoutubeUrl from '../helpers/toEmbedYoutube';
 import { fetchDrinks } from '../services/fetchDrinks';
 import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 
-function MealRecipe({ location, match: { params: { id } } }) {
+function DrinkRecipe({ location, match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState('');
@@ -112,7 +111,7 @@ function MealRecipe({ location, match: { params: { id } } }) {
   );
 }
 
-MealRecipe.propTypes = {
+DrinkRecipe.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
@@ -123,4 +122,4 @@ MealRecipe.propTypes = {
   }).isRequired,
 };
 
-export default MealRecipe;
+export default DrinkRecipe;
