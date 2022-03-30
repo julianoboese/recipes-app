@@ -17,22 +17,33 @@ function Login({ history }) {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
+    <form
+      onSubmit={ handleSubmit }
+      className="d-flex flex-column gap-4 w-75 m-auto"
+    >
+      <h1
+        className="text-center py-1 mt-4 mb-3"
+      >
+        Login
+      </h1>
       <input
         type="email"
         placeholder="E-mail"
         data-testid="email-input"
+        className="form-control bg-light"
         onChange={ ({ target }) => setEmail(target.value) }
       />
       <input
         type="password"
         placeholder="Password"
         data-testid="password-input"
+        className="form-control bg-light my-4"
         onChange={ ({ target }) => setPassword(target.value) }
       />
       <button
         type="submit"
         data-testid="login-submit-btn"
+        className="btn btn-lg btn-success p-2"
         disabled={ !validateEmail(email) || password.length < MIN_PASSWORD_LENGTH }
       >
         Enter
