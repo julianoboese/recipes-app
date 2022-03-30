@@ -10,7 +10,7 @@ function StartRecipeBtn({ id, type }) {
   }
   useEffect(() => {
     const getRecipeProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (Object.keys(getRecipeProgress).length < 1) return;
+    if (!getRecipeProgress) return;
     const progressOfId = getRecipeProgress[type][id];
     if (progressOfId) setRecipeStatus('Continue Recipe');
   }, [id, type]);
