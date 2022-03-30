@@ -10,6 +10,7 @@ import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreIngredients from './pages/ExploreIngredients';
 import ExploreNationality from './pages/ExploreNationality';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
         <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
         <Route path="/explore/foods/nationalities" component={ ExploreNationality } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     </RecipesProvider>
   );
