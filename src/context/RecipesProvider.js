@@ -4,10 +4,7 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const [currentRecipes, setCurrentRecipes] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState({
-    cocktails: {},
-    meals: {},
-  });
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
   useEffect(() => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));

@@ -18,6 +18,10 @@ function DrinkInProgress({ history, match }) {
   }, []);
 
   useEffect(() => {
+    setInProgressRecipes({
+      cocktails: {},
+      meals: {},
+    });
     const getRecipe = async () => {
       const drink = await fetchDrinkById(recipeId);
       setDrinkInProgress(drink);
@@ -55,6 +59,23 @@ function DrinkInProgress({ history, match }) {
     }
   };
 
+  const handleCheck = (ingredient) => {
+    if (inProgressRecipes.cocktails) {
+      return inProgressRecipes.cocktails[recipeId]
+        && inProgressRecipes.cocktails[recipeId].includes(ingredient);
+    }
+    return false;
+  };
+
+  const handleDisabled = () => {
+    if (inProgressRecipes.cocktails) {
+      return inProgressRecipes.cocktails[recipeId]
+        ? ingredients.length !== inProgressRecipes.cocktails[recipeId].length
+        : true;
+    }
+    return true;
+  };
+
   return (
     <div>
       <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
@@ -64,8 +85,7 @@ function DrinkInProgress({ history, match }) {
       <button type="button" data-testid="favorite-btn">Favorite</button>
       <p data-testid="instructions">{strInstructions}</p>
       {ingredients.map((ingredient, index) => {
-        const isChecked = inProgressRecipes.cocktails[recipeId]
-          && inProgressRecipes.cocktails[recipeId].includes(ingredient);
+        const isChecked = handleCheck(ingredient);
 
         return (
           <label
@@ -88,9 +108,7 @@ function DrinkInProgress({ history, match }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ inProgressRecipes.cocktails[recipeId]
-          ? ingredients.length !== inProgressRecipes.cocktails[recipeId].length
-          : true }
+        disabled={ handleDisabled() }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish

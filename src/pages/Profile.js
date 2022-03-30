@@ -8,11 +8,11 @@ function Profile({ history }) {
     return jsonUser.email;
   };
 
-  const redirectDoneRecepes = () => {
+  const redirectDoneRecipes = () => {
     history.push('/done-recipes');
   };
 
-  const redirectFavoriteRecepes = () => {
+  const redirectFavoriteRecipes = () => {
     history.push('/favorite-recipes');
   };
 
@@ -29,14 +29,14 @@ function Profile({ history }) {
       <button
         type="button"
         data-testid="profile-done-btn"
-        onClick={ redirectDoneRecepes }
+        onClick={ redirectDoneRecipes }
       >
         Done Recipes
       </button>
       <button
         type="button"
         data-testid="profile-favorite-btn"
-        onClick={ redirectFavoriteRecepes }
+        onClick={ redirectFavoriteRecipes }
       >
         Favorite Recipes
       </button>
