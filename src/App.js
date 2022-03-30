@@ -6,12 +6,14 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
+import MealRecipe from './pages/MealRecipe';
 
 function App() {
   return (
     <RecipesProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route path="/foods/:id" render={ (props) => <MealRecipe { ...props } /> } />
         <Route path="/foods" component={ MainMealRecipes } />
         <Route path="/drinks" component={ MainDrinkRecipes } />
       </Switch>
