@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
-  const context = {};
   const [currentRecipes, setCurrentRecipes] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
-  const setNewRecipes = (recipes) => {
-    setCurrentRecipes(recipes);
-  };
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  }, [inProgressRecipes]);
 
   return (
-    <RecipesContext.Provider value={ { context, currentRecipes, setNewRecipes } }>
+    <RecipesContext.Provider
+      value={ { currentRecipes,
+        setCurrentRecipes,
+        inProgressRecipes,
+        setInProgressRecipes } }
+    >
       {children}
     </RecipesContext.Provider>
   );

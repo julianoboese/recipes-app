@@ -15,7 +15,7 @@ import RecipesContext from '../context/RecipesContext';
 function SearchBar({ history, location }) {
   const [searchValue, setSearchValue] = useState('');
   const [radioSearch, setRadioSearch] = useState('');
-  const { setNewRecipes } = useContext(RecipesContext);
+  const { setCurrentRecipes } = useContext(RecipesContext);
 
   const FIRST_LETTER = 'first-letter';
 
@@ -38,7 +38,7 @@ function SearchBar({ history, location }) {
       }
     } else {
       console.log('bbb');
-      setNewRecipes(recipes);
+      setCurrentRecipes(recipes);
     }
   };
 
@@ -46,7 +46,8 @@ function SearchBar({ history, location }) {
     if (!recipes) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
-      saveRecipes(recipes, food);
+      const MAX_RECIPES = 12;
+      saveRecipes(recipes.splice(0, MAX_RECIPES), food);
     }
   };
 
