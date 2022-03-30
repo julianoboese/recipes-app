@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import { fetchMealById } from '../services/fetchMeals';
 
-function MealInProgress({ match }) {
+function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
   const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
@@ -28,10 +28,6 @@ function MealInProgress({ match }) {
       setInProgressRecipes(storedRecipes);
     }
   }, [recipeId, setInProgressRecipes]);
-
-  useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  }, [inProgressRecipes]);
 
   const handleChange = ({ target }) => {
     if (target.checked) {
@@ -89,12 +85,24 @@ function MealInProgress({ match }) {
           </label>
         );
       })}
-      <button type="button" data-testid="finish-recipe-btn">Finish</button>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ inProgressRecipes.meals[recipeId]
+          ? ingredients.length !== inProgressRecipes.meals[recipeId].length
+          : true }
+        onClick={ () => history.push('/done-recipes') }
+      >
+        Finish
+      </button>
     </div>
   );
 }
 
 MealInProgress.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       recipeId: PropTypes.string,

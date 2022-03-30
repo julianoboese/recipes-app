@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDrinkById } from '../services/fetchDrinks';
 
-function DrinkInProgress({ match }) {
+function DrinkInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
   const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
@@ -28,10 +28,6 @@ function DrinkInProgress({ match }) {
       setInProgressRecipes(storedRecipes);
     }
   }, [recipeId, setInProgressRecipes]);
-
-  useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  }, [inProgressRecipes]);
 
   const handleChange = ({ target }) => {
     if (target.checked) {
@@ -89,12 +85,24 @@ function DrinkInProgress({ match }) {
           </label>
         );
       })}
-      <button type="button" data-testid="finish-recipe-btn">Finish</button>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ inProgressRecipes.cocktails[recipeId]
+          ? ingredients.length !== inProgressRecipes.cocktails[recipeId].length
+          : true }
+        onClick={ () => history.push('/done-recipes') }
+      >
+        Finish
+      </button>
     </div>
   );
 }
 
 DrinkInProgress.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       recipeId: PropTypes.string,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
@@ -8,6 +8,10 @@ function RecipesProvider({ children }) {
     cocktails: {},
     meals: {},
   });
+
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  }, [inProgressRecipes]);
 
   return (
     <RecipesContext.Provider
