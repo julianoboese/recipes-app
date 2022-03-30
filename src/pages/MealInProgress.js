@@ -7,10 +7,12 @@ import ShareBtn from '../components/ShareBtn';
 function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
-  const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
+  const { doneRecipes, setDoneRecipes } = useContext(RecipesContext);
   const [mealInProgress, setMealInProgress] = useState({});
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
-  const { strMeal, strMealThumb, strCategory, strInstructions } = mealInProgress;
+  const { strMeal, strMealThumb, strArea, strTags, strCategory,
+    strInstructions } = mealInProgress;
   const ingredients = Object.entries(mealInProgress).reduce((acc, [key, value]) => {
     if (key.includes('strIngredient') && value) {
       return [...acc, value];
@@ -19,44 +21,47 @@ function MealInProgress({ history, match }) {
   }, []);
 
   useEffect(() => {
-    setInProgressRecipes({
-      cocktails: {},
-      meals: {},
-    });
     const getRecipe = async () => {
       const meal = await fetchMealById(recipeId);
       setMealInProgress(meal);
     };
     getRecipe();
-    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (storedRecipes) {
-      setInProgressRecipes(storedRecipes);
-    }
-  }, [recipeId, setInProgressRecipes]);
+
+    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+      || { cocktails: {}, meals: {} };
+    setInProgressRecipes(storedInProgressRecipes);
+
+    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setDoneRecipes(storedDoneRecipes);
+  }, [recipeId, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
+    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+      || { cocktails: {}, meals: {} };
     if (target.checked) {
-      setInProgressRecipes(
-        {
-          ...inProgressRecipes,
-          meals: {
-            ...inProgressRecipes.meals,
-            [recipeId]: inProgressRecipes.meals[recipeId] ? [
-              ...inProgressRecipes.meals[recipeId],
-              target.value,
-            ] : [target.value],
-          },
-        },
-      );
-    } else {
-      setInProgressRecipes({
-        ...inProgressRecipes,
+      const newProgress = {
+        ...storedInProgressRecipes,
         meals: {
-          ...inProgressRecipes.meals,
-          [recipeId]: inProgressRecipes.meals[recipeId]
+          ...storedInProgressRecipes.meals,
+          [recipeId]: storedInProgressRecipes.meals[recipeId] ? [
+            ...storedInProgressRecipes.meals[recipeId],
+            target.value,
+          ] : [target.value],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newProgress));
+      setInProgressRecipes(newProgress);
+    } else {
+      const newProgress = {
+        ...storedInProgressRecipes,
+        meals: {
+          ...storedInProgressRecipes.meals,
+          [recipeId]: storedInProgressRecipes.meals[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
-      });
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newProgress));
+      setInProgressRecipes(newProgress);
     }
   };
 
@@ -75,6 +80,21 @@ function MealInProgress({ history, match }) {
         : true;
     }
     return true;
+  };
+
+  const handleFinish = () => {
+    setDoneRecipes([...doneRecipes, {
+      id: recipeId,
+      type: 'food',
+      nationality: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+      doneDate: '',
+      tags: strTags.split(','),
+    }]);
+    history.push('/done-recipes');
   };
 
   return (
@@ -111,7 +131,7 @@ function MealInProgress({ history, match }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ handleDisabled() }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleFinish }
       >
         Finish
       </button>

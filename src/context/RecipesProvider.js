@@ -4,18 +4,18 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const [currentRecipes, setCurrentRecipes] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  }, [inProgressRecipes]);
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  }, [doneRecipes]);
 
   return (
     <RecipesContext.Provider
       value={ { currentRecipes,
         setCurrentRecipes,
-        inProgressRecipes,
-        setInProgressRecipes } }
+        doneRecipes,
+        setDoneRecipes } }
     >
       {children}
     </RecipesContext.Provider>
