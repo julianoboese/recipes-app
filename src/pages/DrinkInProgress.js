@@ -7,10 +7,12 @@ import ShareBtn from '../components/ShareBtn';
 function DrinkInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
-  const { inProgressRecipes, setInProgressRecipes } = useContext(RecipesContext);
+  const { doneRecipes, setDoneRecipes } = useContext(RecipesContext);
   const [drinkInProgress, setDrinkInProgress] = useState({});
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
-  const { strDrink, strDrinkThumb, strCategory, strInstructions } = drinkInProgress;
+  const { strDrink, strDrinkThumb, strAlcoholic, strCategory,
+    strInstructions } = drinkInProgress;
   const ingredients = Object.entries(drinkInProgress).reduce((acc, [key, value]) => {
     if (key.includes('strIngredient') && value) {
       return [...acc, value];
@@ -19,44 +21,47 @@ function DrinkInProgress({ history, match }) {
   }, []);
 
   useEffect(() => {
-    setInProgressRecipes({
-      cocktails: {},
-      meals: {},
-    });
     const getRecipe = async () => {
       const drink = await fetchDrinkById(recipeId);
       setDrinkInProgress(drink);
     };
     getRecipe();
-    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (storedRecipes) {
-      setInProgressRecipes(storedRecipes);
-    }
-  }, [recipeId, setInProgressRecipes]);
+
+    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+      || { cocktails: {}, meals: {} };
+    setInProgressRecipes(storedInProgressRecipes);
+
+    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setDoneRecipes(storedDoneRecipes);
+  }, [recipeId, setInProgressRecipes, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
+    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+      || { cocktails: {}, meals: {} };
     if (target.checked) {
-      setInProgressRecipes(
-        {
-          ...inProgressRecipes,
-          cocktails: {
-            ...inProgressRecipes.cocktails,
-            [recipeId]: inProgressRecipes.cocktails[recipeId] ? [
-              ...inProgressRecipes.cocktails[recipeId],
-              target.value,
-            ] : [target.value],
-          },
-        },
-      );
-    } else {
-      setInProgressRecipes({
-        ...inProgressRecipes,
+      const newProgress = {
+        ...storedInProgressRecipes,
         cocktails: {
-          ...inProgressRecipes.cocktails,
-          [recipeId]: inProgressRecipes.cocktails[recipeId]
+          ...storedInProgressRecipes.cocktails,
+          [recipeId]: storedInProgressRecipes.cocktails[recipeId] ? [
+            ...storedInProgressRecipes.cocktails[recipeId],
+            target.value,
+          ] : [target.value],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newProgress));
+      setInProgressRecipes(newProgress);
+    } else {
+      const newProgress = {
+        ...storedInProgressRecipes,
+        cocktails: {
+          ...storedInProgressRecipes.cocktails,
+          [recipeId]: storedInProgressRecipes.cocktails[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
-      });
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newProgress));
+      setInProgressRecipes(newProgress);
     }
   };
 
@@ -75,6 +80,21 @@ function DrinkInProgress({ history, match }) {
         : true;
     }
     return true;
+  };
+
+  const handleFinish = () => {
+    setDoneRecipes([...doneRecipes, {
+      id: recipeId,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+      doneDate: '',
+      tags: [],
+    }]);
+    history.push('/done-recipes');
   };
 
   return (
@@ -111,7 +131,7 @@ function DrinkInProgress({ history, match }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ handleDisabled() }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleFinish }
       >
         Finish
       </button>
