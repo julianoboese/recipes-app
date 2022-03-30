@@ -9,6 +9,7 @@ import MainDrinkRecipes from './pages/MainDrinkRecipes';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreIngredients from './pages/ExploreIngredients';
+import ExploreNationality from './pages/ExploreNationality';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/explore/drinks" component={ ExploreFoods } />
         <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
         <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
+        <Route path="/explore/foods/nationalities" component={ ExploreNationality } />
       </Switch>
     </RecipesProvider>
   );
