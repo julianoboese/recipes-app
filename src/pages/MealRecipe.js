@@ -43,61 +43,64 @@ function MealRecipe({ match: { params: { id } } }) {
 
   return (
     <main>
-      <img
-        className="mw-100"
-        src={ recipe.strMealThumb }
-        data-testid="recipe-photo"
-        alt="imagem da receita"
-      />
+      {!isLoading && (
+        <>
+          <img
+            className="mw-100"
+            src={ recipe.strMealThumb }
+            data-testid="recipe-photo"
+            alt="imagem da receita"
+          />
 
-      <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+          <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-      {!isLoading && <ShareBtn type="foods" id={ recipe.idMeal } />}
+          <ShareBtn type="foods" id={ recipe.idMeal } />
 
-      <FavoriteBtn />
+          <FavoriteBtn />
 
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {ingredient}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div>
+            <h3>Ingredients</h3>
+            <ul>
+              {ingredients.map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
-      </div>
+          <div>
+            <h3>Instructions</h3>
+            <p data-testid="instructions">{recipe.strInstructions}</p>
+          </div>
 
-      <div>
-        <h3>Video</h3>
-        <iframe
-          data-testid="video"
-          width="340"
-          height="315"
-          src={ youtubeUrl }
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer;
+          <div>
+            <h3>Video</h3>
+            <iframe
+              data-testid="video"
+              width="340"
+              height="315"
+              src={ youtubeUrl }
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer;
           autoplay;
           clipboard-write;
           encrypted-media;
           gyroscope;
           picture-in-picture"
-          allowFullScreen
-        />
-      </div>
+              allowFullScreen
+            />
+          </div>
 
-      <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
+          <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
-      <StartRecipeBtn />
+          <StartRecipeBtn />
+        </>)}
     </main>
   );
 }
