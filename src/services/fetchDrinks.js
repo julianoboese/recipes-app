@@ -45,3 +45,18 @@ export const fetchDrinkByFirstLetter = async (firstLetter) => {
   const responseJson = await response.json();
   return responseJson.drinks;
 };
+
+export const fetchDrinkRandomly = async () => {
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.drinks;
+};
+
+export const fetchDrinkIngredients = async () => {
+  const MAX_RECIPES = 12;
+  const URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+  const response = await fetch(URL);
+  const responseJson = await response.json();
+  return responseJson.drinks.slice(0, MAX_RECIPES);
+};
