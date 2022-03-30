@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import shareIcon from '../images/shareIcon.svg';
 import { fetchMealById } from '../services/fetchMeals';
 import embedYoutubeUrl from '../helpers/toEmbedYoutube';
 import { fetchDrinks } from '../services/fetchDrinks';
 import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
-function MealRecipe({ location, match: { params: { id } } }) {
+function MealRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isShared, setIsShared] = useState(false);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -54,20 +53,9 @@ function MealRecipe({ location, match: { params: { id } } }) {
       <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
       <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-      <button
-        type="button"
-        data-testid="share-btn"
-        className="btn btn-primary mr-1"
-        onClick={ () => {
-          navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-          setIsShared(true);
-        } }
-      >
-        <img src={ shareIcon } alt="icone para compartilhar" />
-      </button>
-      <FavoriteBtn />
+      {!isLoading && <ShareBtn type="foods" id={ recipe.idMeal } />}
 
-      {isShared && <p>Link copied!</p>}
+      <FavoriteBtn />
 
       <div>
         <h3>Ingredients</h3>
