@@ -15,9 +15,9 @@ function DrinkRecipe({ match: { params: { id } } }) {
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recomentationsReq = await fetchMeals();
+      const recomendationsReq = await fetchMeals();
       const MAX_CAROUSEL_RECOM = 6;
-      setRecomendations(recomentationsReq.slice(0, MAX_CAROUSEL_RECOM));
+      setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchDrinkById(id);
 
       setRecipe(responseRecipe);
@@ -40,42 +40,46 @@ function DrinkRecipe({ match: { params: { id } } }) {
 
   return (
     <main>
-      <img
-        className="mw-100"
-        src={ recipe.strDrinkThumb }
-        data-testid="recipe-photo"
-        alt="imagem da receita"
-      />
+      {!isLoading && (
+        <>
+          <img
+            className="mw-100"
+            src={ recipe.strDrinkThumb }
+            data-testid="recipe-photo"
+            alt="imagem da receita"
+          />
 
-      <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+          <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-      {!isLoading && <ShareBtn type="drinks" id={ recipe.idDrink } />}
+          <ShareBtn type="drinks" id={ recipe.idDrink } />
 
-      <FavoriteBtn />
+          <FavoriteBtn />
 
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {ingredient}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div>
+            <h3>Ingredients</h3>
+            <ul>
+              {ingredients.map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
-      </div>
+          <div>
+            <h3>Instructions</h3>
+            <p data-testid="instructions">{recipe.strInstructions}</p>
+          </div>
 
-      <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
+          <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
-      <StartRecipeBtn />
+          <StartRecipeBtn />
+        </>
+      )}
     </main>
   );
 }
