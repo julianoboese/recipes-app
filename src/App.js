@@ -8,6 +8,10 @@ import MainMealRecipes from './pages/MainMealRecipes';
 import MainDrinkRecipes from './pages/MainDrinkRecipes';
 import MealInProgress from './pages/MealInProgress';
 import DrinkInProgress from './pages/DrinkInProgress';
+import Explore from './pages/Explore';
+import ExploreFoods from './pages/ExploreFoods';
+import ExploreIngredients from './pages/ExploreIngredients';
+import ExploreNationality from './pages/ExploreNationality';
 
 function App() {
   return (
@@ -18,6 +22,12 @@ function App() {
         <Route exact path="/drinks" component={ MainDrinkRecipes } />
         <Route exact path="/foods/:recipeId/in-progress" component={ MealInProgress } />
         <Route exact path="/drinks/:recipeId/in-progress" component={ DrinkInProgress } />
+        <Route exact path="/explore" component={ Explore } />
+        <Route exact path="/explore/foods" component={ ExploreFoods } />
+        <Route exact path="/explore/drinks" component={ ExploreFoods } />
+        <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
+        <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
+        <Route path="/explore/foods/nationalities" component={ ExploreNationality } />
       </Switch>
     </RecipesProvider>
   );
