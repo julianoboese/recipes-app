@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-import React from 'react';
-import PropTypes from 'prop-types';
-import Header from '../components/Header';
-
-function FavoriteRecipes({ history, location }) {
-  return (
-    <div>
-      <Header location={ location.pathname } history={ history } />
-=======
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import FavoriteCard from '../components/FavoriteCard';
 import Header from '../components/Header';
 
-function FavoriteRecipes() {
+function FavoriteRecipes({ history, location }) {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [typeFilter, setTypeFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +23,7 @@ function FavoriteRecipes() {
 
   return (
     <div>
-      <Header />
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -70,7 +61,6 @@ function FavoriteRecipes() {
           />
         ))}
       </section>
->>>>>>> 142781f87b907f37ad48ffdcba251f2168e7c613
     </div>
   );
 }
