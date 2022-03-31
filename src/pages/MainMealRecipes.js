@@ -11,7 +11,8 @@ import {
 } from '../services/fetchMeals';
 
 function MainMealRecipes({ history, location }) {
-  const { currentRecipes, setCurrentRecipes } = useContext(RecipesContext);
+  const { currentRecipes, setCurrentRecipes, ingredients, setIngredients,
+    searchResults, setSearchResults } = useContext(RecipesContext);
 
   const [mealCategories, setMealCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
@@ -21,11 +22,27 @@ function MainMealRecipes({ history, location }) {
       const categories = await fetchMealCategories();
       setMealCategories(categories);
 
-      const meals = await fetchMeals();
-      setCurrentRecipes(meals);
+      if (searchResults.length > 0) {
+        setCurrentRecipes(searchResults);
+      } else if (ingredients.length > 0) {
+        const MAX_RECIPES = 12;
+        setCurrentRecipes(ingredients.splice(0, MAX_RECIPES));
+      } else {
+        const meals = await fetchMeals();
+        setCurrentRecipes(meals);
+      }
     };
     getCategoriesAndMeals();
-  }, [setCurrentRecipes]);
+  }, [setCurrentRecipes, ingredients, searchResults]);
+
+  useEffect(() => () => {
+    if (ingredients.length > 0) {
+      setIngredients([]);
+    }
+    if (searchResults.length > 0) {
+      setSearchResults([]);
+    }
+  }, [ingredients, setIngredients, searchResults, setSearchResults]);
 
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
@@ -63,7 +80,7 @@ function MainMealRecipes({ history, location }) {
       </section>
       <section>
         {currentRecipes.map((meal, index) => (
-          <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
+          <MealCard key={ index } meal={ meal } index={ index } />
         ))}
       </section>
       <Footer />

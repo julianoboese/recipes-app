@@ -15,7 +15,7 @@ import RecipesContext from '../context/RecipesContext';
 function SearchBar({ history, location }) {
   const [searchValue, setSearchValue] = useState('');
   const [radioSearch, setRadioSearch] = useState('');
-  const { setCurrentRecipes } = useContext(RecipesContext);
+  const { setSearchResults } = useContext(RecipesContext);
 
   const FIRST_LETTER = 'first-letter';
 
@@ -28,7 +28,7 @@ function SearchBar({ history, location }) {
     }
   };
 
-  const saveRecipes = (recipes, food) => {
+  const saveRecipes = async (recipes, food) => {
     if (recipes.length === 1) {
       if (food === 'meals') {
         history.push(`/foods/${recipes[0].idMeal}`);
@@ -36,7 +36,8 @@ function SearchBar({ history, location }) {
         history.push(`/drinks/${recipes[0].idDrink}`);
       }
     } else {
-      setCurrentRecipes(recipes);
+      setSearchResults(recipes);
+      setSearchValue('');
     }
   };
 
