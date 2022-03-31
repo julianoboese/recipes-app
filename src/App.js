@@ -24,8 +24,8 @@ function App() {
     <RecipesProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/drinks" component={ MainDrinkRecipes } />
         <Route exact path="/foods" component={ MainMealRecipes } />
+        <Route exact path="/drinks" component={ MainDrinkRecipes } />
         <Route exact path="/foods/:recipeId/in-progress" component={ MealInProgress } />
         <Route exact path="/drinks/:recipeId/in-progress" component={ DrinkInProgress } />
         <Route path="/foods/:id" render={ (props) => <MealRecipe { ...props } /> } />

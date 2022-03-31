@@ -9,7 +9,7 @@ import RecipesContext from '../context/RecipesContext';
 
 function ExploreIngredients({ history, location }) {
   const [allIngredients, setAllIngredients] = useState([]);
-  const { setNewRecipes } = useContext(RecipesContext);
+  const { setIngredients } = useContext(RecipesContext);
 
   const URL = location.pathname;
   const NOT_FOUND = -1;
@@ -31,12 +31,12 @@ function ExploreIngredients({ history, location }) {
   const showRecipesByIngredient = async (name) => {
     if (foodCondition) {
       const ingredients = await fetchMealByIngredients(name);
-      setNewRecipes(ingredients);
+      setIngredients(ingredients);
       history.push('/foods');
     } else {
       const ingredients = await fetchDrinkByIngredients(name);
-      setNewRecipes(ingredients);
-      history.push('/drink');
+      setIngredients(ingredients);
+      history.push('/drinks');
     }
   };
 

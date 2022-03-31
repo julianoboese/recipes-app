@@ -8,7 +8,7 @@ function DrinkCard({ drink, index }) {
   return (
     (
       <Link to={ `/drinks/${idDrink}` }>
-        <div className="w-25" key={ idDrink } data-testid={ `${index}-recipe-card` }>
+        <div className="w-25" data-testid={ `${index}-recipe-card` }>
           <img
             className="img-thumbnail"
             src={ strDrinkThumb }

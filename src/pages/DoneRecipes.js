@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import DoneCard from '../components/DoneCard';
+import Header from '../components/Header';
 
-function DoneRecipes() {
+function DoneRecipes({ history, location }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [typeFilter, setTypeFilter] = useState('');
 
@@ -12,6 +14,7 @@ function DoneRecipes() {
 
   return (
     <div>
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -48,5 +51,14 @@ function DoneRecipes() {
     </div>
   );
 }
+
+DoneRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};
 
 export default DoneRecipes;
