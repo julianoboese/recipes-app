@@ -1,50 +1,31 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from './helpers/renderWithRouter';
+import { renderWithRouter, history } from './helpers/renderWithRouter';
 import App from '../App';
 import '@testing-library/jest-dom';
 
-describe('Tela de Explorar', () => {
-  it('Na tela principal, existe um botão que redireciona para /explore', () => {
-    const { history } = renderWithRouter(<App />);
-
-    history.push('/foods');
-
-    const exploreRouterBtn = screen.getByTestId('explore-bottom-btn');
-    expect(exploreRouterBtn).toBeInTheDocument();
-
-    userEvent.click(exploreRouterBtn);
-    expect(history.location.pathname).toBe('/explore');
-  });
-
-  it('Na tela de explorar, existem dois botões, Explore Foods e Explore Drinks', () => {
-    const { history } = renderWithRouter(<App />);
+describe('Explore Screen', () => {
+  beforeEach(() => {
+    renderWithRouter(<App />);
 
     history.push('/explore');
+  });
 
+  it('On screen, there are two buttons: Explore Foods and Explore Drinks', () => {
     const exploreFoodsBtn = screen.getByRole('link', { name: /Explore Foods/i });
-    expect(exploreFoodsBtn).toBeInTheDocument();
-
     const exploreDrinksBtn = screen.getByRole('link', { name: /Explore Drinks/i });
-    expect(exploreDrinksBtn).toBeInTheDocument();
+
+    expect(exploreFoodsBtn && exploreDrinksBtn).toBeInTheDocument();
   });
 
-  it('O botão Explore Foods deve redirecionar parar /explore/foods', () => {
-    const { history } = renderWithRouter(<App />);
-
-    history.push('/explore');
-
+  it('When click on Explore Foods, you should be redirected to /explore/foods', () => {
     const exploreFoodsBtn = screen.getByRole('link', { name: /Explore Foods/i });
     userEvent.click(exploreFoodsBtn);
 
     expect(history.location.pathname).toBe('/explore/foods');
   });
-  it('O botão Explore Foods deve redirecionar parar /explore/foods', () => {
-    const { history } = renderWithRouter(<App />);
-
-    history.push('/explore');
-
+  it('When click on Explore Drinks, you should be redirected to /explore/drinks', () => {
     const exploreDrinksBtn = screen.getByRole('link', { name: /Explore Drinks/i });
     userEvent.click(exploreDrinksBtn);
 
