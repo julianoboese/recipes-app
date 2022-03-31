@@ -24,7 +24,6 @@ function SearchBar({ history, location }) {
       global.alert('Your search must have only 1 (one) character');
     } else {
       const result = await requestApi(searchValue);
-      console.log(result);
       return result;
     }
   };
@@ -37,7 +36,6 @@ function SearchBar({ history, location }) {
         history.push(`/drinks/${recipes[0].idDrink}`);
       }
     } else {
-      console.log('bbb');
       setCurrentRecipes(recipes);
     }
   };
