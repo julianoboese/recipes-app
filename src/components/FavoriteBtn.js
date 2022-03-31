@@ -37,6 +37,7 @@ function FavoriteBtn({ recipe, type }) {
   useEffect(() => {
     const generalFavorite = createItemObj();
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    // console.log(favorites, typeof favorites);
     if (favorites) {
       const atcualFavorite = favorites
         .some((item) => item.id === generalFavorite.id);
@@ -59,7 +60,30 @@ function FavoriteBtn({ recipe, type }) {
     />);
   };
 
+  const insertIntoFavorites = (newObj) => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites) {
+      const newFavorites = [...favorites, newObj];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+      return;
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify([newObj]));
+  };
+
+  const removeFromFavorites = (newObj) => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorites = favorites.filter((favorite) => favorite.id !== newObj.id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+  };
+
   const handleFavoriteClick = () => {
+    const newObj = createItemObj();
+    if (!isFavorited) {
+      insertIntoFavorites(newObj);
+    }
+    if (isFavorited) {
+      removeFromFavorites(newObj);
+    }
     setIsFavorited(!isFavorited);
   };
 
