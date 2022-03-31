@@ -5,8 +5,9 @@ import favoriteIcon from '../images/blackHeartIcon.svg';
 import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteBtn({ recipe, type }) {
-  console.log(recipe, type);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [dataTestId, setdataTestId] = useState('favorite-btn');
+  const [isLoading, setIsLoading] = useState(true);
 
   const createItemObj = () => {
     if (type === 'food') {
@@ -33,29 +34,35 @@ function FavoriteBtn({ recipe, type }) {
       };
       return item;
     }
+    if (type === 'favorite') return recipe;
   };
 
   useEffect(() => {
     const generalFavorite = createItemObj();
+    if (recipe.index || recipe.index === 0) {
+      setdataTestId(`${recipe.index}-horizontal-favorite-btn`);
+    }
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
       const actualFavorite = favorites
         .some((item) => item.id === generalFavorite.id);
       setIsFavorited(actualFavorite);
     }
+    console.log(dataTestId);
+    setIsLoading(false);
   }, [createItemObj]);
 
   const heartFavorited = () => {
     if (isFavorited) {
       return (<img
         src={ favoriteIcon }
-        data-testid="favorite-btn"
+        data-testid={ dataTestId }
         alt="ícone de favorito"
       />);
     }
     return (<img
       src={ notFavoriteIcon }
-      data-testid="favorite-btn"
+      data-testid={ dataTestId }
       alt="ícone de não favorito"
     />);
   };
@@ -93,7 +100,7 @@ function FavoriteBtn({ recipe, type }) {
       className="btn btn-primary"
       onClick={ handleFavoriteClick }
     >
-      {heartFavorited()}
+      {!isLoading && heartFavorited()}
     </button>
   );
 }
@@ -103,6 +110,7 @@ FavoriteBtn.propTypes = {
     id: PropTypes.string,
     idDrink: PropTypes.string,
     idMeal: PropTypes.string,
+    index: PropTypes.number,
     strAlcoholic: PropTypes.string,
     strArea: PropTypes.string,
     strCategory: PropTypes.string,

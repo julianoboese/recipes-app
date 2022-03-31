@@ -14,6 +14,12 @@ function FavoriteRecipes() {
     setIsLoading(false);
   }, []);
 
+  const handleClick = () => {
+    const storedFavoriteRecipes = JSON.parse(localStorage
+      .getItem('favoriteRecipes'));
+    setFavoriteRecipes(storedFavoriteRecipes);
+  };
+
   return (
     <div>
       <Header />
@@ -40,7 +46,7 @@ function FavoriteRecipes() {
           Drinks
         </button>
       </section>
-      <section>
+      <section onClick={ handleClick } aria-hidden="true">
         {favoriteRecipes.filter((recipe) => {
           if (!typeFilter) {
             return true;

@@ -1,21 +1,13 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import FavoriteBtn from './FavoriteBtn';
+// import { fetchMealById } from '../services/fetchMeals';
 
 function FavoriteCard({ recipe, index }) {
-  // const [isLoading, setIsLoading] = useState(true);
-  const [favoriteRecipe, setFavoriteRecipe] = useState({});
   const { id, type, category, nationality, alcoholicOrNot, name, image } = recipe;
-
-  useEffect(() => {
-    const initialRecipe = () => {
-      setFavoriteRecipe(recipe);
-    };
-    initialRecipe();
-  }, [recipe]);
-
+  recipe.index = index;
   const [isShared, setIsShared] = useState(false);
 
   return (
@@ -46,10 +38,12 @@ function FavoriteCard({ recipe, index }) {
       <p data-testid={ `${index}-horizontal-top-text` }>
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
-      {Object.keys(favoriteRecipe).length > 0 && <FavoriteBtn
-        recipe={ favoriteRecipe }
-        type={ type }
-      />}
+      <FavoriteBtn
+        data-testid="0-horizontal-favorite-btn"
+        recipe={ recipe }
+        type="favorite"
+      />
+
     </div>
   );
 }
@@ -57,13 +51,14 @@ function FavoriteCard({ recipe, index }) {
 FavoriteCard.propTypes = {
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
-    id: PropTypes.number,
-    type: PropTypes.string,
     alcoholicOrNot: PropTypes.string,
     category: PropTypes.string,
+    id: PropTypes.number,
     image: PropTypes.string,
+    index: PropTypes.number,
     name: PropTypes.string,
     nationality: PropTypes.string,
+    type: PropTypes.string,
   }).isRequired,
 };
 
