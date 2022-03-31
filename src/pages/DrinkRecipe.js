@@ -1,32 +1,44 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import shareIcon from '../images/shareIcon.svg';
 import { fetchMeals } from '../services/fetchMeals';
 import { fetchDrinkById } from '../services/fetchDrinks';
 import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
+import ShareBtn from '../components/ShareBtn';
 
-function DrinkRecipe({ location, match: { params: { id } } }) {
+function DrinkRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isShared, setIsShared] = useState(false);
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recomentationsReq = await fetchMeals();
+      const recomendationsReq = await fetchMeals();
       const MAX_CAROUSEL_RECOM = 6;
-      setRecomendations(recomentationsReq.slice(0, MAX_CAROUSEL_RECOM));
+      setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchDrinkById(id);
 
-      setRecipe(responseRecipe);
+      if (responseRecipe) {
+        setRecipe(responseRecipe);
 
-      const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (null))
-        .map((entry) => entry[1]);
-      setIngredients(recipeIngredients);
+        const recipeIngredients = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strIngredient')
+            && entry[1] !== (null)
+            && entry[1] !== (''))
+          .map((entry) => entry[1]);
+
+        const recipeMeasure = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strMeasure')
+            && entry[1] !== (null)
+            && entry[1] !== (''))
+          .map((entry) => entry[1]);
+
+        setMeasure(recipeMeasure);
+        setIngredients(recipeIngredients);
+      }
       setIsLoading(false);
     };
     getRecipe();
@@ -41,54 +53,46 @@ function DrinkRecipe({ location, match: { params: { id } } }) {
 
   return (
     <main>
-      <img
-        className="mw-100"
-        src={ recipe.strDrinkThumb }
-        data-testid="recipe-photo"
-        alt="imagem da receita"
-      />
+      {!isLoading && (
+        <>
+          <img
+            className="mw-100"
+            src={ recipe.strDrinkThumb }
+            data-testid="recipe-photo"
+            alt="imagem da receita"
+          />
 
-      <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+          <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
 
-      <button
-        type="button"
-        data-testid="share-btn"
-        className="btn btn-primary mr-1"
-        onClick={ () => {
-          navigator.clipboard.writeText(`http://localhost:3000${location.pathname}`);
-          setIsShared(true);
-        } }
-      >
-        <img src={ shareIcon } alt="icone para compartilhar" />
-      </button>
+          <FavoriteBtn recipe={ recipe } type="drink" />
 
-      <FavoriteBtn />
+          <ShareBtn type="drinks" id={ recipe.idDrink || '' } />
 
-      {isShared && <p>Link copied!</p>}
+          <div>
+            <h3>Ingredients</h3>
+            <ul>
+              {ingredients.map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient} - ${measure[index]}`}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {ingredient}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <div>
+            <h3>Instructions</h3>
+            <p data-testid="instructions">{recipe.strInstructions}</p>
+          </div>
 
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
-      </div>
+          <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
-      <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
-
-      <StartRecipeBtn />
+          <StartRecipeBtn type="cocktails" id={ recipe.idDrink } />
+        </>
+      )}
     </main>
   );
 }
