@@ -1,15 +1,11 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouter, history } from './helpers/renderWithRouter';
-import App from '../App';
+import { renderUrl, history } from './helpers/renderUrl';
 import '@testing-library/jest-dom';
 
 describe('Explore Screen', () => {
   beforeEach(() => {
-    renderWithRouter(<App />);
-
-    history.push('/explore');
+    renderUrl('/explore');
   });
 
   it('On screen, there are two buttons: Explore Foods and Explore Drinks', () => {

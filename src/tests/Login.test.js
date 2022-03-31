@@ -1,12 +1,10 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
-import { renderWithRouter } from './helpers/renderWithRouter';
+import { renderUrl } from './helpers/renderUrl';
 import '@testing-library/jest-dom';
 
 test('02 - Tela de Login', () => {
-  const { history } = renderWithRouter(<App />);
+  const { history } = renderUrl('/');
 
   const emailInput = screen.getByPlaceholderText('E-mail');
   expect(emailInput).toBeInTheDocument();
