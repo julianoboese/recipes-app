@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import validateEmail from '../helpers/validateEmail';
+import LoginStyle from '../default_styles/LoginStyle';
 
 function Login({ history }) {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function Login({ history }) {
   };
 
   return (
-    <form
+    <LoginStyle
       onSubmit={ handleSubmit }
       className="d-flex flex-column gap-4 w-75 mx-auto mt-5"
     >
@@ -48,7 +49,7 @@ function Login({ history }) {
       >
         Enter
       </button>
-    </form>
+    </LoginStyle>
   );
 }
 
