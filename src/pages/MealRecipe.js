@@ -17,18 +17,20 @@ function MealRecipe({ match: { params: { id } } }) {
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recomentationsReq = await fetchDrinks();
+      const recomendationsReq = await fetchDrinks();
       const MAX_CAROUSEL_RECOM = 6;
-      setRecomendations(recomentationsReq.slice(0, MAX_CAROUSEL_RECOM));
+      setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchMealById(id);
-      setYoutubeUrl(embedYoutubeUrl(responseRecipe.strYoutube));
+      if (responseRecipe) {
+        setYoutubeUrl(embedYoutubeUrl(responseRecipe.strYoutube));
 
-      setRecipe(responseRecipe);
+        setRecipe(responseRecipe);
 
-      const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (''))
-        .map((entry) => entry[1]);
-      setIngredients(recipeIngredients);
+        const recipeIngredients = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (''))
+          .map((entry) => entry[1]);
+        setIngredients(recipeIngredients);
+      }
       setIsLoading(false);
     };
     getRecipe();
@@ -55,7 +57,7 @@ function MealRecipe({ match: { params: { id } } }) {
           <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-          <ShareBtn type="foods" id={ recipe.idMeal } />
+          <ShareBtn type="foods" id={ recipe.idMeal || '' } />
 
           <FavoriteBtn />
 

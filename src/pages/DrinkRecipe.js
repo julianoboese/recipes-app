@@ -20,12 +20,14 @@ function DrinkRecipe({ match: { params: { id } } }) {
       setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchDrinkById(id);
 
-      setRecipe(responseRecipe);
+      if (responseRecipe) {
+        setRecipe(responseRecipe);
 
-      const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (null))
-        .map((entry) => entry[1]);
-      setIngredients(recipeIngredients);
+        const recipeIngredients = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (null))
+          .map((entry) => entry[1]);
+        setIngredients(recipeIngredients);
+      }
       setIsLoading(false);
     };
     getRecipe();
@@ -52,7 +54,7 @@ function DrinkRecipe({ match: { params: { id } } }) {
           <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-          <ShareBtn type="drinks" id={ recipe.idDrink } />
+          <ShareBtn type="drinks" id={ recipe.idDrink || '' } />
 
           <FavoriteBtn />
 
