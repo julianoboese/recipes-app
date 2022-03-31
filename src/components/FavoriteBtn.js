@@ -5,6 +5,7 @@ import favoriteIcon from '../images/blackHeartIcon.svg';
 import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteBtn({ recipe, type }) {
+  console.log(recipe, type);
   const [isFavorited, setIsFavorited] = useState(false);
 
   const createItemObj = () => {
