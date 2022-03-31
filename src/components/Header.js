@@ -51,7 +51,13 @@ function Header({ location, history }) {
           type="button"
           className="btn btn-primary"
         >
-          <img src={ searchIcon } data-testid="search-top-btn" alt="ícone de pesquisa" />
+          {(location === '/foods' || location === '/drinks'
+            || location === '/explore/foods/nationalities')
+            && <img
+              src={ searchIcon }
+              data-testid="search-top-btn"
+              alt="ícone de pesquisa"
+            />}
         </button>
       </div>
 
