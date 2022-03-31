@@ -10,9 +10,14 @@ function DoneCard({ recipe, index }) {
   const [isShared, setIsShared] = useState(false);
 
   return (
-    <div>
+    <div className="w-25">
       <Link to={ `/${type}s/${id}` }>
-        <img src={ image } alt={ name } data-testid={ `${index}-horizontal-image` } />
+        <img
+          className="img-thumbnail"
+          src={ image }
+          alt={ name }
+          data-testid={ `${index}-horizontal-image` }
+        />
       </Link>
       <Link to={ `/${type}s/${id}` }>
         <p data-testid={ `${index}-horizontal-name` }>{name}</p>

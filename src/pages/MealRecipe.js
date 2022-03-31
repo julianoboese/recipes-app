@@ -18,28 +18,30 @@ function MealRecipe({ match: { params: { id } } }) {
 
   useEffect(() => {
     const getRecipe = async () => {
-      const recomentationsReq = await fetchDrinks();
+      const recomendationsReq = await fetchDrinks();
       const MAX_CAROUSEL_RECOM = 6;
-      setRecomendations(recomentationsReq.slice(0, MAX_CAROUSEL_RECOM));
+      setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchMealById(id);
-      setYoutubeUrl(embedYoutubeUrl(responseRecipe.strYoutube));
+      if (responseRecipe) {
+        setYoutubeUrl(embedYoutubeUrl(responseRecipe.strYoutube));
 
-      setRecipe(responseRecipe);
+        setRecipe(responseRecipe);
 
-      const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient')
-        && entry[1] !== ('')
-        && entry[1] !== (null))
-        .map((entry) => entry[1]);
+        const recipeIngredients = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strIngredient')
+            && entry[1] !== ('')
+            && entry[1] !== (null))
+          .map((entry) => entry[1]);
 
-      const recipeMeasure = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strMeasure')
-        && entry[1] !== ('')
-        && entry[1] !== (null))
-        .map((entry) => entry[1]);
+        const recipeMeasure = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strMeasure')
+            && entry[1] !== ('')
+            && entry[1] !== (null))
+          .map((entry) => entry[1]);
 
-      setMeasure(recipeMeasure);
-      setIngredients(recipeIngredients);
+        setMeasure(recipeMeasure);
+        setIngredients(recipeIngredients);
+      }
       setIsLoading(false);
     };
     getRecipe();
@@ -68,7 +70,7 @@ function MealRecipe({ match: { params: { id } } }) {
 
           <FavoriteBtn recipe={ recipe } type="food" />
 
-          <ShareBtn type="foods" id={ recipe.idMeal } />
+          <ShareBtn type="foods" id={ recipe.idMeal || '' } />
 
           <div>
             <h3>Ingredients</h3>

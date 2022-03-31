@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import RecipesContext from '../context/RecipesContext';
+import React, { useEffect, useState } from 'react';
 import { fetchMealById } from '../services/fetchMeals';
 import ShareBtn from '../components/ShareBtn';
+import FavoriteBtn from '../components/FavoriteBtn';
 
 function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
-  const { doneRecipes, setDoneRecipes } = useContext(RecipesContext);
   const [mealInProgress, setMealInProgress] = useState({});
   const [inProgressRecipes, setInProgressRecipes] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { strMeal, strMealThumb, strArea, strTags, strCategory,
     strInstructions } = mealInProgress;
@@ -24,27 +25,27 @@ function MealInProgress({ history, match }) {
     const getRecipe = async () => {
       const meal = await fetchMealById(recipeId);
       setMealInProgress(meal);
+      const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+        || { cocktails: {}, meals: {} };
+      setInProgressRecipes(storedRecipes);
+
+      const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+      setDoneRecipes(storedDoneRecipes);
+      setIsLoading(false);
     };
     getRecipe();
-
-    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
-      || { cocktails: {}, meals: {} };
-    setInProgressRecipes(storedInProgressRecipes);
-
-    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setDoneRecipes(storedDoneRecipes);
   }, [recipeId, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
-    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
       || { cocktails: {}, meals: {} };
     if (target.checked) {
       const newProgress = {
-        ...storedInProgressRecipes,
+        ...storedRecipes,
         meals: {
-          ...storedInProgressRecipes.meals,
-          [recipeId]: storedInProgressRecipes.meals[recipeId] ? [
-            ...storedInProgressRecipes.meals[recipeId],
+          ...storedRecipes.meals,
+          [recipeId]: storedRecipes.meals[recipeId] ? [
+            ...storedRecipes.meals[recipeId],
             target.value,
           ] : [target.value],
         },
@@ -53,10 +54,10 @@ function MealInProgress({ history, match }) {
       setInProgressRecipes(newProgress);
     } else {
       const newProgress = {
-        ...storedInProgressRecipes,
+        ...storedRecipes,
         meals: {
-          ...storedInProgressRecipes.meals,
-          [recipeId]: storedInProgressRecipes.meals[recipeId]
+          ...storedRecipes.meals,
+          [recipeId]: storedRecipes.meals[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
       };
@@ -83,7 +84,7 @@ function MealInProgress({ history, match }) {
   };
 
   const handleFinish = () => {
-    setDoneRecipes([...doneRecipes, {
+    const newDoneRecipe = {
       id: recipeId,
       type: 'food',
       nationality: strArea,
@@ -93,48 +94,55 @@ function MealInProgress({ history, match }) {
       image: strMealThumb,
       doneDate: '',
       tags: strTags.split(','),
-    }]);
+    };
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newDoneRecipe]));
+    setDoneRecipes([...doneRecipes, newDoneRecipe]);
     history.push('/done-recipes');
   };
 
   return (
     <div>
-      <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
-      <h2 data-testid="recipe-title">{strMeal}</h2>
-      <h3 data-testid="recipe-category">{strCategory}</h3>
-      <ShareBtn type="foods" id={ recipeId } />
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      {!isLoading
+      && (
+        <>
+          <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
+          <h2 data-testid="recipe-title">{strMeal}</h2>
+          <h3 data-testid="recipe-category">{strCategory}</h3>
+          <FavoriteBtn recipe={ mealInProgress } type="food" />
+          <ShareBtn type="foods" id={ recipeId } />
 
-      <p data-testid="instructions">{strInstructions}</p>
-      {ingredients.map((ingredient, index) => {
-        const isChecked = handleCheck(ingredient);
+          <p data-testid="instructions">{strInstructions}</p>
+          {ingredients.map((ingredient, index) => {
+            const isChecked = handleCheck(ingredient);
 
-        return (
-          <label
-            htmlFor={ ingredient }
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-step` }
-            style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+            return (
+              <label
+                htmlFor={ ingredient }
+                key={ ingredient }
+                data-testid={ `${index}-ingredient-step` }
+                style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+              >
+                <input
+                  type="checkbox"
+                  value={ ingredient }
+                  id={ ingredient }
+                  checked={ isChecked }
+                  onChange={ handleChange }
+                />
+                {ingredient}
+              </label>
+            );
+          })}
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            disabled={ handleDisabled() }
+            onClick={ handleFinish }
           >
-            <input
-              type="checkbox"
-              value={ ingredient }
-              id={ ingredient }
-              checked={ isChecked }
-              onChange={ handleChange }
-            />
-            {ingredient}
-          </label>
-        );
-      })}
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ handleDisabled() }
-        onClick={ handleFinish }
-      >
-        Finish
-      </button>
+            Finish
+          </button>
+        </>
+      )}
     </div>
   );
 }

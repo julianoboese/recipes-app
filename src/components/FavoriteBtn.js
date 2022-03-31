@@ -37,26 +37,25 @@ function FavoriteBtn({ recipe, type }) {
   useEffect(() => {
     const generalFavorite = createItemObj();
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    // console.log(favorites, typeof favorites);
     if (favorites) {
-      const atcualFavorite = favorites
+      const actualFavorite = favorites
         .some((item) => item.id === generalFavorite.id);
-      setIsFavorited(atcualFavorite);
+      setIsFavorited(actualFavorite);
     }
-  }, []);
+  }, [createItemObj]);
 
   const heartFavorited = () => {
     if (isFavorited) {
       return (<img
         src={ favoriteIcon }
         data-testid="favorite-btn"
-        alt="icone de favorito"
+        alt="ícone de favorito"
       />);
     }
     return (<img
       src={ notFavoriteIcon }
       data-testid="favorite-btn"
-      alt="icone de não favorito"
+      alt="ícone de não favorito"
     />);
   };
 

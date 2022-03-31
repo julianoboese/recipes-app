@@ -21,22 +21,24 @@ function DrinkRecipe({ match: { params: { id } } }) {
       setRecomendations(recomendationsReq.slice(0, MAX_CAROUSEL_RECOM));
       const responseRecipe = await fetchDrinkById(id);
 
-      setRecipe(responseRecipe);
+      if (responseRecipe) {
+        setRecipe(responseRecipe);
 
-      const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient')
-         && entry[1] !== (null)
-         && entry[1] !== (''))
-        .map((entry) => entry[1]);
+        const recipeIngredients = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strIngredient')
+            && entry[1] !== (null)
+            && entry[1] !== (''))
+          .map((entry) => entry[1]);
 
-      const recipeMeasure = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strMeasure')
-         && entry[1] !== (null)
-         && entry[1] !== (''))
-        .map((entry) => entry[1]);
+        const recipeMeasure = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strMeasure')
+            && entry[1] !== (null)
+            && entry[1] !== (''))
+          .map((entry) => entry[1]);
 
-      setMeasure(recipeMeasure);
-      setIngredients(recipeIngredients);
+        setMeasure(recipeMeasure);
+        setIngredients(recipeIngredients);
+      }
       setIsLoading(false);
     };
     getRecipe();
@@ -65,7 +67,7 @@ function DrinkRecipe({ match: { params: { id } } }) {
 
           <FavoriteBtn recipe={ recipe } type="drink" />
 
-          <ShareBtn type="drinks" id={ recipe.idDrink } />
+          <ShareBtn type="drinks" id={ recipe.idDrink || '' } />
 
           <div>
             <h3>Ingredients</h3>
