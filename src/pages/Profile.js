@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile({ history, location }) {
@@ -49,6 +50,7 @@ function Profile({ history, location }) {
         >
           Logout
         </button>
+        <Footer />
       </div>
     </>
   );
