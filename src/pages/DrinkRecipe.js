@@ -10,6 +10,7 @@ import ShareBtn from '../components/ShareBtn';
 function DrinkRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,8 +24,18 @@ function DrinkRecipe({ match: { params: { id } } }) {
       setRecipe(responseRecipe);
 
       const recipeIngredients = Object.entries(responseRecipe)
-        .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (null))
+        .filter((entry) => entry[0].includes('strIngredient')
+         && entry[1] !== (null)
+         && entry[1] !== (''))
         .map((entry) => entry[1]);
+
+      const recipeMeasure = Object.entries(responseRecipe)
+        .filter((entry) => entry[0].includes('strMeasure')
+         && entry[1] !== (null)
+         && entry[1] !== (''))
+        .map((entry) => entry[1]);
+
+      setMeasure(recipeMeasure);
       setIngredients(recipeIngredients);
       setIsLoading(false);
     };
@@ -50,11 +61,11 @@ function DrinkRecipe({ match: { params: { id } } }) {
           />
 
           <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+
+          <FavoriteBtn recipe={ recipe } type="drink" />
 
           <ShareBtn type="drinks" id={ recipe.idDrink } />
-
-          <FavoriteBtn />
 
           <div>
             <h3>Ingredients</h3>
@@ -64,7 +75,7 @@ function DrinkRecipe({ match: { params: { id } } }) {
                   key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
-                  {ingredient}
+                  {`${ingredient} - ${measure[index]}`}
                 </li>
               ))}
             </ul>
@@ -77,7 +88,7 @@ function DrinkRecipe({ match: { params: { id } } }) {
 
           <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
-          <StartRecipeBtn />
+          <StartRecipeBtn type="cocktails" id={ recipe.idDrink } />
         </>
       )}
     </main>
