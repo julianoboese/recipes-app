@@ -1,0 +1,30 @@
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderUrl, history } from './helpers/renderUrl';
+import '@testing-library/jest-dom';
+
+describe('Explore Screen', () => {
+  beforeEach(() => {
+    renderUrl('/explore');
+  });
+
+  it('On screen, there are two buttons: Explore Foods and Explore Drinks', () => {
+    const exploreFoodsBtn = screen.getByRole('link', { name: /Explore Foods/i });
+    const exploreDrinksBtn = screen.getByRole('link', { name: /Explore Drinks/i });
+
+    expect(exploreFoodsBtn && exploreDrinksBtn).toBeInTheDocument();
+  });
+
+  it('When click on Explore Foods, you should be redirected to /explore/foods', () => {
+    const exploreFoodsBtn = screen.getByRole('link', { name: /Explore Foods/i });
+    userEvent.click(exploreFoodsBtn);
+
+    expect(history.location.pathname).toBe('/explore/foods');
+  });
+  it('When click on Explore Drinks, you should be redirected to /explore/drinks', () => {
+    const exploreDrinksBtn = screen.getByRole('link', { name: /Explore Drinks/i });
+    userEvent.click(exploreDrinksBtn);
+
+    expect(history.location.pathname).toBe('/explore/drinks');
+  });
+});

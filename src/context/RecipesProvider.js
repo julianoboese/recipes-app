@@ -4,11 +4,17 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const [currentRecipes, setCurrentRecipes] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   return (
     <RecipesContext.Provider
       value={ { currentRecipes,
         setCurrentRecipes,
+        ingredients,
+        setIngredients,
+        searchResults,
+        setSearchResults,
       } }
     >
       {children}

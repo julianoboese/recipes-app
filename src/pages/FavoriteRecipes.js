@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import FavoriteCard from '../components/FavoriteCard';
 import Header from '../components/Header';
 
-function FavoriteRecipes() {
+function FavoriteRecipes({ history, location }) {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [typeFilter, setTypeFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ function FavoriteRecipes() {
 
   return (
     <div>
-      <Header />
+      <Header location={ location.pathname } history={ history } />
       <section>
         <button
           type="button"
@@ -63,5 +64,14 @@ function FavoriteRecipes() {
     </div>
   );
 }
+
+FavoriteRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};
 
 export default FavoriteRecipes;
