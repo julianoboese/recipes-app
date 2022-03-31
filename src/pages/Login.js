@@ -20,10 +20,10 @@ function Login({ history }) {
   return (
     <LoginStyle
       onSubmit={ handleSubmit }
-      className="d-flex flex-column gap-4 w-75 mx-auto mt-5"
+      className=""
     >
       <h1
-        className="text-center py-1 mt-4 mb-3 el-headline"
+        className=""
       >
         Login
       </h1>
@@ -31,14 +31,14 @@ function Login({ history }) {
         type="email"
         placeholder="E-mail"
         data-testid="email-input"
-        className="form-control bg-light"
+        className=""
         onChange={ ({ target }) => setEmail(target.value) }
       />
       <input
         type="password"
         placeholder="Password"
         data-testid="password-input"
-        className="form-control bg-light my-4"
+        className=""
         onChange={ ({ target }) => setPassword(target.value) }
       />
       <button
