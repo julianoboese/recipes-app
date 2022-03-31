@@ -11,6 +11,7 @@ import ShareBtn from '../components/ShareBtn';
 function MealRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [measure, setMeasure] = useState([]);
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [recomendations, setRecomendations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,8 +28,18 @@ function MealRecipe({ match: { params: { id } } }) {
         setRecipe(responseRecipe);
 
         const recipeIngredients = Object.entries(responseRecipe)
-          .filter((entry) => entry[0].includes('strIngredient') && entry[1] !== (''))
+          .filter((entry) => entry[0].includes('strIngredient')
+            && entry[1] !== ('')
+            && entry[1] !== (null))
           .map((entry) => entry[1]);
+
+        const recipeMeasure = Object.entries(responseRecipe)
+          .filter((entry) => entry[0].includes('strMeasure')
+            && entry[1] !== ('')
+            && entry[1] !== (null))
+          .map((entry) => entry[1]);
+
+        setMeasure(recipeMeasure);
         setIngredients(recipeIngredients);
       }
       setIsLoading(false);
@@ -40,7 +51,7 @@ function MealRecipe({ match: { params: { id } } }) {
     id: drink.idDrink,
     name: drink.strDrink,
     imgUrl: drink.strDrinkThumb,
-    category: drink.strCategory,
+    category: drink.strAlcoholic,
   }));
 
   return (
@@ -57,9 +68,9 @@ function MealRecipe({ match: { params: { id } } }) {
           <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
 
-          <ShareBtn type="foods" id={ recipe.idMeal || '' } />
+          <FavoriteBtn recipe={ recipe } type="food" />
 
-          <FavoriteBtn />
+          <ShareBtn type="foods" id={ recipe.idMeal || '' } />
 
           <div>
             <h3>Ingredients</h3>
@@ -69,7 +80,7 @@ function MealRecipe({ match: { params: { id } } }) {
                   key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
                 >
-                  {ingredient}
+                  {`${ingredient} - ${measure[index]}`}
                 </li>
               ))}
             </ul>
@@ -101,7 +112,7 @@ function MealRecipe({ match: { params: { id } } }) {
 
           <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
-          <StartRecipeBtn />
+          <StartRecipeBtn type="meals" id={ recipe.idMeal } />
         </>)}
     </main>
   );

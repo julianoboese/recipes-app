@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { fetchDrinkById } from '../services/fetchDrinks';
 import ShareBtn from '../components/ShareBtn';
+import FavoriteBtn from '../components/FavoriteBtn';
 
 function DrinkInProgress({ history, match }) {
   const { params: { recipeId } } = match;
@@ -9,6 +10,7 @@ function DrinkInProgress({ history, match }) {
   const [drinkInProgress, setDrinkInProgress] = useState({});
   const [inProgressRecipes, setInProgressRecipes] = useState({});
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { strDrink, strDrinkThumb, strAlcoholic, strCategory,
     strInstructions } = drinkInProgress;
@@ -23,27 +25,27 @@ function DrinkInProgress({ history, match }) {
     const getRecipe = async () => {
       const drink = await fetchDrinkById(recipeId);
       setDrinkInProgress(drink);
+      const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+        || { cocktails: {}, meals: {} };
+      setInProgressRecipes(storedRecipes);
+
+      const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+      setDoneRecipes(storedDoneRecipes);
+      setIsLoading(false);
     };
     getRecipe();
-
-    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
-      || { cocktails: {}, meals: {} };
-    setInProgressRecipes(storedInProgressRecipes);
-
-    const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setDoneRecipes(storedDoneRecipes);
   }, [recipeId, setInProgressRecipes, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
-    const storedInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
       || { cocktails: {}, meals: {} };
     if (target.checked) {
       const newProgress = {
-        ...storedInProgressRecipes,
+        ...storedRecipes,
         cocktails: {
-          ...storedInProgressRecipes.cocktails,
-          [recipeId]: storedInProgressRecipes.cocktails[recipeId] ? [
-            ...storedInProgressRecipes.cocktails[recipeId],
+          ...storedRecipes.cocktails,
+          [recipeId]: storedRecipes.cocktails[recipeId] ? [
+            ...storedRecipes.cocktails[recipeId],
             target.value,
           ] : [target.value],
         },
@@ -52,10 +54,10 @@ function DrinkInProgress({ history, match }) {
       setInProgressRecipes(newProgress);
     } else {
       const newProgress = {
-        ...storedInProgressRecipes,
+        ...storedRecipes,
         cocktails: {
-          ...storedInProgressRecipes.cocktails,
-          [recipeId]: storedInProgressRecipes.cocktails[recipeId]
+          ...storedRecipes.cocktails,
+          [recipeId]: storedRecipes.cocktails[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
       };
@@ -100,42 +102,47 @@ function DrinkInProgress({ history, match }) {
 
   return (
     <div>
-      <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
-      <h2 data-testid="recipe-title">{strDrink}</h2>
-      <h3 data-testid="recipe-category">{strCategory}</h3>
-      <ShareBtn type="drinks" id={ recipeId } />
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      {!isLoading
+      && (
+        <>
+          <img src={ strDrinkThumb } alt={ strDrink } data-testid="recipe-photo" />
+          <h2 data-testid="recipe-title">{strDrink}</h2>
+          <h3 data-testid="recipe-category">{strCategory}</h3>
+          <FavoriteBtn recipe={ drinkInProgress } type="drink" />
+          <ShareBtn type="drinks" id={ recipeId } />
 
-      <p data-testid="instructions">{strInstructions}</p>
-      {ingredients.map((ingredient, index) => {
-        const isChecked = handleCheck(ingredient);
+          <p data-testid="instructions">{strInstructions}</p>
+          {ingredients.map((ingredient, index) => {
+            const isChecked = handleCheck(ingredient);
 
-        return (
-          <label
-            htmlFor={ ingredient }
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-step` }
-            style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+            return (
+              <label
+                htmlFor={ ingredient }
+                key={ ingredient }
+                data-testid={ `${index}-ingredient-step` }
+                style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+              >
+                <input
+                  type="checkbox"
+                  value={ ingredient }
+                  id={ ingredient }
+                  checked={ isChecked }
+                  onChange={ handleChange }
+                />
+                {ingredient}
+              </label>
+            );
+          })}
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            disabled={ handleDisabled() }
+            onClick={ handleFinish }
           >
-            <input
-              type="checkbox"
-              value={ ingredient }
-              id={ ingredient }
-              checked={ isChecked }
-              onChange={ handleChange }
-            />
-            {ingredient}
-          </label>
-        );
-      })}
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ handleDisabled() }
-        onClick={ handleFinish }
-      >
-        Finish
-      </button>
+            Finish
+          </button>
+        </>
+      )}
     </div>
   );
 }
