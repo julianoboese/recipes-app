@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import favoriteIcon from '../images/blackHeartIcon.svg';
@@ -34,15 +33,15 @@ function FavoriteBtn({ recipe, type }) {
     }
   };
 
+  const generalFavorite = createItemObj();
   useEffect(() => {
-    const generalFavorite = createItemObj();
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
       const actualFavorite = favorites
         .some((item) => item.id === generalFavorite.id);
       setIsFavorited(actualFavorite);
     }
-  }, [createItemObj]);
+  }, [generalFavorite]);
 
   const heartFavorited = () => {
     if (isFavorited) {
