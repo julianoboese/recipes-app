@@ -29,9 +29,9 @@ function Header({ location, history }) {
   };
 
   return (
-    <header>
+    <header className="bg-dark">
 
-      <div className="d-flex align-items-center justify-content-between mt-2 mx-4">
+      <div className="d-flex align-items-center justify-content-around py-2">
         <Link to="/profile">
           <button type="button" className="btn btn-primary">
             <img
@@ -42,7 +42,7 @@ function Header({ location, history }) {
           </button>
         </Link>
 
-        <p data-testid="page-title" className="mb-0">
+        <p data-testid="page-title" className="mb-0 title-header">
           {checkLocationAndGiveName()}
         </p>
 

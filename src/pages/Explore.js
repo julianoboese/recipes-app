@@ -3,19 +3,30 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import colors from '../default_styles/colorsDefault';
 
 function Explore({ history, location }) {
   return (
     <div>
       <Header location={ location.pathname } history={ history } />
-      <main>
-        <Link to="/explore/foods">
-          <button type="button" data-testid="explore-foods">
+      <main
+        className="d-flex flex-column align-items-center vh-40 justify-content-center"
+      >
+        <Link to="/explore/foods" className="w-75">
+          <button
+            type="button"
+            data-testid="explore-foods"
+            className={ `${colors.foodBtnColor} w-100 mb-4 btn-lg` }
+          >
             Explore Foods
           </button>
         </Link>
-        <Link to="/explore/drinks">
-          <button type="button" data-testid="explore-drinks">
+        <Link to="/explore/drinks" className="w-75">
+          <button
+            type="button"
+            data-testid="explore-drinks"
+            className={ `${colors.drinkBtnColor} w-100 btn-lg` }
+          >
             Explore Drinks
           </button>
         </Link>

@@ -29,6 +29,14 @@
 }
 */
 
+.vh-40 {
+  height: 40vh;
+}
+
+.title-header {
+  font-size: 1.5rem;
+}
+
 .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
@@ -65,4 +73,38 @@
   100% {
     transform: rotate(-10deg);
   }
+}
+
+.el-bg {
+  background-color: #16161a;
+}
+
+.el-headline {
+  color: #fffffe;
+}
+
+.el-p {
+  color: #94a1b2;
+}
+
+.el-btn {
+  background-color: #7f5af0;
+  border: 0;
+  border-radius: 5px;
+  color: #fffffe;
+  font-size: 1.2rem;
+  font-style: bold;
+  padding: 0.6rem;
+}
+
+.il-stroke {
+  background-color: #010101;
+}
+
+.il-secondary {
+  background-color: #72757e;
+}
+
+.il-tertiary {
+  background-color: #2cb67d;
 }

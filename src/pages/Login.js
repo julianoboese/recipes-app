@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import validateEmail from '../helpers/validateEmail';
-import colors from '../default_styles/colorsDefault';
 
 function Login({ history }) {
   const [email, setEmail] = useState('');
@@ -23,7 +22,7 @@ function Login({ history }) {
       className="d-flex flex-column gap-4 w-75 mx-auto mt-5"
     >
       <h1
-        className="text-center py-1 mt-4 mb-3"
+        className="text-center py-1 mt-4 mb-3 el-headline"
       >
         Login
       </h1>
@@ -44,7 +43,7 @@ function Login({ history }) {
       <button
         type="submit"
         data-testid="login-submit-btn"
-        className={ `${colors.button}` }
+        className="el-btn"
         disabled={ !validateEmail(email) || password.length < MIN_PASSWORD_LENGTH }
       >
         Enter
