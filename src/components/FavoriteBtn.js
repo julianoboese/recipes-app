@@ -42,7 +42,7 @@ function FavoriteBtn({ recipe, type }) {
         .some((item) => item.id === generalFavorite.id);
       setIsFavorited(actualFavorite);
     }
-  }, []);
+  }, [createItemObj]);
 
   const heartFavorited = () => {
     if (isFavorited) {
