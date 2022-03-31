@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import RecipesContext from '../context/RecipesContext';
+import React, { useEffect, useState } from 'react';
 import { fetchDrinkById } from '../services/fetchDrinks';
 import ShareBtn from '../components/ShareBtn';
 
 function DrinkInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
-  const { doneRecipes, setDoneRecipes } = useContext(RecipesContext);
   const [drinkInProgress, setDrinkInProgress] = useState({});
   const [inProgressRecipes, setInProgressRecipes] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   const { strDrink, strDrinkThumb, strAlcoholic, strCategory,
     strInstructions } = drinkInProgress;
@@ -83,7 +82,7 @@ function DrinkInProgress({ history, match }) {
   };
 
   const handleFinish = () => {
-    setDoneRecipes([...doneRecipes, {
+    const newDoneRecipe = {
       id: recipeId,
       type: 'drink',
       nationality: '',
@@ -93,7 +92,9 @@ function DrinkInProgress({ history, match }) {
       image: strDrinkThumb,
       doneDate: '',
       tags: [],
-    }]);
+    };
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newDoneRecipe]));
+    setDoneRecipes([...doneRecipes, newDoneRecipe]);
     history.push('/done-recipes');
   };
 

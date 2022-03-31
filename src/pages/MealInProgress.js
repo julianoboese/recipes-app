@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import RecipesContext from '../context/RecipesContext';
+import React, { useEffect, useState } from 'react';
 import { fetchMealById } from '../services/fetchMeals';
 import ShareBtn from '../components/ShareBtn';
 
 function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
 
-  const { doneRecipes, setDoneRecipes } = useContext(RecipesContext);
   const [mealInProgress, setMealInProgress] = useState({});
   const [inProgressRecipes, setInProgressRecipes] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState([]);
 
   const { strMeal, strMealThumb, strArea, strTags, strCategory,
     strInstructions } = mealInProgress;
@@ -83,7 +82,7 @@ function MealInProgress({ history, match }) {
   };
 
   const handleFinish = () => {
-    setDoneRecipes([...doneRecipes, {
+    const newDoneRecipe = {
       id: recipeId,
       type: 'food',
       nationality: strArea,
@@ -93,7 +92,9 @@ function MealInProgress({ history, match }) {
       image: strMealThumb,
       doneDate: '',
       tags: strTags.split(','),
-    }]);
+    };
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newDoneRecipe]));
+    setDoneRecipes([...doneRecipes, newDoneRecipe]);
     history.push('/done-recipes');
   };
 
