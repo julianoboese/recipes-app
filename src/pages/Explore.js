@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import colors from '../default_styles/colorsDefault';
 
 function Explore({ history, location }) {
   return (

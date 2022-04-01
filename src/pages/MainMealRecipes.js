@@ -9,6 +9,7 @@ import {
   fetchMeals,
   fetchMealsByCategory,
 } from '../services/fetchMeals';
+import MainStyled from '../default_styles/MainStyle';
 
 function MainMealRecipes({ history, location }) {
   const { currentRecipes, setCurrentRecipes, ingredients, setIngredients,
@@ -59,30 +60,32 @@ function MainMealRecipes({ history, location }) {
   return (
     <>
       <Header location={ location.pathname } history={ history } />
-      <section>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ handleCategory }
-        >
-          All
-        </button>
-        {mealCategories.map(({ strCategory }) => (
+      <MainStyled>
+        <section>
           <button
-            key={ strCategory }
             type="button"
-            data-testid={ `${strCategory}-category-filter` }
+            data-testid="All-category-filter"
             onClick={ handleCategory }
           >
-            {strCategory}
+            All
           </button>
-        ))}
-      </section>
-      <section>
-        {currentRecipes.map((meal, index) => (
-          <MealCard key={ index } meal={ meal } index={ index } />
-        ))}
-      </section>
+          {mealCategories.map(({ strCategory }) => (
+            <button
+              key={ strCategory }
+              type="button"
+              data-testid={ `${strCategory}-category-filter` }
+              onClick={ handleCategory }
+            >
+              {strCategory}
+            </button>
+          ))}
+        </section>
+        <section className="card-section">
+          {currentRecipes.map((meal, index) => (
+            <MealCard key={ index } meal={ meal } index={ index } />
+          ))}
+        </section>
+      </MainStyled>
       <Footer />
     </>
   );
