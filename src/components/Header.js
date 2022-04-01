@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar';
-import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
+import HeaderStyles from '../default_styles/HeaderStyle';
 
 function Header({ location, history }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -29,40 +30,27 @@ function Header({ location, history }) {
   };
 
   return (
-    <header className="bg-dark">
+    <HeaderStyles>
 
-      <div className="d-flex align-items-center justify-content-around py-2">
+      <div className="header-container">
         <Link to="/profile">
-          <button type="button" className="btn btn-primary">
-            <img
-              data-testid="profile-top-btn"
-              src={ profileIcon }
-              alt="ícone de perfil"
-            />
-          </button>
+          <FontAwesomeIcon icon={ faUser } />
         </Link>
 
         <p data-testid="page-title" className="mb-0 title-header">
           {checkLocationAndGiveName()}
         </p>
 
-        <button
-          onClick={ () => setIsSearching(!isSearching) }
-          type="button"
-          className="btn btn-primary"
-        >
-          {(location === '/foods' || location === '/drinks'
+        {(location === '/foods' || location === '/drinks'
             || location === '/explore/foods/nationalities')
-            && <img
-              src={ searchIcon }
-              data-testid="search-top-btn"
-              alt="ícone de pesquisa"
+            && <FontAwesomeIcon
+              onClick={ () => setIsSearching(!isSearching) }
+              icon={ faMagnifyingGlass }
             />}
-        </button>
       </div>
 
       { isSearching && <SearchBar location={ location } history={ history } /> }
-    </header>
+    </HeaderStyles>
   );
 }
 

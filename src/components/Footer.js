@@ -6,6 +6,7 @@ import {
   faCompass,
   faBowlFood,
 } from '@fortawesome/free-solid-svg-icons';
+
 import FooterStyle from '../default_styles/FooterStyle';
 
 function Footer() {
@@ -13,14 +14,17 @@ function Footer() {
     <FooterStyle
       data-testid="footer"
     >
-      <li className="list active">
-        <Link to="/drinks">
+      <li className="list">
+        <Link to="/foods">
           <span className="icon">
-            <FontAwesomeIcon icon={ faChampagneGlasses } />
+
+            <FontAwesomeIcon icon={ faBowlFood } />
+
           </span>
-          <span className="text">Drinks</span>
+          <span className="text">Foods</span>
 
         </Link>
+
       </li>
 
       <li className="list">
@@ -33,14 +37,12 @@ function Footer() {
         </Link>
       </li>
 
-      <li className="list">
-        <Link to="/foods">
+      <li className="list active">
+        <Link to="/drinks">
           <span className="icon">
-
-            <FontAwesomeIcon icon={ faBowlFood } />
-
+            <FontAwesomeIcon icon={ faChampagneGlasses } />
           </span>
-          <span className="text">Foods</span>
+          <span className="text">Drinks</span>
 
         </Link>
       </li>

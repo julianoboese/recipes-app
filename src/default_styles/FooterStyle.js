@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-// const translateY = `
-
-// `;
-
 const FooterStyle = styled.ul`
 
 * {
@@ -13,16 +9,18 @@ const FooterStyle = styled.ul`
 }
 
 padding: 0;
-margin: 0;
-width: 100%;
+margin: 0 1.5vw;
+width: 97%;
 position: fixed;
-bottom: 0;
+bottom: 5px;
 display: flex;
-justify-content: space-evenly;
+justify-content: space-around;
 align-items: center;
-background-color: #dfdfdf;
+background-color: rgb(223,223,223, 0.7);
 height: 70px;
-border-radius: 10px;
+border-radius: 40px;
+opacity: 1;
+
 
 li {
   position: relative;
@@ -42,24 +40,25 @@ li {
     font-weight: 500;
     
     .icon {
-      color: #222327;
+      color: black;
       position: relative;
       display: block;
       line-height: 75px;
-      font-size: 1.5em;
+      font-size: 2em;
       text-align: center;
       transition: 0.5s;
+      opacity: 1;
     }
 
     .text {
-      color: #222327;
+      color: black;
       position: absolute;
       font-weight: 400;
       font-size: 0.75em;
       letter-spacing: 0.05em;
       transition: 0.5s;
       opacity: 0;
-      transform: translateY(20px)
+      transform: translateY(20px);
     }
   }
 }
@@ -75,7 +74,6 @@ li:hover {
     }
   }
 }
-
 
 `;
 
