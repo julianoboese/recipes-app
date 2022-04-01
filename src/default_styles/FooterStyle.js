@@ -20,7 +20,7 @@ bottom: 0;
 display: flex;
 justify-content: space-evenly;
 align-items: center;
-background-color: white;
+background-color: #dfdfdf;
 height: 70px;
 border-radius: 10px;
 
@@ -67,7 +67,7 @@ li {
 li:hover {
   a {
     .icon {
-      transform: translateY(-35px);
+      transform: translateY(-20px);
     }
     .text {
       opacity: 1;
