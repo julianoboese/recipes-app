@@ -7,15 +7,15 @@ function DrinkCard({ drink, index }) {
 
   return (
     (
-      <Link to={ `/drinks/${idDrink}` }>
+      <Link className="card-item" to={ `/drinks/${idDrink}` }>
         <div className="w-25" data-testid={ `${index}-recipe-card` }>
           <img
-            className="img-thumbnail"
+            className="img-item"
             src={ strDrinkThumb }
             alt={ strDrink }
             data-testid={ `${index}-card-img` }
           />
-          <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+          <p className="card-p" data-testid={ `${index}-card-name` }>{strDrink}</p>
         </div>
       </Link>
     )
