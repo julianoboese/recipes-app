@@ -101,7 +101,7 @@ function SearchBar({ history, location }) {
           value={ searchValue }
           onChange={ ({ target }) => setSearchValue(target.value) }
         />
-        <div>
+        <div className="radio-buttons">
           <label htmlFor="ingredient-radio">
             <input
               data-testid="ingredient-search-radio"
@@ -110,6 +110,7 @@ function SearchBar({ history, location }) {
               name="search-radio"
               onChange={ () => setRadioSearch('ingredient') }
             />
+            {' '}
             Ingredient
           </label>
           <label htmlFor="name-radio">
@@ -120,6 +121,7 @@ function SearchBar({ history, location }) {
               name="search-radio"
               onChange={ () => setRadioSearch('name') }
             />
+            {' '}
             Name
           </label>
           <label htmlFor="first-letter-radio">
@@ -130,6 +132,7 @@ function SearchBar({ history, location }) {
               name="search-radio"
               onChange={ () => setRadioSearch('first-letter') }
             />
+            {' '}
             First Letter
           </label>
         </div>

@@ -37,6 +37,11 @@ a {
   max-width: 100%;
   height: auto;
 }
+
+.emoji {
+  aspect-ratio: 1;
+  font-size: 30px;
+}
 `;
 
 export default MainStyled;

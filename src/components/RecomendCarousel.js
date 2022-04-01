@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import CarouselStyle from '../default_styles/CarouselStyle';
 
 function RecomendCarousel({ recomendations, loading }) {
   const activeClassName = 'carousel-item active';
@@ -31,7 +32,7 @@ function RecomendCarousel({ recomendations, loading }) {
   };
 
   return (
-    <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+    <CarouselStyle className="carousel slide" data-ride="carousel">
       <div className="carousel-inner">
         {!loading && activeCarousel.map((carouselPosition, index) => {
           let recomIndex = [];
@@ -47,7 +48,7 @@ function RecomendCarousel({ recomendations, loading }) {
 
           return (
             <div key={ index } className={ carouselPosition }>
-              <div className="d-flex mw-100 my-3">
+              <div className="cards-container">
                 <div
                   className="w-50 card"
                   data-testid={ `${recomIndex[0]}-recomendation-card` }
@@ -107,7 +108,7 @@ function RecomendCarousel({ recomendations, loading }) {
         <span className="carousel-control-next-icon" aria-hidden="true" />
         <span className="sr-only">Next</span>
       </a>
-    </div>
+    </CarouselStyle>
   );
 }
 
