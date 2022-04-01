@@ -15,7 +15,6 @@ function Explore({ history, location }) {
           <button
             type="button"
             data-testid="explore-foods"
-            className={ `${colors.foodBtnColor} w-100 mb-4 btn-lg` }
           >
             Explore Foods
           </button>
@@ -24,7 +23,6 @@ function Explore({ history, location }) {
           <button
             type="button"
             data-testid="explore-drinks"
-            className={ `${colors.drinkBtnColor} w-100 btn-lg` }
           >
             Explore Drinks
           </button>
