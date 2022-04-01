@@ -8,6 +8,7 @@ import {
   fetchMealByCountry,
   fetchMeals,
 } from '../services/fetchMeals';
+import MainStyled from '../default_styles/MainStyle';
 
 function ExploreNationality({ history, location }) {
   const [allCountries, setAllCountries] = useState([]);
@@ -38,7 +39,7 @@ function ExploreNationality({ history, location }) {
   return (
     <div>
       <Header location={ location.pathname } history={ history } />
-      <main>
+      <MainStyled>
         <select
           data-testid="explore-by-nationality-dropdown"
           value={ currentCountry }
@@ -53,10 +54,12 @@ function ExploreNationality({ history, location }) {
             </option>
           ))}
         </select>
-        { allRecipes.map((meal, index) => (
-          <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
-        ))}
-      </main>
+        <section className="card-section">
+          { allRecipes.map((meal, index) => (
+            <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
+          ))}
+        </section>
+      </MainStyled>
       <Footer />
     </div>
   );

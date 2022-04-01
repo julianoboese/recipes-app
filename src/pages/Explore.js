@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import ExploreStyled from '../default_styles/ExploreStyle';
 
 function Explore({ history, location }) {
   return (
     <div>
       <Header location={ location.pathname } history={ history } />
-      <main
-        className="d-flex flex-column align-items-center vh-40 justify-content-center"
-      >
+      <ExploreStyled>
         <Link to="/explore/foods" className="w-75">
           <button
             type="button"
             data-testid="explore-foods"
-            className={ `${colors.foodBtnColor} w-100 mb-4 btn-lg` }
+            className=""
           >
             Explore Foods
           </button>
@@ -24,12 +23,12 @@ function Explore({ history, location }) {
           <button
             type="button"
             data-testid="explore-drinks"
-            className={ `${colors.drinkBtnColor} w-100 btn-lg` }
+            className=""
           >
             Explore Drinks
           </button>
         </Link>
-      </main>
+      </ExploreStyled>
       <Footer />
     </div>
   );

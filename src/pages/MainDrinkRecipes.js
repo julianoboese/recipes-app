@@ -9,6 +9,7 @@ import {
   fetchDrinks,
   fetchDrinksByCategory,
 } from '../services/fetchDrinks';
+import MainStyled from '../default_styles/MainStyle';
 
 function MainDrinkRecipes({ history, location }) {
   const { currentRecipes, setCurrentRecipes, ingredients, setIngredients,
@@ -59,30 +60,32 @@ function MainDrinkRecipes({ history, location }) {
   return (
     <>
       <Header location={ location.pathname } history={ history } />
-      <section>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ handleCategory }
-        >
-          All
-        </button>
-        {drinkCategories.map(({ strCategory }) => (
+      <MainStyled>
+        <section>
           <button
-            key={ strCategory }
             type="button"
-            data-testid={ `${strCategory}-category-filter` }
+            data-testid="All-category-filter"
             onClick={ handleCategory }
           >
-            {strCategory}
+            All
           </button>
-        ))}
-      </section>
-      <section>
-        {currentRecipes.map((drink, index) => (
-          <DrinkCard key={ index } drink={ drink } index={ index } />
-        ))}
-      </section>
+          {drinkCategories.map(({ strCategory }) => (
+            <button
+              key={ strCategory }
+              type="button"
+              data-testid={ `${strCategory}-category-filter` }
+              onClick={ handleCategory }
+            >
+              {strCategory}
+            </button>
+          ))}
+        </section>
+        <section className="card-section">
+          {currentRecipes.map((drink, index) => (
+            <DrinkCard key={ index } drink={ drink } index={ index } />
+          ))}
+        </section>
+      </MainStyled>
       <Footer />
     </>
   );

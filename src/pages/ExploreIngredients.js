@@ -6,6 +6,7 @@ import IngredientCard from '../components/IngredientCard';
 import { fetchMealIngredients, fetchMealByIngredients } from '../services/fetchMeals';
 import { fetchDrinkIngredients, fetchDrinkByIngredients } from '../services/fetchDrinks';
 import RecipesContext from '../context/RecipesContext';
+import IngredientStyled from '../default_styles/IngredientCardStyled';
 
 function ExploreIngredients({ history, location }) {
   const [allIngredients, setAllIngredients] = useState([]);
@@ -43,7 +44,7 @@ function ExploreIngredients({ history, location }) {
   return (
     <div>
       <Header location={ URL } history={ history } />
-      <main>
+      <IngredientStyled>
         { allIngredients.map(({ strIngredient1: name, strIngredient }, index) => (
           <IngredientCard
             onClick={ foodCondition
@@ -57,7 +58,7 @@ function ExploreIngredients({ history, location }) {
             index={ index }
           />
         ))}
-      </main>
+      </IngredientStyled>
       <Footer />
     </div>
   );

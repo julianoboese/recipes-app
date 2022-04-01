@@ -7,10 +7,10 @@ function MealCard({ meal, index }) {
 
   return (
     (
-      <Link className="card-mail" to={ `/foods/${idMeal}` }>
+      <Link className="card-item" to={ `/foods/${idMeal}` }>
         <div data-testid={ `${index}-recipe-card` }>
           <img
-            className="img-thumbnail"
+            className="img-item"
             src={ strMealThumb }
             alt={ strMeal }
             data-testid={ `${index}-card-img` }

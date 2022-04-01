@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { fetchMealRandomly } from '../services/fetchMeals';
 import { fetchDrinkRandomly } from '../services/fetchDrinks';
+import ExploreStyled from '../default_styles/ExploreStyle';
 
 function ExploreFood({ history, location }) {
   const URL = location.pathname;
@@ -24,7 +25,7 @@ function ExploreFood({ history, location }) {
   return (
     <div>
       <Header location={ URL } history={ history } />
-      <main>
+      <ExploreStyled>
         <Link
           to={
             foodCondition
@@ -47,10 +48,11 @@ function ExploreFood({ history, location }) {
           type="button"
           data-testid="explore-surprise"
           onClick={ randomRecipe }
+          className="surprise-button"
         >
           Surprise me!
         </button>
-      </main>
+      </ExploreStyled>
       <Footer />
     </div>
   );

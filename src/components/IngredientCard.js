@@ -9,13 +9,15 @@ function IngredientCard({ name, index, src, onClick }) {
       onKeyPress={ onClick }
       tabIndex={ 0 }
       role="button"
+      className="card-item"
     >
       <img
         src={ src }
         alt={ name }
         data-testid={ `${index}-card-img` }
+        className="img-item"
       />
-      <p data-testid={ `${index}-card-name` }>{ name }</p>
+      <p className="card-p" data-testid={ `${index}-card-name` }>{ name }</p>
     </div>
   );
 }
