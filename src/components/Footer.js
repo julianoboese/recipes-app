@@ -1,46 +1,51 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import drinkIcon from '../images/drinkIcon.svg';
-import exploreIcon from '../images/exploreIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChampagneGlasses,
+  faCompass,
+  faBowlFood,
+} from '@fortawesome/free-solid-svg-icons';
+import FooterStyle from '../default_styles/FooterStyle';
 
 function Footer() {
   return (
-    <footer
-      className="fixed-bottom d-flex justify-content-between mx-3"
+    <FooterStyle
       data-testid="footer"
     >
-      <Link to="/drinks">
-        <button type="button" className="btn btn-primary">
-          <img
-            src={ drinkIcon }
-            alt="imagem de um drink"
-            data-testid="drinks-bottom-btn"
-          />
-        </button>
-      </Link>
+      <li className="list active">
+        <Link to="/drinks">
+          <span className="icon">
+            <FontAwesomeIcon icon={ faChampagneGlasses } />
+          </span>
+          <span className="text">Drinks</span>
 
-      <Link to="/explore">
-        <button type="button" className="btn btn-primary">
-          <img
-            src={ exploreIcon }
-            alt="imagem de uma bússola"
-            data-testid="explore-bottom-btn"
-          />
-        </button>
-      </Link>
+        </Link>
+      </li>
 
-      <Link to="/foods">
-        <button type="button" className="btn btn-primary">
-          <img
-            src={ mealIcon }
-            alt="imagem de garfo e colher cruzados"
-            data-testid="food-bottom-btn"
-          />
-        </button>
-      </Link>
+      <li className="list">
+        <Link to="/explore">
+          <span className="icon">
+            <FontAwesomeIcon icon={ faCompass } />
 
-    </footer>
+          </span>
+          <span className="text">Explore</span>
+        </Link>
+      </li>
+
+      <li className="list">
+        <Link to="/foods">
+          <span className="icon">
+
+            <FontAwesomeIcon icon={ faBowlFood } />
+
+          </span>
+          <span className="text">Foods</span>
+
+        </Link>
+      </li>
+      {/* <div className="indicator" /> */}
+    </FooterStyle>
   );
 }
 
