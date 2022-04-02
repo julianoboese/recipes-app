@@ -7,7 +7,6 @@ import '@testing-library/jest-dom';
 
 describe('Explore Food Ingredients Screen', () => {
   beforeEach(() => {
-    renderUrl('/explore/foods');
     jest.clearAllMocks();
   });
   it('On the explore ingredients screen, the ingredients are shown', async () => {
@@ -16,14 +15,14 @@ describe('Explore Food Ingredients Screen', () => {
       json: jest.fn().mockResolvedValue(mealIngredients),
     });
 
-    const exploreByIngredientBtn = screen
-      .getByRole('button', { name: /By Ingredient/i });
-    userEvent.click(exploreByIngredientBtn);
+    renderUrl('/explore/foods/ingredients');
+
     const chickenIngredient = await screen.findByAltText('Chicken');
     expect(chickenIngredient).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalled();
     expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
   });
+
   it('Clicking on an ingredient redirects to the main screen', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
@@ -31,9 +30,7 @@ describe('Explore Food Ingredients Screen', () => {
         .mockResolvedValue(mealsByIngredient),
     });
 
-    const exploreByIngredientBtn = screen
-      .getByRole('button', { name: /By Ingredient/i });
-    userEvent.click(exploreByIngredientBtn);
+    renderUrl('/explore/foods/ingredients');
 
     const chickenIngredient = await screen.findByAltText('Chicken');
     userEvent.click(chickenIngredient);
@@ -45,7 +42,6 @@ describe('Explore Food Ingredients Screen', () => {
 
 describe('Explore Drink Ingredients Screen', () => {
   beforeEach(() => {
-    renderUrl('/explore/drinks');
     jest.clearAllMocks();
   });
   it('On the explore ingredients screen, the ingredients are shown', async () => {
@@ -54,9 +50,8 @@ describe('Explore Drink Ingredients Screen', () => {
       json: jest.fn().mockResolvedValue(drinkIngredients),
     });
 
-    const exploreByIngredientBtn = screen
-      .getByRole('button', { name: /By Ingredient/i });
-    userEvent.click(exploreByIngredientBtn);
+    renderUrl('/explore/drinks/ingredients');
+
     const rumIngredient = await screen.findByAltText('Light rum');
     expect(rumIngredient).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalled();
@@ -69,9 +64,7 @@ describe('Explore Drink Ingredients Screen', () => {
         .mockResolvedValue(drinksByIngredient),
     });
 
-    const exploreByIngredientBtn = screen
-      .getByRole('button', { name: /By Ingredient/i });
-    userEvent.click(exploreByIngredientBtn);
+    renderUrl('/explore/drinks/ingredients');
 
     const rumIngredient = await screen.findByAltText('Light rum');
     userEvent.click(rumIngredient);

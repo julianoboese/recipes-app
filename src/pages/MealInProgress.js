@@ -71,7 +71,6 @@ function MealInProgress({ history, match }) {
       return inProgressRecipes.meals[recipeId]
         && inProgressRecipes.meals[recipeId].includes(ingredient);
     }
-    return false;
   };
 
   const handleDisabled = () => {
@@ -80,7 +79,6 @@ function MealInProgress({ history, match }) {
         ? ingredients.length !== inProgressRecipes.meals[recipeId].length
         : true;
     }
-    return true;
   };
 
   const handleFinish = () => {

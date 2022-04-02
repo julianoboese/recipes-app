@@ -32,7 +32,7 @@ function ExploreIngredients({ history, location }) {
     if (foodCondition) {
       const ingredients = await fetchMealByIngredients(name);
       setIngredients(ingredients);
-      history.push({ pathname: '/foods', state: { from: location.pathname } });
+      history.push({ pathname: '/foods' });
     } else {
       const ingredients = await fetchDrinkByIngredients(name);
       setIngredients(ingredients);

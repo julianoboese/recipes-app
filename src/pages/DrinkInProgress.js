@@ -71,7 +71,6 @@ function DrinkInProgress({ history, match }) {
       return inProgressRecipes.cocktails[recipeId]
         && inProgressRecipes.cocktails[recipeId].includes(ingredient);
     }
-    return false;
   };
 
   const handleDisabled = () => {
@@ -80,7 +79,6 @@ function DrinkInProgress({ history, match }) {
         ? ingredients.length !== inProgressRecipes.cocktails[recipeId].length
         : true;
     }
-    return true;
   };
 
   const handleFinish = () => {

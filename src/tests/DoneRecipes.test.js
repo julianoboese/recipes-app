@@ -1,3 +1,4 @@
+// https://stackoverflow.com/questions/62351935/how-to-mock-navigator-clipboard-writetext-in-jest
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderUrl } from './helpers/renderUrl';
