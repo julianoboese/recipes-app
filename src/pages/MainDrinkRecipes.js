@@ -16,6 +16,7 @@ function MainDrinkRecipes({ history, location }) {
 
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getCategoriesAndDrinks = async () => {
@@ -25,24 +26,20 @@ function MainDrinkRecipes({ history, location }) {
       if (searchResults.length > 0) {
         setCurrentRecipes(searchResults);
       } else if (ingredients.length > 0) {
-        const MAX_RECIPES = 12;
-        setCurrentRecipes(ingredients.splice(0, MAX_RECIPES));
+        setCurrentRecipes(ingredients);
       } else {
         const drinks = await fetchDrinks();
         setCurrentRecipes(drinks);
       }
+      setIsLoading(false);
     };
     getCategoriesAndDrinks();
   }, [setCurrentRecipes, ingredients, searchResults]);
 
   useEffect(() => () => {
-    if (ingredients.length > 0) {
-      setIngredients([]);
-    }
-    if (searchResults.length > 0) {
-      setSearchResults([]);
-    }
-  }, [ingredients, setIngredients, searchResults, setSearchResults]);
+    setSearchResults([]);
+    setIngredients([]);
+  }, [setIngredients, setSearchResults]);
 
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
@@ -59,30 +56,36 @@ function MainDrinkRecipes({ history, location }) {
   return (
     <>
       <Header location={ location.pathname } history={ history } />
-      <section>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ handleCategory }
-        >
-          All
-        </button>
-        {drinkCategories.map(({ strCategory }) => (
-          <button
-            key={ strCategory }
-            type="button"
-            data-testid={ `${strCategory}-category-filter` }
-            onClick={ handleCategory }
-          >
-            {strCategory}
-          </button>
-        ))}
-      </section>
-      <section>
-        {currentRecipes.map((drink, index) => (
-          <DrinkCard key={ index } drink={ drink } index={ index } />
-        ))}
-      </section>
+      {!isLoading
+      && (
+        <main>
+
+          <section>
+            <button
+              type="button"
+              data-testid="All-category-filter"
+              onClick={ handleCategory }
+            >
+              All
+            </button>
+            {drinkCategories.map(({ strCategory }) => (
+              <button
+                key={ strCategory }
+                type="button"
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ handleCategory }
+              >
+                {strCategory}
+              </button>
+            ))}
+          </section>
+          <section>
+            {currentRecipes.map((drink, index) => (
+              <DrinkCard key={ index } drink={ drink } index={ index } />
+            ))}
+          </section>
+        </main>
+      )}
       <Footer />
     </>
   );
