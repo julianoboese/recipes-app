@@ -16,6 +16,9 @@ function MainMealRecipes({ history, location }) {
 
   const [mealCategories, setMealCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => setSearchResults([]), [setSearchResults]);
 
   useEffect(() => {
     const getCategoriesAndMeals = async () => {
@@ -25,24 +28,20 @@ function MainMealRecipes({ history, location }) {
       if (searchResults.length > 0) {
         setCurrentRecipes(searchResults);
       } else if (ingredients.length > 0) {
-        const MAX_RECIPES = 12;
-        setCurrentRecipes(ingredients.splice(0, MAX_RECIPES));
+        setCurrentRecipes(ingredients);
       } else {
         const meals = await fetchMeals();
         setCurrentRecipes(meals);
       }
+      setIsLoading(false);
     };
     getCategoriesAndMeals();
   }, [setCurrentRecipes, ingredients, searchResults]);
 
   useEffect(() => () => {
-    if (ingredients.length > 0) {
-      setIngredients([]);
-    }
-    if (searchResults.length > 0) {
-      setSearchResults([]);
-    }
-  }, [ingredients, setIngredients, searchResults, setSearchResults]);
+    setSearchResults([]);
+    setIngredients([]);
+  }, [setIngredients, setSearchResults]);
 
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
@@ -59,30 +58,35 @@ function MainMealRecipes({ history, location }) {
   return (
     <>
       <Header location={ location.pathname } history={ history } />
-      <section>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ handleCategory }
-        >
-          All
-        </button>
-        {mealCategories.map(({ strCategory }) => (
-          <button
-            key={ strCategory }
-            type="button"
-            data-testid={ `${strCategory}-category-filter` }
-            onClick={ handleCategory }
-          >
-            {strCategory}
-          </button>
-        ))}
-      </section>
-      <section>
-        {currentRecipes.map((meal, index) => (
-          <MealCard key={ index } meal={ meal } index={ index } />
-        ))}
-      </section>
+      {!isLoading
+      && (
+        <main>
+          <section>
+            <button
+              type="button"
+              data-testid="All-category-filter"
+              onClick={ handleCategory }
+            >
+              All
+            </button>
+            {mealCategories.map(({ strCategory }) => (
+              <button
+                key={ strCategory }
+                type="button"
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ handleCategory }
+              >
+                {strCategory}
+              </button>
+            ))}
+          </section>
+          <section>
+            {currentRecipes.map((meal, index) => (
+              <MealCard key={ index } meal={ meal } index={ index } />
+            ))}
+          </section>
+        </main>
+      )}
       <Footer />
     </>
   );
