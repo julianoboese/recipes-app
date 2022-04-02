@@ -28,10 +28,8 @@ function MainMealRecipes({ history, location }) {
       if (searchResults.length > 0) {
         setCurrentRecipes(searchResults);
       } else if (ingredients.length > 0) {
-        console.log('aaa');
         setCurrentRecipes(ingredients);
       } else {
-        console.log('bbb');
         const meals = await fetchMeals();
         setCurrentRecipes(meals);
       }
