@@ -11,9 +11,6 @@ describe('Drink In Progress Screen', () => {
       json: jest.fn().mockResolvedValue(oneDrinkMock),
     });
   });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it('should render the recipe data', async () => {
     renderUrl('/drinks/17222/in-progress');

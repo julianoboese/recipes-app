@@ -11,9 +11,6 @@ describe('Meal In Progress Screen', () => {
       json: jest.fn().mockResolvedValue(oneMealMock),
     });
   });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it('should render the recipe data', async () => {
     renderUrl('/foods/52771/in-progress');
