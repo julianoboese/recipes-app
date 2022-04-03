@@ -3,14 +3,21 @@ import RecipesContext from '../context/RecipesContext';
 import { fetchDrinkCategories, fetchDrinks } from '../services/fetchDrinks';
 import { fetchMealCategories, fetchMeals } from '../services/fetchMeals';
 
-function useRenderRecipes(currentPage) {
+function useMainRecipes(currentPage) {
   const { setCurrentRecipes, ingredients, setIngredients,
     searchResults, setSearchResults } = useContext(RecipesContext);
 
   const [recipeCategories, setRecipeCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => setSearchResults([]), [setSearchResults]);
+  useEffect(() => {
+    setSearchResults([]);
+
+    return () => {
+      setSearchResults([]);
+      setIngredients([]);
+    };
+  }, [setIngredients, setSearchResults]);
 
   useEffect(() => {
     const getCategoriesAndRecipes = async () => {
@@ -38,12 +45,7 @@ function useRenderRecipes(currentPage) {
     getCategoriesAndRecipes();
   }, [setCurrentRecipes, ingredients, searchResults, currentPage]);
 
-  useEffect(() => () => {
-    setSearchResults([]);
-    setIngredients([]);
-  }, [setIngredients, setSearchResults]);
-
   return [recipeCategories, isLoading];
 }
 
-export default useRenderRecipes;
+export default useMainRecipes;
