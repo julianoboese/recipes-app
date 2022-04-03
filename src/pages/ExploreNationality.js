@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import MealCard from '../components/MealCard';
+import RecipeCard from '../components/RecipeCard';
 import {
   fetchMealCountries,
   fetchMealByCountry,
@@ -53,8 +53,8 @@ function ExploreNationality({ history, location }) {
             </option>
           ))}
         </select>
-        { allRecipes.map((meal, index) => (
-          <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
+        { allRecipes.map((recipe, index) => (
+          <RecipeCard key={ recipe.idMeal } recipe={ recipe } index={ index } />
         ))}
       </main>
       <Footer />
