@@ -1,4 +1,4 @@
-export const mealIngredients = {
+export const mealIngredientsMock = {
   meals: [
     {
       idIngredient: '1',
@@ -74,7 +74,7 @@ export const mealIngredients = {
   ],
 };
 
-export const mealsByIngredient = {
+export const mealsByIngredientMock = {
   meals: [
     {
       strMeal: 'Brown Stew Chicken',
@@ -129,7 +129,7 @@ export const mealsByIngredient = {
   ],
 };
 
-export const drinkIngredients = {
+export const drinkIngredientsMock = {
   drinks: [
     {
       strIngredient1: 'Light rum',
@@ -170,7 +170,7 @@ export const drinkIngredients = {
   ],
 };
 
-export const drinksByIngredient = {
+export const drinksByIngredientMock = {
   drinks: [
     {
       strDrink: '151 Florida Bushwacker',
