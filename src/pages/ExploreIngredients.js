@@ -34,7 +34,7 @@ function ExploreIngredients({ history, location }) {
       const ingredients = await fetchMealByIngredients(name);
       setSearchResults([]);
       setIngredients(ingredients.splice(0, MAX_RECIPES));
-      history.push({ pathname: '/foods' });
+      history.push('/foods');
     } else {
       const ingredients = await fetchDrinkByIngredients(name);
       setSearchResults([]);

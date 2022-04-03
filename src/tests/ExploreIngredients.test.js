@@ -1,9 +1,10 @@
-import { screen } from '@testing-library/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderUrl } from './helpers/renderUrl';
 import '@testing-library/jest-dom';
 import { drinkIngredientsMock, drinksByIngredientMock,
   mealIngredientsMock, mealsByIngredientMock } from './mocks/ingredientsMocks';
+import { drinkCategoriesMock, mealCategoriesMock } from './mocks/categoriesMocks';
 
 describe('Explore Food Ingredients Screen', () => {
   beforeEach(() => {
@@ -27,16 +28,28 @@ describe('Explore Food Ingredients Screen', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mealIngredientsMock)
-        .mockResolvedValue(mealsByIngredientMock),
+        .mockResolvedValueOnce(mealsByIngredientMock)
+        .mockResolvedValue(mealCategoriesMock),
     });
 
     renderUrl('/explore/foods/ingredients');
 
     const chickenIngredient = await screen.findByAltText('Chicken');
-    userEvent.click(chickenIngredient);
+
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+
+    userEvent.click(chickenIngredient);
+
+    await waitForElementToBeRemoved(() => screen.getByAltText('Chicken'));
+
+    expect(screen.getByRole('button', { name: 'All' })).toBeInTheDocument();
+    expect(screen.getByAltText('Brown Stew Chicken')).toBeInTheDocument();
+
+    const TIMES_CALLED = 4;
+    expect(global.fetch).toHaveBeenCalledTimes(TIMES_CALLED);
     expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
+    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
   });
 });
 
@@ -61,15 +74,27 @@ describe('Explore Drink Ingredients Screen', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(drinkIngredientsMock)
-        .mockResolvedValue(drinksByIngredientMock),
+        .mockResolvedValueOnce(drinksByIngredientMock)
+        .mockResolvedValue(drinkCategoriesMock),
     });
 
     renderUrl('/explore/drinks/ingredients');
 
     const rumIngredient = await screen.findByAltText('Light rum');
-    userEvent.click(rumIngredient);
+
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
+
+    userEvent.click(rumIngredient);
+
+    await waitForElementToBeRemoved(() => screen.getByAltText('Light rum'));
+
+    expect(screen.getByRole('button', { name: 'All' })).toBeInTheDocument();
+    expect(screen.getByAltText('Acapulco')).toBeInTheDocument();
+
+    const TIMES_CALLED = 4;
+    expect(global.fetch).toHaveBeenCalledTimes(TIMES_CALLED);
     expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Light rum');
+    expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
   });
 });

@@ -13,7 +13,6 @@ function MainMealRecipes({ history, location }) {
   const [currentCategory, setCurrentCategory] = useState('');
 
   const [recipeCategories, isLoading] = useMainRecipes(location.pathname);
-
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
       const recipes = await fetchMeals();
