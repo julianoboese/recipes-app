@@ -47,7 +47,7 @@ function Login({ history }) {
         className="el-btn"
         disabled={ !validateEmail(email) || password.length < MIN_PASSWORD_LENGTH }
       >
-        Enter
+        Entrar
       </button>
     </LoginStyle>
   );

@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const LoginStyle = styled.form`
-height: 100%;
+height: 100vh;
 color: white;
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
 gap: 5px;
+background-color: gold;
 
 
 * {
@@ -15,11 +16,11 @@ gap: 5px;
 }
 
 h1 {
-  color: #0C1821;
+  color: firebrick;
 }
 
 input {
-  width: 80%;
+  width: 75%;
   padding: 7px;
   background-color: #FFF;
   border-radius: 50px;
@@ -28,18 +29,19 @@ input {
 }
 
 button {
-  width: 80%;
-  background-color: #333138;
+  width: 85%;
+  background-color: firebrick;
   border: 0;
   border-radius: 50px;
-  color: #fffffe;
+  color: gold;
   font-size: 1.2rem;
-  font-style: bold;
+  font-weight: 700;
   padding: 0.8rem;
 }
 
 button:disabled {
-  background-color: #6a696e;
+  background-color: #b22222a1;
+  color: grey;
 }
 `;
 
