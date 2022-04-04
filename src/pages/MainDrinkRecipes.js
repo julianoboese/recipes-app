@@ -1,57 +1,27 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import DrinkCard from '../components/DrinkCard';
+import React, { useContext, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import RecipeCard from '../components/RecipeCard';
 import RecipesContext from '../context/RecipesContext';
-import {
-  fetchDrinkCategories,
-  fetchDrinks,
-  fetchDrinksByCategory,
-} from '../services/fetchDrinks';
+import useMainRecipes from '../hooks/useMainRecipes';
+import { fetchDrinks, fetchDrinksByCategory } from '../services/fetchDrinks';
 
 function MainDrinkRecipes({ history, location }) {
-  const { currentRecipes, setCurrentRecipes, ingredients, setIngredients,
-    searchResults, setSearchResults } = useContext(RecipesContext);
+  const { currentRecipes, setCurrentRecipes } = useContext(RecipesContext);
 
-  const [drinkCategories, setDrinkCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
 
-  useEffect(() => {
-    const getCategoriesAndDrinks = async () => {
-      const categories = await fetchDrinkCategories();
-      setDrinkCategories(categories);
-
-      if (searchResults.length > 0) {
-        setCurrentRecipes(searchResults);
-      } else if (ingredients.length > 0) {
-        const MAX_RECIPES = 12;
-        setCurrentRecipes(ingredients.splice(0, MAX_RECIPES));
-      } else {
-        const drinks = await fetchDrinks();
-        setCurrentRecipes(drinks);
-      }
-    };
-    getCategoriesAndDrinks();
-  }, [setCurrentRecipes, ingredients, searchResults]);
-
-  useEffect(() => () => {
-    if (ingredients.length > 0) {
-      setIngredients([]);
-    }
-    if (searchResults.length > 0) {
-      setSearchResults([]);
-    }
-  }, [ingredients, setIngredients, searchResults, setSearchResults]);
+  const [recipeCategories, isLoading] = useMainRecipes(location.pathname);
 
   const handleCategory = async ({ target }) => {
     if (target.innerHTML === currentCategory || target.innerHTML === 'All') {
-      const meals = await fetchDrinks();
-      setCurrentRecipes(meals);
+      const recipes = await fetchDrinks();
+      setCurrentRecipes(recipes);
       setCurrentCategory('');
     } else {
-      const drinks = await fetchDrinksByCategory(target.innerHTML);
-      setCurrentRecipes(drinks);
+      const recipes = await fetchDrinksByCategory(target.innerHTML);
+      setCurrentRecipes(recipes);
       setCurrentCategory(target.innerHTML);
     }
   };
@@ -59,30 +29,35 @@ function MainDrinkRecipes({ history, location }) {
   return (
     <>
       <Header location={ location.pathname } history={ history } />
-      <section>
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          onClick={ handleCategory }
-        >
-          All
-        </button>
-        {drinkCategories.map(({ strCategory }) => (
-          <button
-            key={ strCategory }
-            type="button"
-            data-testid={ `${strCategory}-category-filter` }
-            onClick={ handleCategory }
-          >
-            {strCategory}
-          </button>
-        ))}
-      </section>
-      <section>
-        {currentRecipes.map((drink, index) => (
-          <DrinkCard key={ index } drink={ drink } index={ index } />
-        ))}
-      </section>
+      {!isLoading
+      && (
+        <main>
+          <section>
+            <button
+              type="button"
+              data-testid="All-category-filter"
+              onClick={ handleCategory }
+            >
+              All
+            </button>
+            {recipeCategories.map(({ strCategory }) => (
+              <button
+                key={ strCategory }
+                type="button"
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ handleCategory }
+              >
+                {strCategory}
+              </button>
+            ))}
+          </section>
+          <section>
+            {currentRecipes.map((recipe, index) => (
+              <RecipeCard key={ index } recipe={ recipe } index={ index } />
+            ))}
+          </section>
+        </main>
+      )}
       <Footer />
     </>
   );

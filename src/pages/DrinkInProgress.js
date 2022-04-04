@@ -25,9 +25,17 @@ function DrinkInProgress({ history, match }) {
     const getRecipe = async () => {
       const drink = await fetchDrinkById(recipeId);
       setDrinkInProgress(drink);
+
       const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
         || { cocktails: {}, meals: {} };
-      setInProgressRecipes(storedRecipes);
+      const initializedRecipe = {
+        ...storedRecipes,
+        cocktails: {
+          ...storedRecipes.cocktails,
+          [recipeId]: storedRecipes.cocktails[recipeId] || [],
+        },
+      };
+      setInProgressRecipes(initializedRecipe);
 
       const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
       setDoneRecipes(storedDoneRecipes);
@@ -37,15 +45,13 @@ function DrinkInProgress({ history, match }) {
   }, [recipeId, setInProgressRecipes, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
-    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
-      || { cocktails: {}, meals: {} };
     if (target.checked) {
       const newProgress = {
-        ...storedRecipes,
+        ...inProgressRecipes,
         cocktails: {
-          ...storedRecipes.cocktails,
-          [recipeId]: storedRecipes.cocktails[recipeId] ? [
-            ...storedRecipes.cocktails[recipeId],
+          ...inProgressRecipes.cocktails,
+          [recipeId]: inProgressRecipes.cocktails[recipeId] ? [
+            ...inProgressRecipes.cocktails[recipeId],
             target.value,
           ] : [target.value],
         },
@@ -54,10 +60,10 @@ function DrinkInProgress({ history, match }) {
       setInProgressRecipes(newProgress);
     } else {
       const newProgress = {
-        ...storedRecipes,
+        ...inProgressRecipes,
         cocktails: {
-          ...storedRecipes.cocktails,
-          [recipeId]: storedRecipes.cocktails[recipeId]
+          ...inProgressRecipes.cocktails,
+          [recipeId]: inProgressRecipes.cocktails[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
       };
@@ -67,18 +73,14 @@ function DrinkInProgress({ history, match }) {
   };
 
   const handleCheck = (ingredient) => {
-    if (inProgressRecipes.cocktails) {
-      return inProgressRecipes.cocktails[recipeId]
-        && inProgressRecipes.cocktails[recipeId].includes(ingredient);
+    if (inProgressRecipes.cocktails && inProgressRecipes.cocktails[recipeId]) {
+      return inProgressRecipes.cocktails[recipeId].includes(ingredient);
     }
-    return false;
   };
 
   const handleDisabled = () => {
-    if (inProgressRecipes.cocktails) {
-      return inProgressRecipes.cocktails[recipeId]
-        ? ingredients.length !== inProgressRecipes.cocktails[recipeId].length
-        : true;
+    if (inProgressRecipes.cocktails && inProgressRecipes.cocktails[recipeId]) {
+      return ingredients.length !== inProgressRecipes.cocktails[recipeId].length;
     }
     return true;
   };

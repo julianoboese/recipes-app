@@ -4,8 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
-import MainMealRecipes from './pages/MainMealRecipes';
-import MainDrinkRecipes from './pages/MainDrinkRecipes';
 import MealRecipe from './pages/MealRecipe';
 import DrinkRecipe from './pages/DrinkRecipe';
 import MealInProgress from './pages/MealInProgress';
@@ -18,6 +16,8 @@ import ExploreFoods from './pages/ExploreFoods';
 import ExploreIngredients from './pages/ExploreIngredients';
 import ExploreNationality from './pages/ExploreNationality';
 import NotFound from './pages/NotFound';
+import MainMealRecipes from './pages/MainMealRecipes';
+import MainDrinkRecipes from './pages/MainDrinkRecipes';
 
 function App() {
   return (

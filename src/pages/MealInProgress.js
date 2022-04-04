@@ -25,9 +25,17 @@ function MealInProgress({ history, match }) {
     const getRecipe = async () => {
       const meal = await fetchMealById(recipeId);
       setMealInProgress(meal);
+
       const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
         || { cocktails: {}, meals: {} };
-      setInProgressRecipes(storedRecipes);
+      const initializedRecipe = {
+        ...storedRecipes,
+        meals: {
+          ...storedRecipes.meals,
+          [recipeId]: storedRecipes.meals[recipeId] || [],
+        },
+      };
+      setInProgressRecipes(initializedRecipe);
 
       const storedDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
       setDoneRecipes(storedDoneRecipes);
@@ -37,27 +45,25 @@ function MealInProgress({ history, match }) {
   }, [recipeId, setDoneRecipes]);
 
   const handleChange = ({ target }) => {
-    const storedRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
-      || { cocktails: {}, meals: {} };
     if (target.checked) {
       const newProgress = {
-        ...storedRecipes,
+        ...inProgressRecipes,
         meals: {
-          ...storedRecipes.meals,
-          [recipeId]: storedRecipes.meals[recipeId] ? [
-            ...storedRecipes.meals[recipeId],
+          ...inProgressRecipes.meals,
+          [recipeId]: [
+            ...inProgressRecipes.meals[recipeId],
             target.value,
-          ] : [target.value],
+          ],
         },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newProgress));
       setInProgressRecipes(newProgress);
     } else {
       const newProgress = {
-        ...storedRecipes,
+        ...inProgressRecipes,
         meals: {
-          ...storedRecipes.meals,
-          [recipeId]: storedRecipes.meals[recipeId]
+          ...inProgressRecipes.meals,
+          [recipeId]: inProgressRecipes.meals[recipeId]
             .filter((ingredient) => ingredient !== target.value),
         },
       };
@@ -67,18 +73,14 @@ function MealInProgress({ history, match }) {
   };
 
   const handleCheck = (ingredient) => {
-    if (inProgressRecipes.meals) {
-      return inProgressRecipes.meals[recipeId]
-        && inProgressRecipes.meals[recipeId].includes(ingredient);
+    if (inProgressRecipes.meals && inProgressRecipes.meals[recipeId]) {
+      return inProgressRecipes.meals[recipeId].includes(ingredient);
     }
-    return false;
   };
 
   const handleDisabled = () => {
-    if (inProgressRecipes.meals) {
-      return inProgressRecipes.meals[recipeId]
-        ? ingredients.length !== inProgressRecipes.meals[recipeId].length
-        : true;
+    if (inProgressRecipes.meals && inProgressRecipes.meals[recipeId]) {
+      return ingredients.length !== inProgressRecipes.meals[recipeId].length;
     }
     return true;
   };
