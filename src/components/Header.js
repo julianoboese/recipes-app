@@ -49,7 +49,10 @@ function Header({ location, history }) {
 
       </div>
 
-      { isSearching && <SearchBar location={ location } history={ history } /> }
+      { isSearching && <SearchBar
+        location={ location }
+        history={ history }
+      /> }
     </HeaderStyles>
   );
 }
