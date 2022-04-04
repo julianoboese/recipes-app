@@ -48,6 +48,7 @@ function ExploreNationality({ history, location }) {
             <option
               key={ strArea }
               data-testid={ `${strArea}-option` }
+              value={ strArea }
             >
               { strArea }
             </option>
