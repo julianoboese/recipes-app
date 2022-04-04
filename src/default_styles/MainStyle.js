@@ -41,8 +41,11 @@ a {
 }
 
 .category-section {
-  width: 80%;
+  width: 83%;
   display: flex;
+  margin: 0 auto;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .category-item {
@@ -50,6 +53,34 @@ a {
   color: gold;
   border: 0;
   border-radius: 50px;
+  padding: 0.5rem 0.8rem;
+  font-weight: 700;
+}
+
+.category-item:first-child {
+  padding: 0 1rem;
+}
+
+.nationality-dropdown-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.helper-dropdown {
+  background-color: firebrick;
+  color: gold;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+}
+
+.nationalities-dropdown {
+  background-color: firebrick;
+  color: gold;
+  border: 0;
+  border-radius: 50px;
+  padding: 0 0.3rem;
+  font-weight: 700;
 }
 `;
 

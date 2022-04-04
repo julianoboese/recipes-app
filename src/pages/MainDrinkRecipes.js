@@ -61,11 +61,12 @@ function MainDrinkRecipes({ history, location }) {
     <>
       <Header location={ location.pathname } history={ history } />
       <MainStyled>
-        <section>
+        <section className="category-section">
           <button
             type="button"
             data-testid="All-category-filter"
             onClick={ handleCategory }
+            className="category-item"
           >
             All
           </button>
@@ -75,6 +76,7 @@ function MainDrinkRecipes({ history, location }) {
               type="button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ handleCategory }
+              className="category-item"
             >
               {strCategory}
             </button>

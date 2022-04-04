@@ -40,20 +40,25 @@ function ExploreNationality({ history, location }) {
     <div>
       <Header location={ location.pathname } history={ history } />
       <MainStyled>
-        <select
-          data-testid="explore-by-nationality-dropdown"
-          value={ currentCountry }
-          onChange={ ({ target }) => setCurrentCountry(target.value) }
-        >
-          {allCountries.map(({ strArea }) => (
-            <option
-              key={ strArea }
-              data-testid={ `${strArea}-option` }
+        <section className="nationality-dropdown-section">
+          <div className="helper-dropdown">
+            <select
+              data-testid="explore-by-nationality-dropdown"
+              value={ currentCountry }
+              onChange={ ({ target }) => setCurrentCountry(target.value) }
+              className="nationalities-dropdown"
             >
-              { strArea }
-            </option>
-          ))}
-        </select>
+              {allCountries.map(({ strArea }) => (
+                <option
+                  key={ strArea }
+                  data-testid={ `${strArea}-option` }
+                >
+                  { strArea }
+                </option>
+              ))}
+            </select>
+          </div>
+        </section>
         <section className="card-section">
           { allRecipes.map((meal, index) => (
             <MealCard key={ meal.idMeal } meal={ meal } index={ index } />
