@@ -15,7 +15,7 @@ position: fixed;
 bottom: 5px;
 display: flex;
 justify-content: space-around;
-align-items: center;
+align-items: flex-start;
 background-color: rgb(223,223,223, 0.7);
 height: 70px;
 border-radius: 40px;
@@ -36,11 +36,14 @@ li {
     align-items: center;
     flex-direction: column;
     width: 100%;
+    aspect-ratio: 1;
     text-align: center;
     font-weight: 500;
     
     .icon {
-      color: black;
+      margin-top: -5px;
+      aspect-ratio: 1;
+      color: firebrick;
       position: relative;
       display: block;
       line-height: 75px;
@@ -51,7 +54,7 @@ li {
     }
 
     .text {
-      color: black;
+      color: firebrick;
       position: absolute;
       font-weight: 400;
       font-size: 0.75em;
@@ -66,11 +69,11 @@ li {
 li:hover {
   a {
     .icon {
-      transform: translateY(-20px);
+      transform: translateY(-10px);
     }
     .text {
       opacity: 1;
-      transform: translateY(10px);
+      transform: translateY(15px);
     }
   }
 }

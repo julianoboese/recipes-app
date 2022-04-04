@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   fetchMealByIngredients,
@@ -13,9 +13,16 @@ import {
 import RecipesContext from '../context/RecipesContext';
 
 function SearchBar({ history, location }) {
+  const [formClass, setFormClass] = useState('search-form-hidden');
   const [searchValue, setSearchValue] = useState('');
   const [radioSearch, setRadioSearch] = useState('');
   const { setSearchResults } = useContext(RecipesContext);
+
+  useEffect(() => {
+    setFormClass('search-form-shown');
+
+    return () => setFormClass('search-form-hidden');
+  }, []);
 
   const FIRST_LETTER = 'first-letter';
 
@@ -91,18 +98,28 @@ function SearchBar({ history, location }) {
   };
 
   return (
-    <form>
+    <form className={ formClass }>
       <div className="search-inputs">
+        <div>
 
-        <input
-          type="text"
-          data-testid="search-input"
-          placeholder="Search Recipe"
-          value={ searchValue }
-          onChange={ ({ target }) => setSearchValue(target.value) }
-        />
-        <div className="radio-buttons">
-          <label htmlFor="ingredient-radio">
+          <input
+            type="text"
+            data-testid="search-input"
+            placeholder="Search Recipe"
+            value={ searchValue }
+            onChange={ ({ target }) => setSearchValue(target.value) }
+          />
+          <button
+            type="submit"
+            data-testid="exec-search-btn"
+            onClick={ searchController }
+          >
+            Search
+          </button>
+        </div>
+
+        <div className="radio-container">
+          <label className="radio-buttons" htmlFor="ingredient-radio">
             <input
               data-testid="ingredient-search-radio"
               id="ingredient-radio"
@@ -113,7 +130,7 @@ function SearchBar({ history, location }) {
             {' '}
             Ingredient
           </label>
-          <label htmlFor="name-radio">
+          <label className="radio-buttons" htmlFor="name-radio">
             <input
               data-testid="name-search-radio"
               id="name-radio"
@@ -124,7 +141,7 @@ function SearchBar({ history, location }) {
             {' '}
             Name
           </label>
-          <label htmlFor="first-letter-radio">
+          <label className="radio-buttons" htmlFor="first-letter-radio">
             <input
               data-testid="first-letter-search-radio"
               id="first-letter-radio"
@@ -137,13 +154,6 @@ function SearchBar({ history, location }) {
           </label>
         </div>
       </div>
-      <button
-        type="submit"
-        data-testid="exec-search-btn"
-        onClick={ searchController }
-      >
-        Search
-      </button>
     </form>
   );
 }
