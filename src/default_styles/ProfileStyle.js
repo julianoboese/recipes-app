@@ -9,8 +9,11 @@ gap: 2.5rem;
 
 .profile {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
+  justify-content: center;
+  width: 85%;
+  flex-wrap: wrap;
 }
 
 .image-gravatar {
