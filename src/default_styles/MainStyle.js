@@ -51,7 +51,6 @@ a {
   border: 0;
   border-radius: 50px;
 }
-
 `;
 
 export default MainStyled;

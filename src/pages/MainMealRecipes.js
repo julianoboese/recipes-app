@@ -16,6 +16,7 @@ function MainMealRecipes({ history, location }) {
     searchResults, setSearchResults } = useContext(RecipesContext);
 
   const [mealCategories, setMealCategories] = useState([]);
+  // const [caterogryEmoji, setCaterogryEmoji] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function MainMealRecipes({ history, location }) {
               onClick={ handleCategory }
               className="category-item"
             >
-              {strCategory}
+              { strCategory}
             </button>
           ))}
         </section>

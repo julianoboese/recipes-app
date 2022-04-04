@@ -31,22 +31,22 @@ function Header({ location, history }) {
 
   return (
     <HeaderStyles>
-
       <div className="header-container">
-        <Link to="/profile">
-          <FontAwesomeIcon icon={ faUser } />
-        </Link>
-
-        <p data-testid="page-title" className="mb-0 title-header">
-          {checkLocationAndGiveName()}
-        </p>
-
         {(location === '/foods' || location === '/drinks'
             || location === '/explore/foods/nationalities')
             && <FontAwesomeIcon
               onClick={ () => setIsSearching(!isSearching) }
               icon={ faMagnifyingGlass }
             />}
+
+        <p data-testid="page-title">
+          {checkLocationAndGiveName()}
+        </p>
+
+        <Link to="/profile">
+          <FontAwesomeIcon icon={ faUser } />
+        </Link>
+
       </div>
 
       { isSearching && <SearchBar location={ location } history={ history } /> }
