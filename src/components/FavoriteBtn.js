@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import favoriteIcon from '../images/blackHeartIcon.svg';
-import notFavoriteIcon from '../images/whiteHeartIcon.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHearth } from '@fortawesome/free-regular-svg-icons';
+// import notFavoriteIcon from '../images/whiteHeartIcon.svg';
+// import favoriteIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteBtn({ recipe, type }) {
   const [isFavorited, setIsFavorited] = useState(false);
-  const [dataTestId, setdataTestId] = useState('favorite-btn');
+  // const [dataTestId, setdataTestId] = useState('favorite-btn');
   const [isLoading, setIsLoading] = useState(true);
 
   const createItemObj = () => {
@@ -52,17 +55,9 @@ function FavoriteBtn({ recipe, type }) {
 
   const heartFavorited = () => {
     if (isFavorited) {
-      return (<img
-        src={ favoriteIcon }
-        data-testid={ dataTestId }
-        alt="ícone de favorito"
-      />);
+      return (<FontAwesomeIcon icon={ faHeart } />);
     }
-    return (<img
-      src={ notFavoriteIcon }
-      data-testid={ dataTestId }
-      alt="ícone de não favorito"
-    />);
+    return (<FontAwesomeIcon icon={ regularHearth } />);
   };
 
   const insertIntoFavorites = (newObj) => {

@@ -38,7 +38,7 @@ function Header({ location, history }) {
         icon={ faMagnifyingGlass }
       />);
     }
-    return <Home />;
+    return <Home history={ history } />;
   };
 
   return (
