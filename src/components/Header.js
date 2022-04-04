@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar';
 import HeaderStyles from '../default_styles/HeaderStyle';
+import Home from './Home';
 
 function Header({ location, history }) {
   const [isSearching, setIsSearching] = useState(false);
@@ -29,15 +30,21 @@ function Header({ location, history }) {
     return headingText;
   };
 
+  const generateButton = () => {
+    if (location === '/foods' || location === '/drinks'
+     || location === '/explore/foods/nationalities') {
+      return (<FontAwesomeIcon
+        onClick={ () => setIsSearching(!isSearching) }
+        icon={ faMagnifyingGlass }
+      />);
+    }
+    return <Home />;
+  };
+
   return (
     <HeaderStyles>
       <div className="header-container">
-        {(location === '/foods' || location === '/drinks'
-            || location === '/explore/foods/nationalities')
-            && <FontAwesomeIcon
-              onClick={ () => setIsSearching(!isSearching) }
-              icon={ faMagnifyingGlass }
-            />}
+        {generateButton()}
 
         <p data-testid="page-title">
           {checkLocationAndGiveName()}

@@ -101,7 +101,6 @@ function SearchBar({ history, location }) {
     <form className={ formClass }>
       <div className="search-inputs">
         <div>
-
           <input
             type="text"
             data-testid="search-input"
