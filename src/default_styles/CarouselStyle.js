@@ -8,18 +8,25 @@ position: relative;
 }
 
 .card {
-  position: relative;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
   flex-direction: column;
+  /* align-items: center; */
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: firebrick;
+  color: gold;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border-radius: 20px;
   max-width: 50%;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.card img {
+  border-radius: 20px 20px 0 0;
 }
 
 .carousel-inner {
