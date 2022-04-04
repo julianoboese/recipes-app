@@ -16,7 +16,7 @@ function StartRecipeBtn({ id, type }) {
   }, [id, type]);
 
   return (
-    <Link to={ redirectUrl }>
+    <Link to={ redirectUrl } className="start-button">
 
       <button
         type="button"

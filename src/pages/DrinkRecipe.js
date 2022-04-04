@@ -56,15 +56,17 @@ function DrinkRecipe({ match: { params: { id } } }) {
     <FoodDetailsStyled>
       {!isLoading && (
         <>
-          <img
-            className="food-thumbnail"
-            src={ recipe.strDrinkThumb }
-            data-testid="recipe-photo"
-            alt="imagem da receita"
-          />
-          <section className="title">
-            <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-            <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+          <section className="header-title">
+            <img
+              className="food-thumbnail"
+              src={ recipe.strDrinkThumb }
+              data-testid="recipe-photo"
+              alt="imagem da receita"
+            />
+            <div className="title-box">
+              <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+              <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+            </div>
           </section>
           <section className="action-buttons">
             <FavoriteBtn recipe={ recipe } type="drink" />
