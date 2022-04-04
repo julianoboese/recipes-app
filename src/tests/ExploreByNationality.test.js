@@ -3,6 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { renderUrl } from './helpers/renderUrl';
 import '@testing-library/jest-dom';
 import japaneseMeals from './mocks/japaneseFoodsMock';
+import japaneseMock from './mocks/japaneseMock';
+import carouselDrinksMock from './mocks/carouselDrinksMock';
+import { mealsMock } from './mocks/mealMocks';
+import areasMock from './mocks/areasMock'
 
 describe('Desenvolva os testes unitários para explorar comidas por nacionalidade', () => {
   beforeEach(() => {
@@ -29,21 +33,25 @@ describe('Desenvolva os testes da pagina explorar comidas por nacionalidade', ()
   it('Teste se ao clicar no card aparecem os detalhes da receita', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(japaneseMeals),
+      json: jest.fn().mockResolvedValueOnce(areasMock)
+        .mockResolvedValueOnce(mealsMock)
+        .mockResolvedValueOnce(japaneseMeals)
+        .mockResolvedValueOnce(carouselDrinksMock)
+        .mockResolvedValue(japaneseMock),
     });
     renderUrl('/explore/foods');
     const byNationalityButton = screen.getByRole('button', {
       name: /by nationality/i,
     });
     userEvent.click(byNationalityButton);
-    const selectBox = await screen.findByText('All');
+    const selectBox = await screen.findByTestId('explore-by-nationality-dropdown');
     userEvent.selectOptions(selectBox, 'Japanese');
-    const firstFood = screen.getByRole('link', {
-      name: /chicken karaage chicken karaage/i,
-    });
+    await waitForElementToBeRemoved(() => screen.getByText('Corba'))
+    const firstFood = await screen.findByAltText(/chicken karaage/i);
     userEvent.click(firstFood);
-    await waitForElementToBeRemoved(() => firstFood);
+    console.log(firstFood);
     expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese')
   });
   it('Teste se retorna mensagem "Not found" quando buscar /drinks/nationalities', () => {
     const { history } = renderUrl('/');
