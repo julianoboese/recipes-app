@@ -1,77 +1,77 @@
 const areas = {
-  'meals': [
+  meals: [
     {
-      'strArea': 'American'
+      strArea: 'American',
     },
     {
-      'strArea': 'British'
+      strArea: 'British',
     },
     {
-      'strArea': 'Canadian'
+      strArea: 'Canadian',
     },
     {
-      'strArea': 'Chinese'
+      strArea: 'Chinese',
     },
     {
-      'strArea': 'Dutch'
+      strArea: 'Dutch',
     },
     {
-      'strArea': 'Egyptian'
+      strArea: 'Egyptian',
     },
     {
-      'strArea': 'French'
+      strArea: 'French',
     },
     {
-      'strArea': 'Greek'
+      strArea: 'Greek',
     },
     {
-      'strArea': 'Indian'
+      strArea: 'Indian',
     },
     {
-      'strArea': 'Irish'
+      strArea: 'Irish',
     },
     {
-      'strArea': 'Italian'
+      strArea: 'Italian',
     },
     {
-      'strArea': 'Jamaican'
+      strArea: 'Jamaican',
     },
     {
-      'strArea': 'Japanese'
+      strArea: 'Japanese',
     },
     {
-      'strArea': 'Kenyan'
+      strArea: 'Kenyan',
     },
     {
-      'strArea': 'Malaysian'
+      strArea: 'Malaysian',
     },
     {
-      'strArea': 'Mexican'
+      strArea: 'Mexican',
     },
     {
-      'strArea': 'Moroccan'
+      strArea: 'Moroccan',
     },
     {
-      'strArea': 'Russian'
+      strArea: 'Russian',
     },
     {
-      'strArea': 'Spanish'
+      strArea: 'Spanish',
     },
     {
-      'strArea': 'Thai'
+      strArea: 'Thai',
     },
     {
-      'strArea': 'Tunisian'
+      strArea: 'Tunisian',
     },
     {
-      'strArea': 'Turkish'
+      strArea: 'Turkish',
     },
     {
-      'strArea': 'Unknown'
+      strArea: 'Unknown',
     },
     {
-      'strArea': 'Vietnamese'
-    }
+      strArea: 'Vietnamese',
+    },
   ],
 };
 
