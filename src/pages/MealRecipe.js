@@ -59,16 +59,18 @@ function MealRecipe({ match: { params: { id } } }) {
     <FoodDetailsStyled>
       {!isLoading && (
         <>
-          <img
-            className="food-thumbnail"
-            src={ recipe.strMealThumb }
-            data-testid="recipe-photo"
-            alt="imagem da receita"
-          />
-          <section className="title">
-            <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-            ●
-            <p data-testid="recipe-category">{recipe.strCategory}</p>
+          <section className="header-title">
+            <img
+              className="food-thumbnail"
+              src={ recipe.strMealThumb }
+              data-testid="recipe-photo"
+              alt="imagem da receita"
+            />
+            <div className="title-box">
+              <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+              ●
+              <p data-testid="recipe-category">{recipe.strCategory}</p>
+            </div>
           </section>
           <section className="action-buttons">
             <FavoriteBtn recipe={ recipe } type="food" />
@@ -95,7 +97,7 @@ function MealRecipe({ match: { params: { id } } }) {
             <p data-testid="instructions">{recipe.strInstructions}</p>
           </section>
 
-          <div>
+          <div className="video-section">
             <h3>Video</h3>
             <iframe
               data-testid="video"

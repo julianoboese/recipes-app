@@ -6,26 +6,36 @@ background-color: gold;
   width: 100%;
 }
 
-.title {
-  position: absolute;
+.header-title {
   width: 100%;
-  top: 313px;
+  position: relative;
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 10px;
   color: firebrick;
-  padding: 10px 1rem;
+}
+
+.title-box {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   background-image: 
   linear-gradient(to top, rgba(255, 215, 0, 1), rgba(255, 215, 0, 0));
 }
 
-.title > h1 {
-  font-size: 2rem;
+.title-box > h1 {
+  font-size: 1.8rem;
   margin: 0;
+  padding-left: 1rem;
 }
 
-.title > p {
+.title-box > p {
   padding-top: 0.1rem;
+  padding-right: 1rem;
   font-size: 0.8rem;
   font-style: italic;
 }
@@ -33,7 +43,7 @@ background-color: gold;
 .action-buttons {
   position: absolute;
   right: 10px;
-  top: 332px;
+  top: 30px;
   display: flex;
   gap:  10px;
 }
@@ -42,7 +52,7 @@ background-color: gold;
   border: 0;
   background-color: rgba(255, 255, 255, 0);
   font-size: 1.5rem;
-  color: firebrick;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .ingredients-section {
@@ -80,6 +90,21 @@ background-color: gold;
 
 .instructions-section p {
   width: 90%;
+}
+
+.video-section h3 {
+  padding: 1rem;
+  font-size: 1.3rem;
+  color: firebrick;
+}
+
+.video-section iframe {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.start-button {
+
 }
 `;
 
