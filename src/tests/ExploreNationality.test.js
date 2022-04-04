@@ -6,7 +6,7 @@ import japaneseMeals from './mocks/japaneseFoodsMock';
 import japaneseMock from './mocks/japaneseMock';
 import carouselDrinksMock from './mocks/carouselDrinksMock';
 import { mealsMock } from './mocks/mealMocks';
-import areasMock from './mocks/areasMock'
+import areasMock from './mocks/areasMock';
 
 describe('Desenvolva os testes unitários para explorar comidas por nacionalidade', () => {
   beforeEach(() => {
@@ -46,12 +46,12 @@ describe('Desenvolva os testes da pagina explorar comidas por nacionalidade', ()
     userEvent.click(byNationalityButton);
     const selectBox = await screen.findByTestId('explore-by-nationality-dropdown');
     userEvent.selectOptions(selectBox, 'Japanese');
-    await waitForElementToBeRemoved(() => screen.getByText('Corba'))
+    await waitForElementToBeRemoved(() => screen.getByText('Corba'));
     const firstFood = await screen.findByAltText(/chicken karaage/i);
     userEvent.click(firstFood);
     console.log(firstFood);
     expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese')
+    expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese');
   });
   it('Teste se retorna mensagem "Not found" quando buscar /drinks/nationalities', () => {
     const { history } = renderUrl('/');
