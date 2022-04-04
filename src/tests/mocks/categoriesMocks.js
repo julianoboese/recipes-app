@@ -22,7 +22,7 @@ export const drinkCategoriesMock = {
     { strCategory: 'Ordinary Drink' },
     { strCategory: 'Cocktail' },
     { strCategory: 'Milk' },
-    { strCategory: 'Other' },
+    { strCategory: 'Shake' },
     { strCategory: 'Cocoa' },
     { strCategory: 'Shot' },
     { strCategory: 'Coffee' },
