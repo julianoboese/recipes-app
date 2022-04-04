@@ -1,4 +1,3 @@
-// https://stackoverflow.com/questions/62351935/how-to-mock-navigator-clipboard-writetext-in-jest
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderUrl } from './helpers/renderUrl';
@@ -6,7 +5,7 @@ import '@testing-library/jest-dom';
 
 const SPICY_ARRABIATA_PENNE = 'Spicy Arrabiata Penne';
 
-const doneRecipes = [
+const favoriteRecipes = [
   {
     id: '52771',
     type: 'food',
@@ -15,8 +14,6 @@ const doneRecipes = [
     alcoholicOrNot: '',
     name: SPICY_ARRABIATA_PENNE,
     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
   },
   {
     id: '178319',
@@ -26,8 +23,6 @@ const doneRecipes = [
     alcoholicOrNot: 'Alcoholic',
     name: 'Aquamarine',
     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    doneDate: '23/06/2020',
-    tags: [],
   },
 ];
 
@@ -37,10 +32,10 @@ Object.assign(navigator, {
   },
 });
 
-describe('Done Recipes Screen', () => {
+describe('Favorite Recipes Screen', () => {
   beforeEach(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    renderUrl('/done-recipes');
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    renderUrl('/favorite-recipes');
   });
   afterEach(() => localStorage.clear());
 
@@ -51,7 +46,7 @@ describe('Done Recipes Screen', () => {
     expect(allBtn && foodsBtn && drinksBtn).toBeInTheDocument();
   });
 
-  it('should have two done recipes, one of each type', async () => {
+  it('should have two favorite recipes, one of each type', async () => {
     const foodName = await screen.findByText(SPICY_ARRABIATA_PENNE);
     const drinkName = await screen.findByText('Aquamarine');
     expect(foodName && drinkName).toBeInTheDocument();

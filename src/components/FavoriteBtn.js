@@ -5,7 +5,7 @@ import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteBtn({ recipe, type }) {
   const [isFavorited, setIsFavorited] = useState(false);
-  const [dataTestId, setdataTestId] = useState('favorite-btn');
+  const [dataTestId, setDataTestId] = useState('favorite-btn');
   const [isLoading, setIsLoading] = useState(true);
 
   const createItemObj = () => {
@@ -39,7 +39,7 @@ function FavoriteBtn({ recipe, type }) {
   const generalFavorite = createItemObj();
   useEffect(() => {
     if (recipe.index || recipe.index === 0) {
-      setdataTestId(`${recipe.index}-horizontal-favorite-btn`);
+      setDataTestId(`${recipe.index}-horizontal-favorite-btn`);
     }
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
