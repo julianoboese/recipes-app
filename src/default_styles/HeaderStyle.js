@@ -15,7 +15,7 @@ color: firebrick;
   font-weight: 700;
   font-size: 20px;
   line-height: 20px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,13 +33,15 @@ svg {
 
 form {
   transition: 0.5s;
-  background-color: #f05d23;
-  border-radius: 50px;
+  transform: translateY(10px);
+  background-color: #ea855e;
+  border-radius: 0 0 20px 20px;
   display: flex;
   flex-direction: row;
   height: 15vh;
   align-items: center;
   font-weight: 500;
+  margin-bottom: 10px;
   color: #333138;
   padding: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
