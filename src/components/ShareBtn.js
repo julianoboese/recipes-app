@@ -21,7 +21,7 @@ function ShareBtn({ type, id }) {
 
       </button>
 
-      {isShared && <p>Link copied!</p>}
+      {isShared && global.alert('Link  copied!')}
     </>
   );
 }

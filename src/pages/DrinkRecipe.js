@@ -6,6 +6,7 @@ import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
+import FoodDetailsStyled from '../default_styles/FoodDetailsStyle';
 
 function DrinkRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
@@ -52,24 +53,26 @@ function DrinkRecipe({ match: { params: { id } } }) {
   }));
 
   return (
-    <main>
+    <FoodDetailsStyled>
       {!isLoading && (
         <>
           <img
-            className="mw-100"
+            className="food-thumbnail"
             src={ recipe.strDrinkThumb }
             data-testid="recipe-photo"
             alt="imagem da receita"
           />
+          <section className="title">
+            <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
+            <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+          </section>
+          <section className="action-buttons">
+            <FavoriteBtn recipe={ recipe } type="drink" />
 
-          <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-          <p data-testid="recipe-category">{recipe.strAlcoholic}</p>
+            <ShareBtn type="drinks" id={ recipe.idDrink || '' } />
+          </section>
 
-          <FavoriteBtn recipe={ recipe } type="drink" />
-
-          <ShareBtn type="drinks" id={ recipe.idDrink || '' } />
-
-          <div>
+          <section className="ingredients-section">
             <h3>Ingredients</h3>
             <ul>
               {ingredients.map((ingredient, index) => (
@@ -81,19 +84,19 @@ function DrinkRecipe({ match: { params: { id } } }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          <div>
+          <section className="instructions-section">
             <h3>Instructions</h3>
             <p data-testid="instructions">{recipe.strInstructions}</p>
-          </div>
+          </section>
 
           <RecomendCarousel recomendations={ objToCarousel } loading={ isLoading } />
 
           <StartRecipeBtn type="cocktails" id={ recipe.idDrink } />
         </>
       )}
-    </main>
+    </FoodDetailsStyled>
   );
 }
 

@@ -7,6 +7,7 @@ import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
+import FoodDetailsStyled from '../default_styles/FoodDetailsStyle';
 
 function MealRecipe({ match: { params: { id } } }) {
   const [recipe, setRecipe] = useState([]);
@@ -55,24 +56,27 @@ function MealRecipe({ match: { params: { id } } }) {
   }));
 
   return (
-    <main>
+    <FoodDetailsStyled>
       {!isLoading && (
         <>
           <img
-            className="mw-100"
+            className="food-thumbnail"
             src={ recipe.strMealThumb }
             data-testid="recipe-photo"
             alt="imagem da receita"
           />
+          <section className="title">
+            <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+            ●
+            <p data-testid="recipe-category">{recipe.strCategory}</p>
+          </section>
+          <section className="action-buttons">
+            <FavoriteBtn recipe={ recipe } type="food" />
 
-          <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
+            <ShareBtn type="foods" id={ recipe.idMeal || '' } />
+          </section>
 
-          <FavoriteBtn recipe={ recipe } type="food" />
-
-          <ShareBtn type="foods" id={ recipe.idMeal || '' } />
-
-          <div>
+          <section className="ingredients-section">
             <h3>Ingredients</h3>
             <ul>
               {ingredients.map((ingredient, index) => (
@@ -84,12 +88,12 @@ function MealRecipe({ match: { params: { id } } }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          <div>
+          <section className="instructions-section">
             <h3>Instructions</h3>
             <p data-testid="instructions">{recipe.strInstructions}</p>
-          </div>
+          </section>
 
           <div>
             <h3>Video</h3>
@@ -114,7 +118,7 @@ function MealRecipe({ match: { params: { id } } }) {
 
           <StartRecipeBtn type="meals" id={ recipe.idMeal } />
         </>)}
-    </main>
+    </FoodDetailsStyled>
   );
 }
 
