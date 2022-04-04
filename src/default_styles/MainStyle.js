@@ -39,6 +39,19 @@ a {
   max-width: 100%;
   height: auto;
 }
+
+.category-section {
+  width: 80%;
+  display: flex;
+}
+
+.category-item {
+  background-color: firebrick;
+  color: gold;
+  border: 0;
+  border-radius: 50px;
+}
+
 `;
 
 export default MainStyled;
