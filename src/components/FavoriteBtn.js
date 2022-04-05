@@ -41,9 +41,6 @@ function FavoriteBtn({ recipe, type }) {
 
   const generalFavorite = createItemObj();
   useEffect(() => {
-    if (recipe.index || recipe.index === 0) {
-      setdataTestId(`${recipe.index}-horizontal-favorite-btn`);
-    }
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
       const actualFavorite = favorites

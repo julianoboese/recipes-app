@@ -16,12 +16,15 @@ position: relative;
   background-color: firebrick;
   color: gold;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 20px;
   max-width: 50%;
 
+  p {
+    margin: 5px auto;
+  }
+
   h4 {
-    margin: 0;
+    margin: 5px auto 15px auto;
   }
 }
 
