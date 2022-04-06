@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const FoodDetailsStyled = styled.main`
 background-color: whitesmoke;
-padding-bottom: 60px;
+padding-bottom: 12vh;
 .food-thumbnail {
   width: 100%;
 }
@@ -113,7 +113,8 @@ padding-bottom: 60px;
 .link-start-btn {
   position: fixed;
   bottom: 5px;
-  left: 30%;
+  transform: translateX(-50%);
+  margin-left: 50%;
 }
 
 .start-button {

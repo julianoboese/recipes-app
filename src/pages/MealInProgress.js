@@ -132,27 +132,38 @@ function MealInProgress({ history, match }) {
             <p data-testid="instructions">{strInstructions}</p>
           </section>
 
-          {ingredients.map((ingredient, index) => {
-            const isChecked = handleCheck(ingredient);
+          <section className="ingredients-section">
+            <h3>Ingredients</h3>
+            <ul>
 
-            return (
-              <label
-                htmlFor={ ingredient }
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-step` }
-                style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
-              >
-                <input
-                  type="checkbox"
-                  value={ ingredient }
-                  id={ ingredient }
-                  checked={ isChecked }
-                  onChange={ handleChange }
-                />
-                {ingredient}
-              </label>
-            );
-          })}
+              {ingredients.map((ingredient, index) => {
+                const isChecked = handleCheck(ingredient);
+
+                return (
+                  <li key={ index }>
+
+                    <label
+                      htmlFor={ ingredient }
+                      className="ingredients-label"
+                      key={ ingredient }
+                      data-testid={ `${index}-ingredient-step` }
+                      style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
+                    >
+                      {ingredient}
+                      <input
+                        type="checkbox"
+                        value={ ingredient }
+                        id={ ingredient }
+                        checked={ isChecked }
+                        onChange={ handleChange }
+                      />
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
           <button
             type="button"
             className="start-button"
