@@ -22,7 +22,8 @@ padding: 0 2.85em;
 position: relative;
 align-items: center;
 justify-content: center;
-background-color: #1d1d27;
+background-color: gold;
+/* background-color: #1d1d27; */
 
 }
 
@@ -85,17 +86,16 @@ stroke-linejoin: round;
 .menu__border{
 
 left: 0;
-bottom: 99%;
-width: 10.9em;
+bottom: 95%;
+width: 10.8em;
 height: 2.4em;
 position: absolute;
 margin: 0 auto;
 clip-path: url(#menu);
-will-change: transform;
-background-color: #1d1d27;
+/* will-change: transform; */
+background-color: gold;
 transition: transform 0.7s;
-/* border-radius: 100px 100px 0 0; */
-
+padding: 10px;
 }
 
 hidden {
