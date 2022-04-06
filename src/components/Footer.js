@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React, { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
@@ -9,7 +12,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import FooterStyle from '../default_styles/FooterStyle';
 
-function Footer() {
+function Footer({ history }) {
+  const borderClass = '.menu__border';
+
   function offsetMenuBorder(element, border) {
     const menu = document.querySelector('.menu');
     const offsetActiveItem = element.getBoundingClientRect();
@@ -24,9 +29,9 @@ function Footer() {
   }
 
   function clickItem({ target }) {
-    // console.log(target.type);
     let activeItem = document.querySelector('.active');
-    const menuBorder = document.querySelector('.menu__border');
+    const menuBorder = document.querySelector(borderClass);
+    const menuItem = document.querySelectorAll('.menu__item');
 
     if (activeItem === target) return;
 
@@ -40,22 +45,55 @@ function Footer() {
         const button2 = button.parentNode;
         button2.classList.add('active');
         activeItem = button2;
+        if (button2 === menuItem[0]) history.push('/foods');
+        if (button2 === menuItem[1]) history.push('/explore');
+        if (button2 === menuItem[2]) history.push('/drinks');
       } else {
         button.classList.add('active');
         activeItem = button;
+        if (button === menuItem[0]) history.push('/foods');
+        if (button === menuItem[1]) history.push('/explore');
+        if (button === menuItem[2]) history.push('/drinks');
       }
     } else {
       target.classList.add('active');
       activeItem = target;
+      if (target === menuItem[0]) history.push('/foods');
+      if (target === menuItem[1]) history.push('/explore');
+      if (target === menuItem[2]) history.push('/drinks');
     }
     offsetMenuBorder(activeItem, menuBorder);
   }
 
   useEffect(() => {
+    // quando carrega a pagina, pega o path e colocar ativo em [0] se for foods, [1] se for explore e [2] se for drinks
+    const placeActiveOnMount = () => {
+      const menuItem = document.querySelectorAll('.menu__item');
+      const { pathname } = history.location;
+      if (pathname === '/foods') {
+        menuItem[0].classList.add('active');
+        return;
+      }
+      if (pathname === '/explore') {
+        menuItem[1].classList.add('active');
+        return;
+      }
+      if (pathname === '/drinks') {
+        menuItem[2].classList.add('active');
+        return;
+      }
+      const border = document.querySelector(borderClass);
+      border.classList = 'hidden';
+    };
+    placeActiveOnMount();
+
     const activeItem = document.querySelector('.active');
-    const menuBorder = document.querySelector('.menu__border');
+
+    if (!activeItem) return;
+
+    const menuBorder = document.querySelector(borderClass);
     offsetMenuBorder(activeItem, menuBorder);
-  }, []);
+  }, [history.location]);
 
   return (
     <FooterStyle
@@ -65,7 +103,7 @@ function Footer() {
         <button
           onClick={ clickItem }
           type="button"
-          className="menu__item active"
+          className="menu__item"
         >
           <FontAwesomeIcon className="new-icon" icon={ faBowlFood } />
         </button>

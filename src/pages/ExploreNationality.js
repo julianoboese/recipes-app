@@ -65,7 +65,7 @@ function ExploreNationality({ history, location }) {
           ))}
         </section>
       </MainStyled>
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

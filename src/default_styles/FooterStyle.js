@@ -89,12 +89,17 @@ bottom: 99%;
 width: 10.9em;
 height: 2.4em;
 position: absolute;
+margin: 0 auto;
 clip-path: url(#menu);
 will-change: transform;
 background-color: #1d1d27;
 transition: transform 0.7s;
 /* border-radius: 100px 100px 0 0; */
 
+}
+
+hidden {
+  display: hidden !important;
 }
 
 .svg-container {
