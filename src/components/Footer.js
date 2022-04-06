@@ -18,6 +18,7 @@ function Footer({ history }) {
   function offsetMenuBorder(element, border) {
     const menu = document.querySelector('.menu');
     const offsetActiveItem = element.getBoundingClientRect();
+    console.log(offsetActiveItem);
     const left = `
     ${Math.floor(
     offsetActiveItem.left - menu.offsetLeft - (
