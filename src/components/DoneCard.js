@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneCard({ recipe, index }) {
@@ -10,38 +12,44 @@ function DoneCard({ recipe, index }) {
   const [isShared, setIsShared] = useState(false);
 
   return (
-    <div className="w-25">
+    <div className="card card-done">
       <Link to={ `/${type}s/${id}` }>
         <img
-          className="img-thumbnail"
+          className="card-image"
           src={ image }
           alt={ name }
           data-testid={ `${index}-horizontal-image` }
         />
       </Link>
       <Link to={ `/${type}s/${id}` }>
-        <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+        <p data-testid={ `${index}-horizontal-name` } className="card-title">
+          {name}
+        </p>
       </Link>
-      <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+      <p data-testid={ `${index}-horizontal-done-date` } className="done-date">
+        {doneDate}
+      </p>
       <button
         type="button"
         src={ shareIcon }
         data-testid={ `${index}-horizontal-share-btn` }
+        className="share-btn"
         onClick={ () => {
           navigator.clipboard.writeText(`http://localhost:3000/${type}s/${id}`);
           setIsShared(true);
         } }
       >
-        share
+        <FontAwesomeIcon icon={ faCopy } />
       </button>
-      {isShared && <p>Link copied!</p>}
-      <p data-testid={ `${index}-horizontal-top-text` }>
+      {isShared && global.alert('Link Copied!')}
+      <p data-testid={ `${index}-horizontal-top-text` } className="card-description done">
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
       {tags.slice(0, 2).map((tag) => (
         <div
           key={ tag }
           data-testid={ `${index}-${tag}-horizontal-tag` }
+          className="card-description done"
         >
           {tag}
         </div>

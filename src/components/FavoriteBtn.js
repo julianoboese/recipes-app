@@ -87,7 +87,7 @@ function FavoriteBtn({ recipe, type }) {
   return (
     <button
       type="button"
-      className="btn btn-primary"
+      className="favorite-btn"
       onClick={ handleFavoriteClick }
     >
       {!isLoading && heartFavorited()}
