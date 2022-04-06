@@ -43,7 +43,8 @@ a {
 .category-section {
   width: 83%;
   display: flex;
-  margin: 0 auto;
+  padding-top: 0.5rem;
+  margin: 0.8rem auto;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
