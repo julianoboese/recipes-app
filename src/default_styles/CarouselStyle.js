@@ -8,16 +8,28 @@ position: relative;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
+  /* 
+  
   min-width: 0;
   word-wrap: break-word;
   background-color: firebrick;
   color: gold;
   background-clip: border-box;
-  border-radius: 20px;
-  max-width: 50%;
+  max-width: 50%; */
+
+  margin: 0 auto;
+
+  flex-direction: column;
+  display: flex;
+  width: 47vw;
+  border: 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+}
 
   p {
     margin: 5px auto;
@@ -29,12 +41,13 @@ position: relative;
 }
 
 .card img {
-  border-radius: 20px 20px 0 0;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .carousel-inner {
   position: relative;
   width: 100%;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
