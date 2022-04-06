@@ -65,7 +65,7 @@ function Profile({ history, location }) {
           </button>
         </section>
       </ProfileStyled>
-      <Footer />
+      <Footer history={ history } />
     </>
   );
 }

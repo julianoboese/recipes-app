@@ -88,7 +88,7 @@ function MainDrinkRecipes({ history, location }) {
           ))}
         </section>
       </MainStyled>
-      <Footer />
+      <Footer history={ history } />
     </>
   );
 }

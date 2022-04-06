@@ -29,7 +29,7 @@ function Explore({ history, location }) {
           </button>
         </Link>
       </ExploreStyled>
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

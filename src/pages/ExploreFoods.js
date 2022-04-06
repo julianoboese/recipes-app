@@ -53,7 +53,7 @@ function ExploreFood({ history, location }) {
           Surprise me!
         </button>
       </ExploreStyled>
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

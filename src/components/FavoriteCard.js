@@ -53,7 +53,7 @@ FavoriteCard.propTypes = {
   recipe: PropTypes.shape({
     alcoholicOrNot: PropTypes.string,
     category: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
     image: PropTypes.string,
     index: PropTypes.number,
     name: PropTypes.string,

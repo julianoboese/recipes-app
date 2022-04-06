@@ -59,7 +59,7 @@ function ExploreIngredients({ history, location }) {
           />
         ))}
       </IngredientStyled>
-      <Footer />
+      <Footer history={ history } />
     </div>
   );
 }

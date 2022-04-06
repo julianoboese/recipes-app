@@ -53,7 +53,7 @@ function DoneCard({ recipe, index }) {
 DoneCard.propTypes = {
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     type: PropTypes.string,
     alcoholicOrNot: PropTypes.string,
     category: PropTypes.string,
