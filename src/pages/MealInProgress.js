@@ -155,7 +155,7 @@ function MealInProgress({ history, match }) {
           })}
           <button
             type="button"
-            className="start-recipe-btn"
+            className="start-button"
             data-testid="finish-recipe-btn"
             disabled={ handleDisabled() }
             onClick={ handleFinish }
