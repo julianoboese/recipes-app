@@ -6,9 +6,10 @@ import RecomendCarousel from '../components/RecomendCarousel';
 import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
+import Home from '../components/Home';
 import FoodDetailsStyled from '../default_styles/FoodDetailsStyle';
 
-function DrinkRecipe({ match: { params: { id } } }) {
+function DrinkRecipe({ match: { params: { id } }, history }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
@@ -56,6 +57,7 @@ function DrinkRecipe({ match: { params: { id } } }) {
     <FoodDetailsStyled>
       {!isLoading && (
         <>
+          <Home history={ history } />
           <section className="header-title">
             <img
               className="food-thumbnail"
@@ -103,8 +105,10 @@ function DrinkRecipe({ match: { params: { id } } }) {
 }
 
 DrinkRecipe.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({

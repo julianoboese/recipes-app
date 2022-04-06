@@ -16,12 +16,12 @@ bottom: 0;
 margin: 0;
 display: flex;
 /* Works well with 100% width  */
-width: 32.05em;
+width: 100vw;
 font-size: 1.5em;
-padding: 0 2.85em;
+padding: 0 5vw;
 position: relative;
 align-items: center;
-justify-content: center;
+justify-content: space-evenly;
 background-color: gold;
 /* background-color: #1d1d27; */
 

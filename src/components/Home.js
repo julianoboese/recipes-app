@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
+import HomeBtn from '../default_styles/HomeBtnStyle';
 // import { Link } from 'react-router-dom';
 
 function Home({ history }) {
   return (
-    <span onClick={ history.goBack } aria-hidden="true">
+    <HomeBtn className="home-btn" onClick={ history.goBack } aria-hidden="true">
       <FontAwesomeIcon icon={ faChevronLeft } />
-    </span>
+    </HomeBtn>
   );
 }
 

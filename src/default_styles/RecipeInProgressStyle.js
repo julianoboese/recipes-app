@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FoodDetailsStyled = styled.main`
+const RecipeInProgress = styled.main`
 background-color: whitesmoke;
 padding-bottom: 60px;
 .food-thumbnail {
@@ -125,6 +125,11 @@ padding-bottom: 60px;
   font-weight: 700;
   padding: 0.8rem 1rem;
 }
+
+.start-button:disabled {
+  background-color: rgb(148,24,24)
+}
+
 `;
 
-export default FoodDetailsStyled;
+export default RecipeInProgress;

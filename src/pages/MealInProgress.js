@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { fetchMealById } from '../services/fetchMeals';
 import ShareBtn from '../components/ShareBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
+import Home from '../components/Home';
+import RecipeInProgress from '../default_styles/RecipeInProgressStyle';
 
 function MealInProgress({ history, match }) {
   const { params: { recipeId } } = match;
@@ -101,17 +103,35 @@ function MealInProgress({ history, match }) {
   };
 
   return (
-    <div>
+    <RecipeInProgress>
       {!isLoading
       && (
         <>
-          <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
-          <h2 data-testid="recipe-title">{strMeal}</h2>
-          <h3 data-testid="recipe-category">{strCategory}</h3>
-          <FavoriteBtn recipe={ mealInProgress } type="food" />
-          <ShareBtn type="foods" id={ recipeId } />
+          <Home history={ history } />
+          <section className="header-title">
+            <img
+              className="food-thumbnail"
+              src={ strMealThumb }
+              alt={ strMeal }
+              data-testid="recipe-photo"
+            />
+            <div className="title-box">
+              <h1 data-testid="recipe-title">{strMeal}</h1>
+              ●
+              <p data-testid="recipe-category">{strCategory}</p>
+            </div>
+          </section>
 
-          <p data-testid="instructions">{strInstructions}</p>
+          <section className="action-buttons">
+            <FavoriteBtn recipe={ mealInProgress } type="food" />
+            <ShareBtn type="foods" id={ recipeId } />
+          </section>
+
+          <section className="instructions-section">
+            <h3>Instructions</h3>
+            <p data-testid="instructions">{strInstructions}</p>
+          </section>
+
           {ingredients.map((ingredient, index) => {
             const isChecked = handleCheck(ingredient);
 
@@ -135,6 +155,7 @@ function MealInProgress({ history, match }) {
           })}
           <button
             type="button"
+            className="start-recipe-btn"
             data-testid="finish-recipe-btn"
             disabled={ handleDisabled() }
             onClick={ handleFinish }
@@ -143,7 +164,7 @@ function MealInProgress({ history, match }) {
           </button>
         </>
       )}
-    </div>
+    </RecipeInProgress>
   );
 }
 

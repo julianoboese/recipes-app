@@ -8,8 +8,9 @@ import StartRecipeBtn from '../components/StartRecipeBtn';
 import FavoriteBtn from '../components/FavoriteBtn';
 import ShareBtn from '../components/ShareBtn';
 import FoodDetailsStyled from '../default_styles/FoodDetailsStyle';
+import Home from '../components/Home';
 
-function MealRecipe({ match: { params: { id } } }) {
+function MealRecipe({ match: { params: { id } }, history }) {
   const [recipe, setRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measure, setMeasure] = useState([]);
@@ -59,6 +60,7 @@ function MealRecipe({ match: { params: { id } } }) {
     <FoodDetailsStyled>
       {!isLoading && (
         <>
+          <Home history={ history } />
           <section className="header-title">
             <img
               className="food-thumbnail"
@@ -72,9 +74,9 @@ function MealRecipe({ match: { params: { id } } }) {
               <p data-testid="recipe-category">{recipe.strCategory}</p>
             </div>
           </section>
+
           <section className="action-buttons">
             <FavoriteBtn recipe={ recipe } type="food" />
-
             <ShareBtn type="foods" id={ recipe.idMeal || '' } />
           </section>
 
@@ -125,8 +127,10 @@ function MealRecipe({ match: { params: { id } } }) {
 }
 
 MealRecipe.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
