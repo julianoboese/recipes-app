@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const FoodDetailsStyled = styled.main`
-background-color: gold;
+background-color: whitesmoke;
+padding-bottom: 60px;
 .food-thumbnail {
   width: 100%;
 }
@@ -13,7 +14,7 @@ background-color: gold;
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  color: firebrick;
+  color: #0C1821;
 }
 
 .title-box {
@@ -24,7 +25,7 @@ background-color: gold;
   align-items: center;
   gap: 0.5rem;
   background-image: 
-  linear-gradient(to top, rgba(255, 215, 0, 1), rgba(255, 215, 0, 0));
+  linear-gradient(to top, rgba(245, 245, 245, 1), rgba(245, 245, 245, 0));
 }
 
 .title-box > h1 {
@@ -52,11 +53,11 @@ background-color: gold;
   border: 0;
   background-color: rgba(255, 255, 255, 0);
   font-size: 1.5rem;
-  color: rgba(0, 0, 0, 0.8);
+  color: firebrick;
 }
 
 .ingredients-section {
-  color: firebrick;
+  color: #0C1821;
   padding-left: 1rem;
   margin: 0;
 }
@@ -71,7 +72,7 @@ background-color: gold;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  border-left: 6px solid firebrick;
+  border-left: 6px solid #0C1821;
 }
 
 .ingredients-section li {
@@ -81,7 +82,7 @@ background-color: gold;
 
 .instructions-section {
   padding-left: 1rem;
-  color: firebrick;
+  color: #0C1821;
 }
 
 .instructions-section h3 {
@@ -95,7 +96,7 @@ background-color: gold;
 .video-section h3 {
   padding: 1rem;
   font-size: 1.3rem;
-  color: firebrick;
+  color: #0C1821;
 }
 
 .video-section iframe {
@@ -103,8 +104,20 @@ background-color: gold;
   margin-bottom: 1.5rem;
 }
 
-.start-button {
+.link-start-btn {
+  position: fixed;
+  bottom: 5px;
+  left: 30%;
+}
 
+.start-button {
+  background-color: firebrick;
+  border: 0;
+  border-radius: 50px;
+  color: gold;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.8rem 1rem;
 }
 `;
 
