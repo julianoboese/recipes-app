@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import shareIcon from '../images/shareIcon.svg';
 import FavoriteBtn from './FavoriteBtn';
 // import { fetchMealById } from '../services/fetchMeals';
@@ -11,31 +13,34 @@ function FavoriteCard({ recipe, index }) {
   const [isShared, setIsShared] = useState(false);
 
   return (
-    <div className="w-25">
-      <Link to={ `/${type}s/${id}` }>
+    <div className="card">
+      <Link to={ `/${type}s/${id}` } className="card-image-container">
         <img
-          className="img-thumbnail"
+          className="card-image"
           src={ image }
           alt={ name }
           data-testid={ `${index}-horizontal-image` }
         />
       </Link>
       <Link to={ `/${type}s/${id}` }>
-        <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+        <p data-testid={ `${index}-horizontal-name` } className="card-title">
+          {name}
+        </p>
       </Link>
       <button
         type="button"
         src={ shareIcon }
         data-testid={ `${index}-horizontal-share-btn` }
+        className="share-btn"
         onClick={ () => {
           navigator.clipboard.writeText(`http://localhost:3000/${type}s/${id}`);
           setIsShared(true);
         } }
       >
-        share
+        <FontAwesomeIcon icon={ faCopy } />
       </button>
-      {isShared && <p>Link copied!</p>}
-      <p data-testid={ `${index}-horizontal-top-text` }>
+      {isShared && global.alert('Link Copied!')}
+      <p data-testid={ `${index}-horizontal-top-text` } className="card-description">
         {type === 'food' ? `${nationality} - ${category}` : alcoholicOrNot}
       </p>
       <FavoriteBtn
