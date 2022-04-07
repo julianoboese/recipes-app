@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CarouselStyle from '../default_styles/CarouselStyle';
 
 function RecomendCarousel({ recomendations, loading }) {
@@ -49,9 +50,13 @@ function RecomendCarousel({ recomendations, loading }) {
           return (
             <div key={ index } className={ carouselPosition }>
               <div className="cards-container">
-                <div
+                <Link
                   className="w-50 card"
                   data-testid={ `${recomIndex[0]}-recomendation-card` }
+                  to={
+                    `/${recomendations[recomIndex[0]].imgUrl.includes('thecocktaildb')
+                      ? 'drinks' : 'foods'}/${recomendations[recomIndex[0]].id}`
+                  }
                 >
                   <img
                     className="w-100"
@@ -65,11 +70,15 @@ function RecomendCarousel({ recomendations, loading }) {
                     {recomendations[recomIndex[0]].name}
 
                   </h4>
-                </div>
+                </Link>
 
-                <div
+                <Link
                   className="w-50 card"
                   data-testid={ `${recomIndex[1]}-recomendation-card` }
+                  to={
+                    `/${recomendations[recomIndex[1]].imgUrl.includes('thecocktaildb')
+                      ? 'drinks' : 'foods'}/${recomendations[recomIndex[1]].id}`
+                  }
                 >
                   <img
                     className="w-100"
@@ -82,7 +91,8 @@ function RecomendCarousel({ recomendations, loading }) {
                   >
                     {recomendations[recomIndex[1]].name}
                   </h4>
-                </div>
+                </Link>
+
               </div>
             </div>
           );

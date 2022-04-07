@@ -19,6 +19,8 @@ position: relative;
 
   margin: 0 auto;
 
+  text-decoration: none;
+  color: black;
   flex-direction: column;
   display: flex;
   width: 47vw;
