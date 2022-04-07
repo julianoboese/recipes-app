@@ -47,5 +47,4 @@ function useMainRecipes(currentPage) {
 
   return [recipeCategories, isLoading];
 }
-
 export default useMainRecipes;
