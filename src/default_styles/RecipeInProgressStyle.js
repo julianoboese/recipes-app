@@ -131,6 +131,7 @@ padding-bottom: 60px;
 
 .start-button:disabled {
   background-color: rgb(148,24,24);
+  color: grey;
   cursor: not-allowed;
 }
 
@@ -142,7 +143,7 @@ padding-bottom: 60px;
 
 input[type="checkbox"] {
   -webkit-appearance: none;
-  margin-left: 3vw;
+  margin-right: 3vw;
 
   font: inherit;
   color: currentColor;
