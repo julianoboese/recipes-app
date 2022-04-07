@@ -30,13 +30,16 @@ function ExploreIngredients({ history, location }) {
   }, [foodCondition]);
 
   const showRecipesByIngredient = async (name) => {
+    const MAX_RECIPES = 12;
     if (foodCondition) {
       const ingredients = await fetchMealByIngredients(name);
-      setIngredients(ingredients);
+      setSearchResults([]);
+      setIngredients(ingredients.splice(0, MAX_RECIPES));
       history.push('/foods');
     } else {
       const ingredients = await fetchDrinkByIngredients(name);
-      setIngredients(ingredients);
+      setSearchResults([]);
+      setIngredients(ingredients.splice(0, MAX_RECIPES));
       history.push('/drinks');
     }
   };

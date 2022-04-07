@@ -8,17 +8,9 @@ position: relative;
 }
 
 .card {
-  /* 
   
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: firebrick;
-  color: gold;
-  background-clip: border-box;
-  max-width: 50%; */
-
   margin: 0 auto;
-
+  
   text-decoration: none;
   color: black;
   flex-direction: column;
@@ -33,13 +25,14 @@ position: relative;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
 }
 
-  p {
-    margin: 5px auto;
-  }
+p {
+  margin: 5px auto;
+}
 
-  h4 {
-    margin: 5px auto 15px auto;
-  }
+h4 {
+  margin: 5px auto 15px auto;
+}
+
 
 .card img {
   border-radius: 0.5rem 0.5rem 0 0;

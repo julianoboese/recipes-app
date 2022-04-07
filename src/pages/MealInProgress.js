@@ -149,7 +149,6 @@ function MealInProgress({ history, match }) {
                       data-testid={ `${index}-ingredient-step` }
                       style={ { textDecoration: isChecked ? 'line-through' : 'none' } }
                     >
-                      {ingredient}
                       <input
                         type="checkbox"
                         value={ ingredient }
@@ -157,6 +156,7 @@ function MealInProgress({ history, match }) {
                         checked={ isChecked }
                         onChange={ handleChange }
                       />
+                      {ingredient}
                     </label>
                   </li>
                 );
