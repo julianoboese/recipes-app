@@ -49,7 +49,7 @@ position: relative;
 .carousel-inner {
   position: relative;
   width: 100%;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+  padding-bottom: 20px;
   overflow: hidden;
 }
 

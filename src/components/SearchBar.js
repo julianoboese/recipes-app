@@ -53,7 +53,7 @@ function SearchBar({ history, location }) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else {
       const MAX_RECIPES = 12;
-      saveRecipes(recipes.splice(0, MAX_RECIPES), food);
+      saveRecipes(recipes.slice(0, MAX_RECIPES), food);
     }
   };
 
@@ -88,13 +88,8 @@ function SearchBar({ history, location }) {
 
   const searchController = (event) => {
     event.preventDefault();
-    const NOT_FOUND = -1;
-
-    if (location.indexOf('foods') !== NOT_FOUND) {
-      getMealsFromApi();
-    } else if (location.indexOf('drinks') !== NOT_FOUND) {
-      getDrinksFromApi();
-    }
+    if (location.includes('foods')) getMealsFromApi();
+    if (location.includes('drinks')) getDrinksFromApi();
   };
 
   return (
