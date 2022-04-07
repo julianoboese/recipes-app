@@ -40,7 +40,6 @@ position: relative;
   h4 {
     margin: 5px auto 15px auto;
   }
-}
 
 .card img {
   border-radius: 0.5rem 0.5rem 0 0;

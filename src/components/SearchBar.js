@@ -57,39 +57,27 @@ function SearchBar({ history, location }) {
     }
   };
 
-  const getMealsFromApi = async () => {
+  const getRecipes = async (fetchByIngredient, fetchByName, fetchByFirstLetter) => {
     let recipes;
     if (radioSearch === 'ingredient') {
-      recipes = await fetchMealByIngredients(searchValue);
+      recipes = await fetchByIngredient(searchValue);
     } else if (radioSearch === 'name') {
-      recipes = await fetchMealByName(searchValue);
+      recipes = await fetchByName(searchValue);
     } else if (radioSearch === FIRST_LETTER) {
-      recipes = await wrongNumberOfCharacters(fetchMealByFirstLetter);
+      recipes = await wrongNumberOfCharacters(fetchByFirstLetter);
     }
     if (recipes !== undefined) {
       nullSafeRecipe(recipes, 'meals');
     }
   };
 
-  const getDrinksFromApi = async () => {
-    let recipes;
-    if (radioSearch === 'ingredient') {
-      recipes = await fetchDrinkByIngredients(searchValue);
-    } else if (radioSearch === 'name') {
-      recipes = await fetchDrinkByName(searchValue);
-    } else if (radioSearch === FIRST_LETTER) {
-      recipes = await wrongNumberOfCharacters(fetchDrinkByFirstLetter);
-    }
-
-    if (recipes !== undefined) {
-      nullSafeRecipe(recipes, 'drinks');
-    }
-  };
-
   const searchController = (event) => {
     event.preventDefault();
-    if (location.includes('foods')) getMealsFromApi();
-    if (location.includes('drinks')) getDrinksFromApi();
+    if (location.includes('foods')) {
+      getRecipes(fetchMealByIngredients, fetchMealByName, fetchMealByFirstLetter);
+    } else {
+      getRecipes(fetchDrinkByIngredients, fetchDrinkByName, fetchDrinkByFirstLetter);
+    }
   };
 
   return (
