@@ -1,9 +1,5 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChampagneGlasses,
@@ -18,7 +14,6 @@ function Footer({ history }) {
   function offsetMenuBorder(element, border) {
     const menu = document.querySelector('.menu');
     const offsetActiveItem = element.getBoundingClientRect();
-    console.log(offsetActiveItem);
     const left = `
     ${Math.floor(
     offsetActiveItem.left - menu.offsetLeft - (
@@ -36,33 +31,19 @@ function Footer({ history }) {
 
     if (activeItem === target) return;
 
-    if (activeItem) {
-      activeItem.classList.remove('active');
-    }
-
+    let button = target;
     if (target.type !== 'button') {
-      const button = target.parentNode;
-      if (button.type !== 'button') {
-        const button2 = button.parentNode;
-        button2.classList.add('active');
-        activeItem = button2;
-        if (button2 === menuItem[0]) history.push('/foods');
-        if (button2 === menuItem[1]) history.push('/explore');
-        if (button2 === menuItem[2]) history.push('/drinks');
-      } else {
-        button.classList.add('active');
-        activeItem = button;
-        if (button === menuItem[0]) history.push('/foods');
-        if (button === menuItem[1]) history.push('/explore');
-        if (button === menuItem[2]) history.push('/drinks');
-      }
-    } else {
-      target.classList.add('active');
-      activeItem = target;
-      if (target === menuItem[0]) history.push('/foods');
-      if (target === menuItem[1]) history.push('/explore');
-      if (target === menuItem[2]) history.push('/drinks');
+      button = target.parentNode;
     }
+    if (button.type !== 'button') {
+      button = button.parentNode;
+    }
+    button.classList.add('active');
+    activeItem = button;
+    if (button === menuItem[0]) history.push('/foods');
+    if (button === menuItem[1]) history.push('/explore');
+    if (button === menuItem[2]) history.push('/drinks');
+
     offsetMenuBorder(activeItem, menuBorder);
   }
 
@@ -133,9 +114,16 @@ function Footer({ history }) {
 
       <div className="svg-container">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 202.9 45.5">
-          <clipPath id="menu" clipPathUnits="objectBoundingBox" transform="scale(0.0049285362247413 0.021978021978022)">
+          <clipPath
+            id="menu"
+            clipPathUnits="objectBoundingBox"
+            transform="scale(0.0049285362247413 0.021978021978022)"
+          >
             <path
-              d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5c9.2,3.6,17.6,4.2,23.3,4H6.7z"
+              d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,
+              11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,
+              10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,
+              5.5,12.4,8.2,18.1,10.5c9.2,3.6,17.6,4.2,23.3,4H6.7z"
             />
           </clipPath>
         </svg>
@@ -143,5 +131,14 @@ function Footer({ history }) {
     </FooterStyle>
   );
 }
+
+Footer.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Footer;
