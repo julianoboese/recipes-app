@@ -10,7 +10,7 @@ import IngredientStyled from '../default_styles/IngredientCardStyled';
 
 function ExploreIngredients({ history, location }) {
   const [allIngredients, setAllIngredients] = useState([]);
-  const { setIngredients } = useContext(RecipesContext);
+  const { setIngredients, setSearchResults } = useContext(RecipesContext);
 
   const URL = location.pathname;
   const NOT_FOUND = -1;
@@ -27,7 +27,7 @@ function ExploreIngredients({ history, location }) {
       }
     };
     loadAllIngredients();
-  }, [foodCondition]);
+  }, [foodCondition, setAllIngredients]);
 
   const showRecipesByIngredient = async (name) => {
     const MAX_RECIPES = 12;
